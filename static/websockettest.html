@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+		<script type="text/javascript">
+			var ws = new WebSocket("ws://localhost:8080/websocket");
+				ws.onopen = function() {
+				ws.send("Hello, world");
+			};
+			ws.onmessage = function (evt) {
+				alert(evt.data);
+			};
+		</script>
+	</head>
+</html>

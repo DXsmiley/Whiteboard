@@ -1,0 +1,36 @@
+h1, h2, h3, h4, h5, h6, p {
+	font-family: helvetica, sans-serif;
+}
+
+canvas {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	position: fixed;
+	overflow: hidden;
+}
+
+#canvas1 {
+	z-index: -2;
+}
+
+#canvas2 {
+	z-index: -1;
+}
+
+body.whiteboard {
+	margin: 0px;
+	position: fixed;
+	overflow: hidden;
+}
+
+body.index {
+	text-align: center;	
+}
+
+div.container {
+	text-align: center;
+	/*text-align: center;*/
+	margin: 0px auto;
+	width: 800px;
+}
