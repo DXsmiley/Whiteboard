@@ -23,7 +23,7 @@ sock = socketio.SocketIO(app)
 def serve_index():
 	return serve_static('index.html')
 
-@app.route('/board/new')
+@app.route('/new')
 def server_board_new():
 	s = hex(random.randint(0, 2 ** 31))[2:]
 	while s in whiteboards:
