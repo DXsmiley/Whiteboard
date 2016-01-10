@@ -1,34 +1,132 @@
-var lastX = 0;
-var lastY = 0;
-var paint = false;
 var whiteboard_id = 'unknown';
 var socket = undefined;
+var tool_heads = [null, null, null, null, null]; // support up to five fingers! not.
+var tools_by_name = {};
+var context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
+var context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
+var active_tool = null;
 
-// pencil : 0
-// eraser : 1
-var tool = 0;
-// var version = 0;
+function setWhiteboardId(wid) {
+	whiteboard_id = wid;
+}
 
-tool_params = [
-	{
-		'width': 2,
-		'colour': '#484fc0',
-		'preview': '#df4b26'
-	},
-	{
-		'width': 30,
-		'colour': '#ffffff',
-		'preview': '#dddddd'
+// Functions for drawing things on canvases
+
+function drawClear(context) {
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+function drawSegment(start, end, context, colour, thickness) {
+	context.lineJoin = "round";
+	context.strokeStyle = colour;
+	context.lineWidth = thickness;
+	context.beginPath();
+	context.moveTo(start.x, start.y);
+	context.lineTo(end.x, end.y);
+	context.closePath();
+	context.stroke();
+}
+
+function drawLine(points, context, colour, thickness) {
+	if (points.length > 1) {
+		for (var i = 1; i < points.length; i++) {
+			drawSegment(points[i - 1], points[i], context, colour, thickness);
+		}
 	}
-]
+}
 
-var context1 = document.getElementById('canvas1').getContext('2d'); // bottom layer
-var context2 = document.getElementById('canvas2').getContext('2d'); // top layer
+function drawLineTimed(points, context, colour, thickness, interval) {
+	// This seems extremely inefficient...
+	if (points.length > 1) {
+		var i = 1;
+		function func() {
+			if (i < points.length) {
+				drawSegment(points[i - 1], points[i], context, colour, thickness);
+				i += 1;
+				window.setTimeout(func, interval);
+			}
+		}
+		func();
+	}
+}
 
-// var unsent_commands = Array();
-var points = Array();
+// A tool head for drawing like a pencil. This can also be used to function as an eraser.
+
+function PencilHead(tool_name, colour, thickness) {
+	this.tool_name = tool_name;
+	this.points = Array();
+	this.colour = colour;
+	this.thickness = thickness;
+	this.distance = 0;
+}
+
+PencilHead.prototype.pushData = function() {
+	if (this.points.length > 1) {
+		var last_point = this.points[this.points.length - 1];
+		sendPaintEvent(this.tool_name, cleanupLine(this.points));
+		drawClear(context_preview);
+		this.points = [last_point];
+	}
+}
+
+PencilHead.prototype.onMove = function(new_point) {
+	if (new_point) {
+		this.points.push(new_point);
+		var l = this.points.length;
+		if (l > 1) {
+			drawSegment(this.points[l - 2], new_point, context_preview, this.colour, this.thickness);
+			this.distance += distance(this.points[l - 2], new_point);
+		}
+		if (this.distance > 2000 && l > 200) {
+			this.pushData()
+			this.distance = 0;
+		}
+	}
+}
+
+PencilHead.prototype.onRelease = function() {
+	this.pushData();
+}
+
+var tool_pencil = {
+	name: 'pencil',
+	buttonImage: 'pencil.png',
+	buttonImageSelected: 'pencil_select.png',
+	onButtonClick: function() {
+		console.log('Selected Pencil');
+		return true;
+	},
+	makeToolHead: function() {
+		return new PencilHead('pencil', '#df4b26', 2);
+	},
+	drawFull: function(points) {
+		drawLine(points, context_picture, '#484fc0', 2);
+	}
+};
+
+var tool_eraser = {
+	name: 'eraser',
+	buttonImage: 'eraser.png',
+	buttonImageSelected: 'eraser_select.png',
+	onButtonClick: function() {
+		console.log('Selected Eraser');
+		return true;
+	},
+	makeToolHead: function() {
+		return new PencilHead('eraser', '#dddddd', 30);
+	},
+	drawFull: function(points) {
+		drawLine(points, context_picture, '#ffffff', 30);
+	}
+};
+
+var tools = {
+	pencil: tool_pencil,
+	eraser: tool_eraser
+}
 
 function sendPaintEvent(the_tool, the_points) {
+	// console.log('sendPaintEvent', the_tool, the_points);
 	socket.emit('paint',
 		{
 			data: {
@@ -38,81 +136,45 @@ function sendPaintEvent(the_tool, the_points) {
 			}
 		}
 	);
+	drawCommand(the_tool, the_points);
 }
 
-function setWhiteboardId(wid) {
-	whiteboard_id = wid;
+// Perform events
+
+function eventToolDown(n, p) {
+	tool_heads[n] = active_tool.makeToolHead();
+	tool_heads[n].onMove(p);
 }
 
-function distance(a, b) {
-	return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
-
-function cleanup(p) {
-	var o = Array();
-	var d = 0.0;
-	o.push(p[0]);
-	for (var i = 1; i < p.length - 1; ++i) {
-		d += distance(p[i], o[o.length - 1]);
-		if (d > 50.0) {
-			d = 0.0;
-			o.push(p[i]);
-		}
+function eventToolMove(n, p) {
+	if (tool_heads[n]) {
+		tool_heads[n].onMove(p);
 	}
-	o.push(p[p.length - 1]);
-	return o;
 }
 
-// Linear point interpolation
-function point_lerp(a, b, k) {
-	var x = a.x + (b.x - a.x) * k;
-	var y = a.y + (b.y - a.y) * k;
-	return {'x': x, 'y': y}
-}
-
-function bezier(p, steps) {
-	var o = Array();
-	o.push(p[0]);
-	for (var i = 0; i < p.length - 3; i += 2) {
-		for (var j = 0; j < steps; ++j) {
-			a = point_lerp(p[i], p[i + 1], j / steps);
-			b = point_lerp(p[i + 1], p[i + 1], j / steps);
-			c = point_lerp(p[i + 1], p[i + 2], j / steps);
-			d = point_lerp(a, b, j / steps);
-			e = point_lerp(b, c, j / steps);
-			f = point_lerp(d, e, j / steps);
-			o.push(f);
-		}
+function eventToolUp(n) {
+	if (tool_heads[n]) {
+		tool_heads[n].onRelease();
+		tool_heads[n] = null;
 	}
-	o.push(p[p.length - 1]);
-	return o;
 }
 
-// Takes in an array of points, and makes a smooth line.
-// function smooth(p) {
-// 	return bezier(cleanup(p), 30);
-// }
+// Interperet events
 
 function mouseDown(e) {
-	// console.log('mousedown');
-	lastX = e.pageX;
-	lastY = e.pageY;
-	paint = true;
-	addPiece(lastX, lastY);
+	eventToolDown(0, new Point(e.pageX, e.pageY));
+}
+
+function mouseMove(e) {
+	eventToolMove(0, new Point(e.pageX, e.pageY));
 }
 
 function mouseUp(e) {
-	// console.log('mouseup');
-	points = cleanup(points);
-	// unsent_commands.push({
-	// 	'tool': tool,
-	// 	'points': points
-	// });
-	drawCommand(tool, points);
-	context2.clearRect(0, 0, context2.canvas.width, context2.canvas.height);
-	paint = false;
-	sendPaintEvent(tool, points);
-	points = Array();
+	eventToolUp(0);
+}
+
+function touchDown(e) {
+	mouseDown(e.touches[0]);
 }
 
 function touchMove(e) {
@@ -120,39 +182,11 @@ function touchMove(e) {
 	e.preventDefault();
 }
 
-function touchDown(e) {
-	mouseDown(e.touches[0]);
-}
-
-function mouseMove(e) {
-	if (paint) {
-		// console.log('painting...', e.pageX, e.pageY);
-		addPiece(e.pageX, e.pageY);
-	}
-}
-
-function clearWhiteboard() {
-	context1.clearRect(0, 0, context1.canvas.width, context1.canvas.height);
-}
-
 function drawCommand(the_tool, the_points) {
-	// console.log(the_tool, the_points);
-	if (the_tool == -1) {
-		clearWhiteboard();
+	if (the_tool == 'clear') {
+		drawClear(context_picture);
 	} else {
-		context1.lineJoin = "round";
-		context1.strokeStyle = tool_params[the_tool].colour;
-		context1.lineWidth = tool_params[the_tool].width;
-		// console.log(the_points);
-		// the_points = bezier(the_points);
-		// console.log(the_points);
-		for (var i = 0; i < the_points.length - 1; ++i) {
-			context1.beginPath();
-			context1.moveTo(the_points[i].x, the_points[i].y);
-			context1.lineTo(the_points[i + 1].x, the_points[i + 1].y);
-			context1.closePath();
-			context1.stroke();
-		}
+		tools[the_tool].drawFull(the_points);
 	}
 }
 
@@ -164,77 +198,30 @@ document.addEventListener('touchmove', touchMove, false);
 document.addEventListener('touchend', mouseUp, false);
 document.addEventListener('touchcancel', mouseUp, false);
 
-$('#button_pencil').click(function(e) {
-	tool = 0;
-	document.getElementById('button_pencil').src = '/static/pencil_select.png';
-	document.getElementById('button_eraser').src = '/static/eraser.png';
-	/*console.log('button_pencil')*/
-});
-
-$('#button_eraser').click(function(e) {
-	tool = 1;
-	document.getElementById('button_pencil').src = '/static/pencil.png';
-	document.getElementById('button_eraser').src = '/static/eraser_select.png';
-	// $('#button_pencil').src = 
-	// $('#button_eraser').src = '/static/eraser_select.png';
-	/*console.log('button_eraser')*/
-});
-
-$('#button_clear').click(function(e) {
-	sendPaintEvent(-1, []);	
-});
-
-function addPiece(x, y) {
-
-	points.push({
-		'x': x,
-		'y': y
-	});
-
-	context2.lineJoin = "round";
-	context2.strokeStyle = tool_params[tool].preview;
-	context2.lineWidth = tool_params[tool].width;
-	context2.beginPath();
-	context2.moveTo(lastX, lastY);
-	context2.lineTo(x, y);
-	context2.closePath();
-	context2.stroke();
-
-	// context1.strokeStyle = "#000000";
-	// context1.lineJoin = "round";
-	// context1.lineWidth = 8;
-	// context1.beginPath();
-	// context1.moveTo(lastX, lastY);
-	// context1.lineTo(x, y);
-	// context1.closePath();
-	// context1.stroke();
-
-	lastX = x;
-	lastY = y;
+function selectTool(t) {
+	for (i in tools) {
+		var n = tools[i].name;
+		var p = tools[i].buttonImage;
+		document.getElementById('button_' + n).src = '/static/' + p;
+	}
+	var n = tools[t].name;
+	var p = tools[t].buttonImageSelected;
+	document.getElementById('button_' + n).src = '/static/' + p;
+	if (tools[t].onButtonClick()) {
+		active_tool = tools[t];
+	}
 }
 
-// function getContent() {
-// 	console.log('Unsent commands: ', unsent_commands);
-// 	$.post("/update",
-// 		{
-// 			"version": '' + version,
-// 			"list_of_commands": JSON.stringify(unsent_commands),
-// 			"board": whiteboard_id
-// 		},
-// 		function (data, status) {
-// 			data = JSON.parse(data);
-// 			version = data['version'];
-// 			console.log('Result data: ', data);
-// 			for (i in data.commands) {
-// 				drawCommand(data.commands[i].tool, data.commands[i].points);
-// 			}
-// 			setTimeout(getContent, 1000);
-// 		}
-// 	);
-// 	unsent_commands = Array();
-// }
+$('#button_pencil').click(function(e) {selectTool('pencil')});
+$('#button_eraser').click(function(e) {selectTool('eraser')});
+
+$('#button_clear').click(function(e) {
+	sendPaintEvent('clear', []);	
+});
 
 $(document).ready(function() {
+
+	active_tool = tool_pencil;
 
 	console.log('Board ID:', whiteboard_id);
 	
@@ -246,38 +233,10 @@ $(document).ready(function() {
 		if (msg.data.board_id == whiteboard_id) {
 			actions = msg.data.actions;
 			for (i in actions) {
-				console.log(actions[i].tool, actions[i].points);
+				// console.log(actions[i].tool, actions[i].points);
 				drawCommand(actions[i].tool, actions[i].points);
 			}
 		}
 	});
 
 });
-
-// function redraw(){
-// 	context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-
-// 	context.strokeStyle = "#df4b26";
-// 	context.lineJoin = "round";
-// 	context.lineWidth = 5;
-		
-// 	for (var i=0; i < clickX.length; i++) {		
-// 		context.beginPath();
-// 		if(clickDrag[i] && i){
-// 			context.moveTo(clickX[i-1], clickY[i-1]);
-// 		} else {
-// 			context.moveTo(clickX[i]-1, clickY[i]);
-// 		}
-// 		context.lineTo(clickX[i], clickY[i]);
-// 		context.closePath();
-// 		context.stroke();
-// 	}
-// }
-
-// $('document').ready(function() {
-	// console.log('Init!');
-	// context.width = $('#the_canvas').width;
-	// context.height = $('#the_canvas').height;
-// });
-
-// setTimeout(getContent, 1000);

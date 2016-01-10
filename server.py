@@ -11,6 +11,10 @@ class Whiteboard:
 		self.last_clear = 0
 	def full_image(self):
 		return self.layers[self.last_clear:]
+	def add_action(self, action):
+		self.layers.append(action)
+		if action['tool'] == 'clear':
+			self.last_clear = len(self.layers) - 1
 
 whiteboards = collections.defaultdict(lambda : Whiteboard())
 
@@ -51,7 +55,7 @@ def socketio_paint(message):
 			]
 		}
 	}
-	whiteboards[bid].layers.append(message['data'])
+	whiteboards[bid].add_action(message['data'])
 	socketio.emit('paint', data, broadcast = True)
 
 @sock.on('full image')
