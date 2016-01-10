@@ -186,7 +186,9 @@ function drawCommand(the_tool, the_points) {
 	if (the_tool == 'clear') {
 		drawClear(context_picture);
 	} else {
-		tools[the_tool].drawFull(the_points);
+		if (the_tool in tools) {
+			tools[the_tool].drawFull(the_points);
+		}
 	}
 }
 

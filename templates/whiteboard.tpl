@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Whiteboard</title>
+		<link rel="stylesheet" type="text/css" href="static/normalise.css">
 		<link rel="stylesheet" type="text/css" href="/static/style.css">
 	</head>
 
