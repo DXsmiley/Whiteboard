@@ -120,9 +120,23 @@ var tool_eraser = {
 	}
 };
 
+var tool_clear = {
+	name: 'clear',
+	buttonImage: 'clear.png',
+	onButtonClick: function() {
+		sendPaintEvent('clear', []);
+		// This is just a button.
+		return false;
+	},
+	drawFull: function(points) {
+
+	}
+};
+
 var tools = {
 	pencil: tool_pencil,
-	eraser: tool_eraser
+	eraser: tool_eraser,
+	clear: tool_clear
 }
 
 function sendPaintEvent(the_tool, the_points) {
@@ -183,12 +197,8 @@ function touchMove(e) {
 }
 
 function drawCommand(the_tool, the_points) {
-	if (the_tool == 'clear') {
-		drawClear(context_picture);
-	} else {
-		if (the_tool in tools) {
-			tools[the_tool].drawFull(the_points);
-		}
+	if (the_tool in tools) {
+		tools[the_tool].drawFull(the_points);
 	}
 }
 
@@ -200,7 +210,8 @@ document.addEventListener('touchmove', touchMove, false);
 document.addEventListener('touchend', mouseUp, false);
 document.addEventListener('touchcancel', mouseUp, false);
 
-function selectTool(t) {
+function trigerToolButton(t) {
+	console.log('Triggering...', t);
 	for (i in tools) {
 		var n = tools[i].name;
 		var p = tools[i].buttonImage;
@@ -208,18 +219,20 @@ function selectTool(t) {
 	}
 	var n = tools[t].name;
 	var p = tools[t].buttonImageSelected;
-	document.getElementById('button_' + n).src = '/static/' + p;
 	if (tools[t].onButtonClick()) {
+		document.getElementById('button_' + n).src = '/static/' + p;
 		active_tool = tools[t];
 	}
 }
 
-$('#button_pencil').click(function(e) {selectTool('pencil')});
-$('#button_eraser').click(function(e) {selectTool('eraser')});
-
-$('#button_clear').click(function(e) {
-	sendPaintEvent('clear', []);	
-});
+for (i in tools) {
+	// Clojures because javascript is strange...
+	function clojure() {
+		var name = tools[i].name;
+		$('#button_' + name).click(function(e) {trigerToolButton(name);});
+	}
+	clojure();
+}
 
 $(document).ready(function() {
 
