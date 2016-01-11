@@ -50,6 +50,8 @@ div#text_input_pane {
 }
 
 h1#text_input_text {
+	font-family: helvetica;
+	font-size: 30px;
 	position: fixed;
 	vertical-align: middle;
 }

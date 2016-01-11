@@ -197,8 +197,6 @@ TextHead.prototype.onRelease = function() {
 }
 
 // When we press enter, we've finished.
-
-
 var tool_text = {
 	name: 'text',
 	buttonImage: 'text.png',
@@ -214,8 +212,8 @@ var tool_text = {
 		console.log('tool_text.drawFull', data);
 		var pos = data.position;
 		var text = data.text;
-		var colour = '#006600';
-		var font = '20px Helvetica';
+		var colour = '#000000';
+		var font = '30px Helvetica';
 		drawText(pos, text, colour, font, context_picture);
 	}
 };
