@@ -50,6 +50,12 @@ function drawLineTimed(points, context, colour, thickness, interval) {
 	}
 }
 
+function drawText(position, text, colour, font, context) {
+	context.font = font;
+	context.fillStyle = colour;
+	context.fillText(text, position.x, position.y);
+}
+
 // A tool head for drawing like a pencil. This can also be used to function as an eraser.
 
 function PencilHead(tool_name, colour, thickness) {
@@ -128,16 +134,98 @@ var tool_clear = {
 		// This is just a button.
 		return false;
 	},
-	drawFull: function(points) {
+	drawFull: function(data) {
 		drawClear(context_picture);
+	}
+};
+
+function TextHead() {
+	this.text = 'Type here!';
+	$('#text_input_pane').show();
+	$('#text_input_text').text('Enter Text');
+}
+
+jQuery.fn.selectText = function() {
+	var range, selection;
+	return this.each(function() {
+		if (document.body.createTextRange) {
+			range = document.body.createTextRange();
+			range.moveToElementText(this);
+			range.select();
+		} else if (window.getSelection) {
+			selection = window.getSelection();
+			range = document.createRange();
+			range.selectNodeContents(this);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
+	});
+};
+
+TextHead.prototype.onMove = function(a) {
+	// Move text and display
+	var point = new Point(a.x, a.y);
+	window.setTimeout(function () {
+		var e = $('#text_input_text');
+		e.css('left', point.x);
+		e.css('top', point.y);
+		e.selectText();
+		e.focus();
+	}, 10);
+	// Setup callbacks
+	function textInputKeyHandle(event) {
+		var commit = (event.keyCode == 13 && !event.shiftKey);
+		if (commit) {
+			console.log('Committing text paint...');
+			sendPaintEvent('text', {
+				position: point,
+				text: $('#text_input_text').text(),
+			});
+		}
+		if (commit || event.keyCode == 27) {
+			$('#text_input_pane').hide();
+		}
+	}
+	$('#text_input_text').off('keydown');
+	$('#text_input_pane').off('keydown');
+	$('#text_input_text').keydown(textInputKeyHandle);
+	$('#text_input_pane').keydown(textInputKeyHandle);
+}
+
+TextHead.prototype.onRelease = function() {
+	// do nothing...
+}
+
+// When we press enter, we've finished.
+
+
+var tool_text = {
+	name: 'text',
+	buttonImage: 'text.png',
+	buttonImageSelected: 'text_select.png',
+	onButtonClick: function() {
+		console.log('Selected Text');
+		return true;
+	},
+	makeToolHead: function() {
+		return new TextHead();
+	},
+	drawFull: function(data) {
+		console.log('tool_text.drawFull', data);
+		var pos = data.position;
+		var text = data.text;
+		var colour = '#006600';
+		var font = '20px Helvetica';
+		drawText(pos, text, colour, font, context_picture);
 	}
 };
 
 var tools = {
 	pencil: tool_pencil,
 	eraser: tool_eraser,
+	text: tool_text,
 	clear: tool_clear
-}
+};
 
 function sendPaintEvent(the_tool, the_points) {
 	// console.log('sendPaintEvent', the_tool, the_points);
@@ -212,16 +300,18 @@ document.addEventListener('touchcancel', mouseUp, false);
 
 function trigerToolButton(t) {
 	console.log('Triggering...', t);
-	for (i in tools) {
-		var n = tools[i].name;
-		var p = tools[i].buttonImage;
-		document.getElementById('button_' + n).src = '/static/' + p;
-	}
+	// Tigger the click event
 	var n = tools[t].name;
 	var p = tools[t].buttonImageSelected;
 	if (tools[t].onButtonClick()) {
-		document.getElementById('button_' + n).src = '/static/' + p;
 		active_tool = tools[t];
+		// Change button images
+		for (i in tools) {
+			var n2 = tools[i].name;
+			var p2 = tools[i].buttonImage;
+			document.getElementById('button_' + n2).src = '/static/' + p2;
+		}
+		document.getElementById('button_' + n).src = '/static/' + p;
 	}
 }
 
