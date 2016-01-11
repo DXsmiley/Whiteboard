@@ -129,7 +129,7 @@ var tool_clear = {
 		return false;
 	},
 	drawFull: function(points) {
-
+		drawClear(context_picture);
 	}
 };
 
