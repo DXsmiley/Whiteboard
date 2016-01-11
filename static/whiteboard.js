@@ -51,6 +51,7 @@ function drawLineTimed(points, context, colour, thickness, interval) {
 }
 
 function drawText(position, text, colour, font, context) {
+	context.textBaseline = 'top';
 	context.font = font;
 	context.fillStyle = colour;
 	context.fillText(text, position.x, position.y);
@@ -70,7 +71,6 @@ PencilHead.prototype.pushData = function() {
 	if (this.points.length > 1) {
 		var last_point = this.points[this.points.length - 1];
 		sendPaintEvent(this.tool_name, cleanupLine(this.points));
-		drawClear(context_preview);
 		this.points = [last_point];
 	}
 }
@@ -92,6 +92,7 @@ PencilHead.prototype.onMove = function(new_point) {
 
 PencilHead.prototype.onRelease = function() {
 	this.pushData();
+	drawClear(context_preview);
 }
 
 var tool_pencil = {

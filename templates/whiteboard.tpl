@@ -10,7 +10,7 @@
 	<body class="whiteboard">
 		<div class="absolute">
 			<div id="text_input_pane">
-				<h1 contenteditable id="text_input_text">Enter Text</h1>
+				<p contenteditable id="text_input_text">Enter Text</p>
 			</div>
 		</div>
 		<div>

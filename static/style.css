@@ -49,9 +49,13 @@ div#text_input_pane {
 	/*visibility: hidden;*/
 }
 
-h1#text_input_text {
+#text_input_text {
 	font-family: helvetica;
 	font-size: 30px;
+	font-style: normal;
 	position: fixed;
 	vertical-align: middle;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
 }
