@@ -148,7 +148,7 @@ var tool_clear = {
 
 function TextHead(colour) {
 	this.colour = colour;
-	$('#text_input_pane').show();
+	$('.text_display').show();
 	$('#text_input_text').text('Enter Text');
 }
 
@@ -192,7 +192,7 @@ TextHead.prototype.onMove = function(a) {
 			});
 		}
 		if (commit || event.keyCode == 27) {
-			$('#text_input_pane').hide();
+			$('.text_display').hide();
 		}
 	}
 	$('#text_input_text').off('keydown');
@@ -203,6 +203,12 @@ TextHead.prototype.onMove = function(a) {
 
 TextHead.prototype.onRelease = function() {
 	// do nothing...
+}
+
+function cancelTextInput() {
+	$('#text_input_text').off('keydown');
+	$('#text_input_pane').off('keydown');
+	$('.text_display').hide();
 }
 
 // When we press enter, we've finished.
@@ -272,6 +278,7 @@ function eventToolUp(n) {
 
 function mouseDown(e) {
 	eventToolDown(0, new Point(e.pageX, e.pageY));
+	e.originalEvent.preventDefault();
 }
 
 function mouseMove(e) {
@@ -297,6 +304,9 @@ function drawCommand(the_tool, the_data) {
 	}
 }
 
+$('#text_input_pane').mousedown(mouseMove);
+$('#text_cancel_button').mousedown(cancelTextInput);
+// $('#text_input_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
 $('#canvas2').mouseup(mouseUp);
