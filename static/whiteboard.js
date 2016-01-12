@@ -5,7 +5,7 @@ var tools_by_name = {};
 var context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
 var context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
 var active_tool = null;
-var global_colour = '#000000';
+var global_colour = null;
 
 function setWhiteboardId(wid) {
 	whiteboard_id = wid;
@@ -146,8 +146,8 @@ var tool_clear = {
 	}
 };
 
-function TextHead() {
-	this.text = 'Type here!';
+function TextHead(colour) {
+	this.colour = colour;
 	$('#text_input_pane').show();
 	$('#text_input_text').text('Enter Text');
 }
@@ -172,6 +172,7 @@ jQuery.fn.selectText = function() {
 TextHead.prototype.onMove = function(a) {
 	// Move text and display
 	var point = new Point(a.x, a.y);
+	var the_colour = this.colour;
 	window.setTimeout(function () {
 		var e = $('#text_input_text');
 		e.css('left', point.x);
@@ -185,6 +186,7 @@ TextHead.prototype.onMove = function(a) {
 		if (commit) {
 			console.log('Committing text paint...');
 			sendPaintEvent('text', {
+				colour: the_colour,
 				position: point,
 				text: $('#text_input_text').text(),
 			});
@@ -213,13 +215,13 @@ var tool_text = {
 		return true;
 	},
 	makeToolHead: function() {
-		return new TextHead();
+		return new TextHead(global_colour);
 	},
 	drawFull: function(data) {
 		console.log('tool_text.drawFull', data);
 		var pos = data.position;
 		var text = data.text;
-		var colour = '#000000';
+		var colour = data.colour;
 		var font = '30px Helvetica';
 		drawText(pos, text, colour, font, context_picture);
 	}
@@ -338,10 +340,12 @@ for (i in tools) {
 // Colours
 
 var colours = {
-	black: '#000000',
+	black: '#444444',
 	blue: '#484fc0',
 	red: '#df4b26'
-}
+};
+
+global_colour = colours['black'];
 
 function triggerColourButton(col) {
 	console.log('Colour: ', col, colours[col]);
