@@ -307,7 +307,7 @@ document.addEventListener('touchcancel', mouseUp, false);
 
 // Tool buttons
 
-function trigerToolButton(t) {
+function triggerToolButton(t) {
 	console.log('Triggering...', t);
 	// Tigger the click event
 	var n = tools[t].name;
@@ -328,14 +328,16 @@ function trigerToolButton(t) {
 	}
 }
 
-for (i in tools) {
-	// Clojures because javascript is strange...
-	function clojure() {
-		var name = tools[i].name;
-		$('#button_' + name).click(function(e) {trigerToolButton(name);});
+$(document).ready( function() {
+	for (i in tools) {
+		// Clojures because javascript is strange...
+		function clojure() {
+			var name = tools[i].name;
+			$('#button_' + name).click(function(e) {triggerToolButton(name);});
+		}
+		clojure();
 	}
-	clojure();
-}
+});
 
 // Colours
 
@@ -356,14 +358,16 @@ function triggerColourButton(col) {
 	$('#colour_' + col).attr('src', '/static/col_s_' + col + '.png');
 }
 
-for (i in colours) {
-	console.log(i, 'is a colour');
-	function clojure() {
-		var x = i;
-		$('#colour_' + x).click(function(e) {triggerColourButton(x);});
+$(document).ready( function() {
+	for (i in colours) {
+		console.log(i, 'is a colour');
+		function clojure() {
+			var x = i;
+			$('#colour_' + x).click(function(e) {triggerColourButton(x);});
+		}
+		clojure();
 	}
-	clojure();
-}
+});
 
 // Data transfer
 
