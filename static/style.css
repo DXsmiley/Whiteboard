@@ -22,6 +22,8 @@ body.whiteboard {
 	margin: 0px auto;
 	position: fixed;
 	overflow: hidden;
+	/*width: 100%;*/
+	height:100%;
 }
 
 body.index {
@@ -37,6 +39,12 @@ div.container {
 
 div.absolute {
 	position: absolute;
+}
+
+div.toolbar {
+	background-color: #000000;
+	height: 100%;
+	margin: 0px auto;
 }
 
 div#text_input_pane {

@@ -14,14 +14,14 @@
 			</div>
 		</div>
 		<div>
-			<div>
-				<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
-				<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
-				<img id="button_pencil" src="/static/pencil_select.png">
-				<img id="button_eraser" src="/static/eraser.png">
-				<img id="button_text" src="/static/text.png">
-				<img id="button_clear" src="/static/clear.png">
-			</div>
+			<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
+			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
+		</div>
+		<div class="toolbar">
+			<img id="button_pencil" src="/static/pencil_select.png"><br>
+			<img id="button_eraser" src="/static/eraser.png"><br>
+			<img id="button_text" src="/static/text.png"><br>
+			<img id="button_clear" src="/static/clear.png"><br>
 		</div>
 	</body>
 
