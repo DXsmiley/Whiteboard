@@ -32,7 +32,7 @@
      inkscape:cx="18.82885"
      inkscape:cy="25.346878"
      inkscape:document-units="px"
-     inkscape:current-layer="g4173"
+     inkscape:current-layer="layer8"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -56,7 +56,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Ring"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <circle
        r="27.246998"
@@ -130,6 +130,29 @@
        id="path4175"
        d="M 31.787929,48.903548 C 27.660944,48.579384 26.008411,41.592579 21.545902,40.839251 17.083393,40.085924 7.437546,36.058311 9.9927287,28.340587 12.547911,20.622864 23.003844,29.436689 24.917478,25.083758 c 1.913633,-4.35293 -9.585977,-6.803847 -1.671717,-10.899885 7.91426,-4.096037 12.755103,-0.210678 16.688803,3.635312 3.9337,3.84599 7.985424,11.921175 7.112357,16.648504 -0.873068,4.72733 -8.494667,-0.296565 -10.554096,1.987223 -2.059429,2.283787 3.011615,4.915753 2.0609,7.431241 -0.950716,2.515489 -2.638812,5.341559 -6.765796,5.017395 z"
        style="fill:#484fc0;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="Cancel">
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4171"
+       width="8.2142859"
+       height="38.079575"
+       x="-4.4228139"
+       y="22.944677"
+       ry="1.9642857"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4171-1"
+       width="8.2142859"
+       height="38.079575"
+       x="37.877323"
+       y="-18.724115"
+       ry="1.9642857"
+       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" />
   </g>
   <g
      inkscape:groupmode="layer"
