@@ -71,9 +71,15 @@ function PencilHead(tool_name, colour, thickness) {
 PencilHead.prototype.pushData = function() {
 	if (this.points.length > 1) {
 		var last_point = this.points[this.points.length - 1];
-		sendPaintEvent(this.tool_name, cleanupLine(this.points));
+		var action_data = {
+			points: cleanupLine(this.points),
+			colour: this.colour,
+			thickness: this.thickness
+		}
+		sendPaintEvent(this.tool_name, action_data);
 		this.points = [last_point];
 	}
+	drawClear(context_preview);
 }
 
 PencilHead.prototype.onMove = function(new_point) {
@@ -93,7 +99,6 @@ PencilHead.prototype.onMove = function(new_point) {
 
 PencilHead.prototype.onRelease = function() {
 	this.pushData();
-	drawClear(context_preview);
 }
 
 var tool_pencil = {
@@ -107,8 +112,8 @@ var tool_pencil = {
 	makeToolHead: function() {
 		return new PencilHead('pencil', global_colour, 2);
 	},
-	drawFull: function(points) {
-		drawLine(points, context_picture, global_colour, 2);
+	drawFull: function(data) {
+		drawLine(data.points, context_picture, data.colour, 2);
 	}
 };
 
@@ -123,8 +128,8 @@ var tool_eraser = {
 	makeToolHead: function() {
 		return new PencilHead('eraser', '#dddddd', 30);
 	},
-	drawFull: function(points) {
-		drawLine(points, context_picture, '#ffffff', 30);
+	drawFull: function(data) {
+		drawLine(data.points, context_picture, '#ffffff', 30);
 	}
 };
 
@@ -227,18 +232,18 @@ var tools = {
 	clear: tool_clear
 };
 
-function sendPaintEvent(the_tool, the_points) {
-	// console.log('sendPaintEvent', the_tool, the_points);
+function sendPaintEvent(tool_name, action_data) {
+	// console.log('sendPaintEvent', tool_name, the_points);
 	socket.emit('paint',
 		{
 			data: {
-				'tool': the_tool,
-				'points': the_points,
+				'tool': tool_name,
+				'data': action_data,
 				'board_id': whiteboard_id
 			}
 		}
 	);
-	drawCommand(the_tool, the_points);
+	drawCommand(tool_name, action_data);
 }
 
 // Perform events
@@ -284,9 +289,9 @@ function touchMove(e) {
 	e.preventDefault();
 }
 
-function drawCommand(the_tool, the_points) {
+function drawCommand(the_tool, the_data) {
 	if (the_tool in tools) {
-		tools[the_tool].drawFull(the_points);
+		tools[the_tool].drawFull(the_data);
 	}
 }
 
@@ -373,7 +378,7 @@ $(document).ready(function() {
 			actions = msg.data.actions;
 			for (i in actions) {
 				// console.log(actions[i].tool, actions[i].points);
-				drawCommand(actions[i].tool, actions[i].points);
+				drawCommand(actions[i].tool, actions[i].data);
 			}
 		}
 	});
