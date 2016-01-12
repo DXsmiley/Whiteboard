@@ -20,8 +20,11 @@
 		<div class="toolbar">
 			<img id="button_pencil" src="/static/pencil_select.png"><br>
 			<img id="button_eraser" src="/static/eraser.png"><br>
-			<img id="button_text" src="/static/text.png"><br>
-			<img id="button_clear" src="/static/clear.png"><br>
+			<img id="button_text"   src="/static/text.png"><br>
+			<img id="button_clear"  src="/static/clear.png"><br>
+			<img id="colour_blue"   src="/static/col_blue.png"></br>
+			<img id="colour_red"    src="/static/col_red.png"></br>
+			<img id="colour_black"  src="/static/col_black.png"></br>
 		</div>
 	</body>
 

@@ -5,6 +5,7 @@ var tools_by_name = {};
 var context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
 var context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
 var active_tool = null;
+var global_colour = '#000000';
 
 function setWhiteboardId(wid) {
 	whiteboard_id = wid;
@@ -104,10 +105,10 @@ var tool_pencil = {
 		return true;
 	},
 	makeToolHead: function() {
-		return new PencilHead('pencil', '#df4b26', 2);
+		return new PencilHead('pencil', global_colour, 2);
 	},
 	drawFull: function(points) {
-		drawLine(points, context_picture, '#484fc0', 2);
+		drawLine(points, context_picture, global_colour, 2);
 	}
 };
 
@@ -297,6 +298,8 @@ document.addEventListener('touchmove', touchMove, false);
 document.addEventListener('touchend', mouseUp, false);
 document.addEventListener('touchcancel', mouseUp, false);
 
+// Tool buttons
+
 function trigerToolButton(t) {
 	console.log('Triggering...', t);
 	// Tigger the click event
@@ -308,9 +311,13 @@ function trigerToolButton(t) {
 		for (i in tools) {
 			var n2 = tools[i].name;
 			var p2 = tools[i].buttonImage;
+			console.log(i);
 			document.getElementById('button_' + n2).src = '/static/' + p2;
+			console.log('done');
 		}
+		console.log(n);
 		document.getElementById('button_' + n).src = '/static/' + p;
+		console.log('done');
 	}
 }
 
@@ -322,6 +329,34 @@ for (i in tools) {
 	}
 	clojure();
 }
+
+// Colours
+
+var colours = {
+	black: '#000000',
+	blue: '#484fc0',
+	red: '#df4b26'
+}
+
+function triggerColourButton(col) {
+	console.log('Colour: ', col, colours[col]);
+	global_colour = colours[col];
+	for (i in colours) {
+		$("#colour_" + i).attr('src', '/static/col_' + i + '.png');
+	}
+	$('#colour_' + col).attr('src', '/static/col_s_' + col + '.png');
+}
+
+for (i in colours) {
+	console.log(i, 'is a colour');
+	function clojure() {
+		var x = i;
+		$('#colour_' + x).click(function(e) {triggerColourButton(x);});
+	}
+	clojure();
+}
+
+// Data transfer
 
 $(document).ready(function() {
 
