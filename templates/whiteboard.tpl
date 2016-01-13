@@ -43,8 +43,14 @@
 
 	<script type="text/javascript" src="//code.jquery.com/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-	<script src="/static/geometry.js"></script>
-	<script src="/static/whiteboard.js"></script>
-	<script type="text/javascript">whiteboard_id = "{{board_id}}";</script>
+	<script type="text/javascript" src="/static/geometry.js"></script>
+	<script type="text/javascript" src="/static/draw.js"></script>
+	<script type="text/javascript" src="/static/globals.js"></script>
+	<script type="text/javascript" src="/static/head_pencil.js"></script>
+	<script type="text/javascript" src="/static/tool_pencil.js"></script>
+	<script type="text/javascript" src="/static/tool_eraser.js"></script>
+	<script type="text/javascript" src="/static/tool_clear.js"></script>
+	<script type="text/javascript" src="/static/whiteboard.js"></script>
+	<script type="text/javascript">setWhiteboardId("{{board_id}}");</script>
 
 </html>

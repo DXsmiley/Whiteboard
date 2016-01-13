@@ -1,151 +1,3 @@
-var whiteboard_id = 'unknown';
-var socket = undefined;
-var tool_heads = [null, null, null, null, null]; // support up to five fingers! not.
-var tools_by_name = {};
-var context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
-var context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
-var active_tool = null;
-var global_colour = null;
-
-function setWhiteboardId(wid) {
-	whiteboard_id = wid;
-}
-
-// Functions for drawing things on canvases
-
-function drawClear(context) {
-	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-}
-
-function drawSegment(start, end, context, colour, thickness) {
-	context.lineJoin = "round";
-	context.strokeStyle = colour;
-	context.lineWidth = thickness;
-	context.beginPath();
-	context.moveTo(start.x, start.y);
-	context.lineTo(end.x, end.y);
-	context.closePath();
-	context.stroke();
-}
-
-function drawLine(points, context, colour, thickness) {
-	if (points.length > 1) {
-		for (var i = 1; i < points.length; i++) {
-			drawSegment(points[i - 1], points[i], context, colour, thickness);
-		}
-	}
-}
-
-function drawLineTimed(points, context, colour, thickness, interval) {
-	// This seems extremely inefficient...
-	if (points.length > 1) {
-		var i = 1;
-		function func() {
-			if (i < points.length) {
-				drawSegment(points[i - 1], points[i], context, colour, thickness);
-				i += 1;
-				window.setTimeout(func, interval);
-			}
-		}
-		func();
-	}
-}
-
-function drawText(position, text, colour, font, context) {
-	context.textBaseline = 'top';
-	context.font = font;
-	context.fillStyle = colour;
-	context.fillText(text, position.x, position.y);
-}
-
-// A tool head for drawing like a pencil. This can also be used to function as an eraser.
-
-function PencilHead(tool_name, colour, thickness) {
-	this.tool_name = tool_name;
-	this.points = Array();
-	this.colour = colour;
-	this.thickness = thickness;
-	this.distance = 0;
-}
-
-PencilHead.prototype.pushData = function() {
-	if (this.points.length > 1) {
-		var last_point = this.points[this.points.length - 1];
-		var action_data = {
-			points: cleanupLine(this.points),
-			colour: this.colour,
-			thickness: this.thickness
-		}
-		sendPaintEvent(this.tool_name, action_data);
-		this.points = [last_point];
-	}
-	drawClear(context_preview);
-}
-
-PencilHead.prototype.onMove = function(new_point) {
-	if (new_point) {
-		this.points.push(new_point);
-		var l = this.points.length;
-		if (l > 1) {
-			drawSegment(this.points[l - 2], new_point, context_preview, this.colour, this.thickness);
-			this.distance += distance(this.points[l - 2], new_point);
-		}
-		if (this.distance > 2000 && l > 200) {
-			this.pushData()
-			this.distance = 0;
-		}
-	}
-}
-
-PencilHead.prototype.onRelease = function() {
-	this.pushData();
-}
-
-var tool_pencil = {
-	name: 'pencil',
-	buttonImage: 'pencil.png',
-	buttonImageSelected: 'pencil_select.png',
-	onButtonClick: function() {
-		console.log('Selected Pencil');
-		return true;
-	},
-	makeToolHead: function() {
-		return new PencilHead('pencil', global_colour, 2);
-	},
-	drawFull: function(data) {
-		drawLine(data.points, context_picture, data.colour, 2);
-	}
-};
-
-var tool_eraser = {
-	name: 'eraser',
-	buttonImage: 'eraser.png',
-	buttonImageSelected: 'eraser_select.png',
-	onButtonClick: function() {
-		console.log('Selected Eraser');
-		return true;
-	},
-	makeToolHead: function() {
-		return new PencilHead('eraser', '#dddddd', 30);
-	},
-	drawFull: function(data) {
-		drawLine(data.points, context_picture, '#ffffff', 30);
-	}
-};
-
-var tool_clear = {
-	name: 'clear',
-	buttonImage: 'clear.png',
-	onButtonClick: function() {
-		sendPaintEvent('clear', []);
-		// This is just a button.
-		return false;
-	},
-	drawFull: function(data) {
-		drawClear(context_picture);
-	}
-};
-
 function TextHead(colour) {
 	this.colour = colour;
 	$('.text_display').show();
@@ -273,14 +125,6 @@ var tool_image = {
 		return null;
 	}
 }
-
-var tools = {
-	pencil: tool_pencil,
-	eraser: tool_eraser,
-	text: tool_text,
-	clear: tool_clear,
-	image: tool_image
-};
 
 function sendPaintEvent(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
@@ -439,7 +283,7 @@ toolbarActivate('#toolbar_normal');
 
 $(document).ready(function() {
 
-	active_tool = tool_pencil;
+	triggerToolButton('pencil');
 
 	console.log('Board ID:', whiteboard_id);
 	
