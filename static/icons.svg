@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="icons.svg"
-   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\text.png"
+   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\cancel.png"
    inkscape:export-xdpi="120"
    inkscape:export-ydpi="120">
   <defs
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.2"
-     inkscape:cx="18.82885"
-     inkscape:cy="25.346878"
+     inkscape:cx="30.965028"
+     inkscape:cy="28.221559"
      inkscape:document-units="px"
      inkscape:current-layer="layer8"
      showgrid="false"
@@ -134,7 +134,9 @@
   <g
      inkscape:groupmode="layer"
      id="layer8"
-     inkscape:label="Cancel">
+     inkscape:label="Cancel"
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
        id="rect4171"
