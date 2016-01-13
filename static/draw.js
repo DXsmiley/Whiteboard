@@ -53,7 +53,7 @@ function drawImage(url, position, context, callback) {
 		image.src = url;
 		_imageCache[url] = image;
 		if (callback) {
-			image.onload = callback;
+			context.drawImage(image, position.x, position.y);
 		}
 	}
 	context.drawImage(_imageCache[url], position.x, position.y);
