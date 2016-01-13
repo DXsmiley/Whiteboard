@@ -1,5 +1,6 @@
 function TextHead(colour) {
 	this.colour = colour;
+	this.point = new Point(0, 0);
 	$('.text_display').show();
 	$('#input_focal_pane').show();
 	$('#text_input_text').text('Enter Text');
@@ -24,59 +25,42 @@ jQuery.fn.selectText = function() {
 
 TextHead.prototype.onMove = function(a) {
 	// Move text and display
-	var point = new Point(a.x, a.y);
-	var the_colour = this.colour;
+	var new_point = new Point(a.x, a.y);
+	this.point = new_point;
 	window.setTimeout(function () {
 		var e = $('#text_input_text');
-		e.css('left', point.x);
-		e.css('top', point.y);
+		e.css('left', new_point.x);
+		e.css('top', new_point.y - 8);
 		e.selectText();
 		e.focus();
 	}, 10);
-	// Setup callbacks
-	function textInputKeyHandle(event) {
-		var commit = (event.keyCode == 13 && !event.shiftKey);
-		if (commit) {
-			console.log('Committing text paint...');
-			sendPaintEvent('text', {
-				colour: the_colour,
-				position: point,
-				text: $('#text_input_text').text(),
-			});
-		}
-		if (commit || event.keyCode == 27) {
-			textInputCancel();
-		}
-	}
-	$('#text_input_text').off('keydown');
-	$('#input_focal_pane').off('keydown');
-	$('#text_input_text').keydown(textInputKeyHandle);
-	$('#input_focal_pane').keydown(textInputKeyHandle);
 }
 
 TextHead.prototype.onRelease = function() {
 	// do nothing...
 }
 
-function textInputCancel() {
-	$('#text_input_text').off('keydown');
-	$('#input_focal_pane').off('keydown');
+TextHead.prototype.onModelConfirm = function() {
+	console.log('Committing text paint...');
+	sendPaintEvent('text', {
+		colour: this.colour,
+		position: this.point,
+		text: $('#text_input_text').text(),
+	});
+	this.onModelCancel();
+}
+
+TextHead.prototype.onModelCancel = function() {
 	$('.text_display').hide();
 	$('#input_focal_pane').hide();
 	toolbarActivate('#toolbar_normal');
 }
 
-function textInputConfirm() {
-	// Currently the same as cancel. Need to fix this.
-	$('#text_input_text').off('keydown');
-	$('#input_focal_pane').off('keydown');
-	$('.text_display').hide();
-	$('#input_focal_pane').hide();
-	toolbarActivate('#toolbar_normal');
-}
+$(document).ready(function() {
+	$('#text_input_text').keydown(modelKeyHandle);
+})
 
-// When we press enter, we've finished.
-var tool_text = {
+makeTool({
 	name: 'text',
 	buttonImage: 'text.png',
 	buttonImageSelected: 'text_select.png',
@@ -96,9 +80,9 @@ var tool_text = {
 		var font = '30px Helvetica';
 		drawText(pos, text, colour, font, context_picture);
 	}
-};
+});
 
-var tool_image = {
+makeTool({
 	name: 'image',
 	buttonImage: 'col_white.png',
 	buttonImageSelected: 'col_s_white.png',
@@ -124,7 +108,7 @@ var tool_image = {
 	makeToolHead: function() {
 		return null;
 	}
-}
+});
 
 function sendPaintEvent(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
@@ -190,10 +174,31 @@ function drawCommand(the_tool, the_data) {
 	}
 }
 
-$('#text_input_text').mousedown(function (e) {}); // doesn'H help with the bug
+function modelInputConfirm() {
+	for (i in tool_heads) {
+		if (tool_heads[i] != null) {
+			tool_heads[i].onModelConfirm();
+		}
+	}
+}
+
+function modelInputCancel() {
+	for (i in tool_heads) {
+		if (tool_heads[i] != null) {
+			tool_heads[i].onModelCancel();
+		}
+	}
+}
+
+function modelKeyHandle(event) {
+	if (event.keyCode == 13 && !event.shiftKey) modelInputConfirm();
+	if (event.keyCode == 27) modelInputCancel();
+}
+
 $('#input_focal_pane').mousedown(mouseMove);
-$('#button_cancel').mousedown(textInputCancel);
-$('#button_confirm').mousedown(textInputConfirm);
+$('#button_cancel').mousedown(modelInputCancel);
+$('#button_confirm').mousedown(modelInputConfirm);
+$('#input_focal_pane').keydown(modelKeyHandle);
 // $('#input_focal_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
