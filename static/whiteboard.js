@@ -149,6 +149,7 @@ var tool_clear = {
 function TextHead(colour) {
 	this.colour = colour;
 	$('.text_display').show();
+	$('#input_focal_pane').show();
 	$('#text_input_text').text('Enter Text');
 }
 
@@ -192,23 +193,34 @@ TextHead.prototype.onMove = function(a) {
 			});
 		}
 		if (commit || event.keyCode == 27) {
-			$('.text_display').hide();
+			textInputCancel();
 		}
 	}
 	$('#text_input_text').off('keydown');
-	$('#text_input_pane').off('keydown');
+	$('#input_focal_pane').off('keydown');
 	$('#text_input_text').keydown(textInputKeyHandle);
-	$('#text_input_pane').keydown(textInputKeyHandle);
+	$('#input_focal_pane').keydown(textInputKeyHandle);
 }
 
 TextHead.prototype.onRelease = function() {
 	// do nothing...
 }
 
-function cancelTextInput() {
+function textInputCancel() {
 	$('#text_input_text').off('keydown');
-	$('#text_input_pane').off('keydown');
+	$('#input_focal_pane').off('keydown');
 	$('.text_display').hide();
+	$('#input_focal_pane').hide();
+	toolbarActivate('#toolbar_normal');
+}
+
+function textInputConfirm() {
+	// Currently the same as cancel. Need to fix this.
+	$('#text_input_text').off('keydown');
+	$('#input_focal_pane').off('keydown');
+	$('.text_display').hide();
+	$('#input_focal_pane').hide();
+	toolbarActivate('#toolbar_normal');
 }
 
 // When we press enter, we've finished.
@@ -221,6 +233,7 @@ var tool_text = {
 		return true;
 	},
 	makeToolHead: function() {
+		toolbarActivate("#toolbar_confirmcancel");
 		return new TextHead(global_colour);
 	},
 	drawFull: function(data) {
@@ -233,11 +246,40 @@ var tool_text = {
 	}
 };
 
+var tool_image = {
+	name: 'image',
+	buttonImage: 'col_white.png',
+	buttonImageSelected: 'col_s_white.png',
+	onButtonClick: function() {
+		console.log('Image plox');
+		var url = window.prompt('Enter image url', '');
+		if (url) {
+			var data = {
+				'url': url,
+				'position': new Point(150, 150)
+			};
+			sendPaintEvent('image', data);
+		}
+		return false;
+	},
+	drawFull: function(data) {
+		base_image = new Image();
+		base_image.src = data.url;
+		base_image.onload = function(){
+			context_picture.drawImage(base_image, data.position.x, data.position.y);
+		}
+	},
+	makeToolHead: function() {
+		return null;
+	}
+}
+
 var tools = {
 	pencil: tool_pencil,
 	eraser: tool_eraser,
 	text: tool_text,
-	clear: tool_clear
+	clear: tool_clear,
+	image: tool_image
 };
 
 function sendPaintEvent(tool_name, action_data) {
@@ -304,9 +346,11 @@ function drawCommand(the_tool, the_data) {
 	}
 }
 
-$('#text_input_pane').mousedown(mouseMove);
-$('#text_cancel_button').mousedown(cancelTextInput);
-// $('#text_input_pane').mousemove(mouseMove);
+$('#text_input_text').mousedown(function (e) {}); // doesn'H help with the bug
+$('#input_focal_pane').mousedown(mouseMove);
+$('#button_cancel').mousedown(textInputCancel);
+$('#button_confirm').mousedown(textInputConfirm);
+// $('#input_focal_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
 $('#canvas2').mouseup(mouseUp);
@@ -378,6 +422,18 @@ $(document).ready( function() {
 		clojure();
 	}
 });
+
+// Toolbars
+
+function toolbarActivate(to_activate) {
+	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel'];
+	for (i in toolbars) {
+		$(toolbars[i]).css('display', 'none');
+	}
+	$(to_activate).css('display', 'block');
+}
+
+toolbarActivate('#toolbar_normal');
 
 // Data transfer
 

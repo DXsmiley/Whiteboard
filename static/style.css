@@ -49,9 +49,11 @@ div.toolbar {
 	/*width: 100px;*/
 	opacity: 1;
 	float: left;
+	z-index: 100;
+	position: relative;
 }
 
-div#text_input_pane {
+#input_focal_pane {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -78,3 +80,11 @@ div#text_input_pane {
 .text_display {
 	display: none;
 }
+
+.image_display {
+	display: none;
+}
+
+/*#toolbar_confirmcancel {
+	display: none;
+}*/
