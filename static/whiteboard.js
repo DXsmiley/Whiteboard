@@ -1,87 +1,3 @@
-function TextHead(colour) {
-	this.colour = colour;
-	this.point = new Point(0, 0);
-	$('.text_display').show();
-	$('#input_focal_pane').show();
-	$('#text_input_text').text('Enter Text');
-}
-
-jQuery.fn.selectText = function() {
-	var range, selection;
-	return this.each(function() {
-		if (document.body.createTextRange) {
-			range = document.body.createTextRange();
-			range.moveToElementText(this);
-			range.select();
-		} else if (window.getSelection) {
-			selection = window.getSelection();
-			range = document.createRange();
-			range.selectNodeContents(this);
-			selection.removeAllRanges();
-			selection.addRange(range);
-		}
-	});
-};
-
-TextHead.prototype.onMove = function(a) {
-	// Move text and display
-	var new_point = new Point(a.x, a.y);
-	this.point = new_point;
-	window.setTimeout(function () {
-		var e = $('#text_input_text');
-		e.css('left', new_point.x);
-		e.css('top', new_point.y - 8);
-		e.selectText();
-		e.focus();
-	}, 10);
-}
-
-TextHead.prototype.onRelease = function() {
-	// do nothing...
-}
-
-TextHead.prototype.onModelConfirm = function() {
-	console.log('Committing text paint...');
-	sendPaintEvent('text', {
-		colour: this.colour,
-		position: this.point,
-		text: $('#text_input_text').text(),
-	});
-	this.onModelCancel();
-}
-
-TextHead.prototype.onModelCancel = function() {
-	$('.text_display').hide();
-	$('#input_focal_pane').hide();
-	toolbarActivate('#toolbar_normal');
-}
-
-$(document).ready(function() {
-	$('#text_input_text').keydown(modelKeyHandle);
-})
-
-makeTool({
-	name: 'text',
-	buttonImage: 'text.png',
-	buttonImageSelected: 'text_select.png',
-	onButtonClick: function() {
-		console.log('Selected Text');
-		return true;
-	},
-	makeToolHead: function() {
-		toolbarActivate("#toolbar_confirmcancel");
-		return new TextHead(global_colour);
-	},
-	drawFull: function(data) {
-		console.log('tool_text.drawFull', data);
-		var pos = data.position;
-		var text = data.text;
-		var colour = data.colour;
-		var font = '30px Helvetica';
-		drawText(pos, text, colour, font, context_picture);
-	}
-});
-
 makeTool({
 	name: 'image',
 	buttonImage: 'col_white.png',
@@ -174,31 +90,31 @@ function drawCommand(the_tool, the_data) {
 	}
 }
 
-function modelInputConfirm() {
+function modalInputConfirm() {
 	for (i in tool_heads) {
 		if (tool_heads[i] != null) {
-			tool_heads[i].onModelConfirm();
+			tool_heads[i].onModalConfirm();
 		}
 	}
 }
 
-function modelInputCancel() {
+function modalInputCancel() {
 	for (i in tool_heads) {
 		if (tool_heads[i] != null) {
-			tool_heads[i].onModelCancel();
+			tool_heads[i].onModalCancel();
 		}
 	}
 }
 
-function modelKeyHandle(event) {
-	if (event.keyCode == 13 && !event.shiftKey) modelInputConfirm();
-	if (event.keyCode == 27) modelInputCancel();
+function modalKeyHandle(event) {
+	if (event.keyCode == 13 && !event.shiftKey) modalInputConfirm();
+	if (event.keyCode == 27) modalInputCancel();
 }
 
 $('#input_focal_pane').mousedown(mouseMove);
-$('#button_cancel').mousedown(modelInputCancel);
-$('#button_confirm').mousedown(modelInputConfirm);
-$('#input_focal_pane').keydown(modelKeyHandle);
+$('#button_cancel').mousedown(modalInputCancel);
+$('#button_confirm').mousedown(modalInputConfirm);
+$('#input_focal_pane').keydown(modalKeyHandle);
 // $('#input_focal_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);

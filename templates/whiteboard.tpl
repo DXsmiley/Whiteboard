@@ -50,6 +50,7 @@
 	<script type="text/javascript" src="/static/tool_pencil.js"></script>
 	<script type="text/javascript" src="/static/tool_eraser.js"></script>
 	<script type="text/javascript" src="/static/tool_clear.js"></script>
+	<script type="text/javascript" src="/static/tool_text.js"></script>
 	<script type="text/javascript" src="/static/whiteboard.js"></script>
 	<script type="text/javascript">setWhiteboardId("{{board_id}}");</script>
 
