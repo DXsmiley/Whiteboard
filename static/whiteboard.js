@@ -373,11 +373,11 @@ function triggerToolButton(t) {
 			var n2 = tools[i].name;
 			var p2 = tools[i].buttonImage;
 			console.log(i);
-			document.getElementById('button_' + n2).src = '/static/' + p2;
+			document.getElementById('button_' + n2).src = '/static/images/' + p2;
 			console.log('done');
 		}
 		console.log(n);
-		document.getElementById('button_' + n).src = '/static/' + p;
+		document.getElementById('button_' + n).src = '/static/images/' + p;
 		console.log('done');
 	}
 }
@@ -407,9 +407,9 @@ function triggerColourButton(col) {
 	console.log('Colour: ', col, colours[col]);
 	global_colour = colours[col];
 	for (i in colours) {
-		$("#colour_" + i).attr('src', '/static/col_' + i + '.png');
+		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
 	}
-	$('#colour_' + col).attr('src', '/static/col_s_' + col + '.png');
+	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
 }
 
 $(document).ready( function() {
