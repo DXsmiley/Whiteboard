@@ -88,3 +88,7 @@ div.toolbar {
 /*#toolbar_confirmcancel {
 	display: none;
 }*/
+
+#modal_image {
+	position: fixed;
+}

@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="icons.svg"
-   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\cancel.png"
+   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\static\images\button_image_select.png"
    inkscape:export-xdpi="120"
    inkscape:export-ydpi="120">
   <defs
@@ -32,7 +32,7 @@
      inkscape:cx="30.965028"
      inkscape:cy="28.221559"
      inkscape:document-units="px"
-     inkscape:current-layer="layer8"
+     inkscape:current-layer="layer10"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -134,8 +134,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer8"
-     inkscape:label="Cancel"
-     style="display:inline"
+     inkscape:label="ButtonCancel"
+     style="display:none"
      sodipodi:insensitive="true">
     <rect
        style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
@@ -158,8 +158,20 @@
   </g>
   <g
      inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="ButtonConfirm"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 12.019216,33.586049 3.969079,-4.917098 9.686227,7.804126 16.162172,-19.032332 4.532795,5.344988 -20.30087,22.233399 z"
+       id="path4174"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Pencil"
+     inkscape:label="ToolPencil"
      style="display:none"
      sodipodi:insensitive="true">
     <rect
@@ -194,7 +206,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer4"
-     inkscape:label="Eraser"
+     inkscape:label="ToolEraser"
      style="display:none"
      sodipodi:insensitive="true">
     <rect
@@ -219,7 +231,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer5"
-     inkscape:label="Clear"
+     inkscape:label="ToolClear"
      style="display:none"
      sodipodi:insensitive="true">
     <path
@@ -247,7 +259,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer6"
-     inkscape:label="Text"
+     inkscape:label="ToolText"
      style="display:none"
      sodipodi:insensitive="true">
     <text
@@ -284,5 +296,32 @@
          x="16.084866"
          y="44.642857"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, '">T</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="ToolImage">
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4183"
+       width="32.142857"
+       height="21.607143"
+       x="13.214285"
+       y="20.535728"
+       ry="4.4771638" />
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4185"
+       width="9.0178566"
+       height="8.6607141"
+       x="17.767859"
+       y="18.125015"
+       ry="2.0089281" />
+    <circle
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:2.44444442;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="path4187"
+       cx="29.500006"
+       cy="31.607134"
+       r="5.4563494" />
   </g>
 </svg>

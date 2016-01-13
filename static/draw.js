@@ -44,3 +44,17 @@ function drawText(position, text, colour, font, context) {
 	context.fillStyle = colour;
 	context.fillText(text, position.x, position.y);
 }
+
+var _imageCache = {}
+
+function drawImage(url, position, context, callback) {
+	if (!(url in _imageCache)) {
+		image = new Image();
+		image.src = url;
+		_imageCache[url] = image;
+		if (callback) {
+			image.onload = callback;
+		}
+	}
+	context.drawImage(_imageCache[url], position.x, position.y);
+}

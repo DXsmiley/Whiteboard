@@ -1,31 +1,3 @@
-makeTool({
-	name: 'image',
-	buttonImage: 'col_white.png',
-	buttonImageSelected: 'col_s_white.png',
-	onButtonClick: function() {
-		console.log('Image plox');
-		var url = window.prompt('Enter image url', '');
-		if (url) {
-			var data = {
-				'url': url,
-				'position': new Point(150, 150)
-			};
-			sendPaintEvent('image', data);
-		}
-		return false;
-	},
-	drawFull: function(data) {
-		base_image = new Image();
-		base_image.src = data.url;
-		base_image.onload = function(){
-			context_picture.drawImage(base_image, data.position.x, data.position.y);
-		}
-	},
-	makeToolHead: function() {
-		return null;
-	}
-});
-
 function sendPaintEvent(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
 	socket.emit('paint',
@@ -40,11 +12,25 @@ function sendPaintEvent(tool_name, action_data) {
 	drawCommand(tool_name, action_data);
 }
 
+function modelClose(extra_thing) {
+	toolbarActivate('#toolbar_normal');
+	$('#input_focal_pane').hide();
+	$(extra_thing).hide();
+}
+
+function modelOpen(extra_thing) {
+	toolbarActivate('#toolbar_confirmcancel');
+	$('#input_focal_pane').show();
+	$(extra_thing).show();
+}
+
 // Perform events
 
 function eventToolDown(n, p) {
 	tool_heads[n] = active_tool.makeToolHead();
-	tool_heads[n].onMove(p);
+	if (tool_heads[n]) {
+		tool_heads[n].onMove(p);
+	}
 }
 
 function eventToolMove(n, p) {
