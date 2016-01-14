@@ -1,4 +1,3 @@
-# import flask
 import flask
 import json
 import collections
@@ -69,16 +68,6 @@ def socketio_full_image(message):
 		}
 	}
 	socketio.emit('paint', data)
-
-@sock.on('connect')
-def socketio_connect():
-	# print('connect')
-	pass
-
-@sock.on('disconnect')
-def socketio_disconnect():
-	# print('disconnect')
-	pass
 
 if __name__ == '__main__':
 	sock.run(app, host = '0.0.0.0', port = 8080)
