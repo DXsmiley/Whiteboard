@@ -123,19 +123,16 @@ function triggerToolButton(t) {
 		for (i in tools) {
 			var n2 = tools[i].name;
 			var p2 = tools[i].buttonImage;
-			console.log(i);
 			document.getElementById('button_' + n2).src = '/static/images/' + p2;
-			console.log('done');
 		}
-		console.log(n);
 		document.getElementById('button_' + n).src = '/static/images/' + p;
-		console.log('done');
 	}
 }
 
 $(document).ready( function() {
 	for (i in tools) {
 		// Clojures because javascript is strange...
+		console.log(i, 'is a tool');
 		function clojure() {
 			var name = tools[i].name;
 			$('#button_' + name).click(function(e) {triggerToolButton(name);});
