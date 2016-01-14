@@ -56,5 +56,9 @@ function drawImage(url, position, context, callback) {
 			context.drawImage(image, position.x, position.y);
 		}
 	}
-	context.drawImage(_imageCache[url], position.x, position.y);
+	try {
+		context.drawImage(_imageCache[url], position.x, position.y);
+	} catch (error) {
+		// silence...
+	}
 }
