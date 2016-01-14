@@ -24,7 +24,7 @@
 	}
 
 	ImageHead.prototype.onModalCancel = function() {
-		modelClose('.image_display');
+		modelClose('.modal_image');
 	}
 
 	makeTool({
@@ -37,7 +37,7 @@
 		makeToolHead: function() {
 			var url = window.prompt('Enter image url', '');
 			if (url) {
-				modelOpen('.image_display');
+				modelOpen('.modal_image');
 				return new ImageHead(url);
 			}
 			return null;

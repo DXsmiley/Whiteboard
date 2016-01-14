@@ -14,13 +14,13 @@ function sendPaintEvent(tool_name, action_data) {
 
 function modelClose(extra_thing) {
 	toolbarActivate('#toolbar_normal');
-	$('#input_focal_pane').hide();
+	$('#modal_pane').hide();
 	$(extra_thing).hide();
 }
 
 function modelOpen(extra_thing) {
 	toolbarActivate('#toolbar_confirmcancel');
-	$('#input_focal_pane').show();
+	$('#modal_pane').show();
 	$(extra_thing).show();
 }
 
@@ -97,11 +97,11 @@ function modalKeyHandle(event) {
 	if (event.keyCode == 27) modalInputCancel();
 }
 
-$('#input_focal_pane').mousedown(mouseMove);
+$('#modal_pane').mousedown(mouseMove);
 $('#button_cancel').mousedown(modalInputCancel);
 $('#button_confirm').mousedown(modalInputConfirm);
-$('#input_focal_pane').keydown(modalKeyHandle);
-// $('#input_focal_pane').mousemove(mouseMove);
+$('#modal_pane').keydown(modalKeyHandle);
+// $('#modal_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
 $('#canvas2').mouseup(mouseUp);

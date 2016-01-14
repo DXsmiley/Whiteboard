@@ -33,12 +33,12 @@
 			</div>
 		</div>
 		<div class="absolute">
-			<div id="input_focal_pane">
-				<div class="text_display">
-					<p contenteditable id="text_input_text" class="text_display">Enter Text</p>
+			<div id="modal_pane">
+				<div class="modal_text">
+					<p contenteditable id="text_input_text" class="modal_text">Enter Text</p>
 				</div>
-				<div class="image_display">
-					<img id="modal_image" src="/static/images/placeholder.png" class="image_display" />
+				<div class="modal_image">
+					<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
 				</div>
 			</div>
 		</div>

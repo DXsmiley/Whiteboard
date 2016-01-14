@@ -20,8 +20,8 @@
 	function TextHead(colour) {
 		this.colour = colour;
 		this.point = new Point(0, 0);
-		$('.text_display').show();
-		$('#input_focal_pane').show();
+		$('.modal_text').show();
+		$('#modal_pane').show();
 		$('#text_input_text').text('Enter Text');
 	}
 
@@ -53,8 +53,8 @@
 	}
 
 	TextHead.prototype.onModalCancel = function() {
-		$('.text_display').hide();
-		$('#input_focal_pane').hide();
+		$('.modal_text').hide();
+		$('#modal_pane').hide();
 		toolbarActivate('#toolbar_normal');
 	}
 
