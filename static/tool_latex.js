@@ -86,8 +86,8 @@
 
 	makeTool({
 		name: 'latex',
-		buttonImage: 'col_white.png',
-		buttonImageSelected: 'col_s_white.png',
+		buttonImage: 'button_maths.png',
+		buttonImageSelected: 'button_maths_selected.png',
 		onButtonClick: function() {
 			console.log('LaTeX!');
 			return true;

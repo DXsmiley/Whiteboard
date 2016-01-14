@@ -19,7 +19,7 @@
 				<img id="button_eraser" src="/static/images/eraser.png"><br>
 				<img id="button_text"   src="/static/images/text.png"><br>
 				<img id="button_image"  src="/static/images/button_image.png"><br>
-				<img id="button_latex"  src="/static/images/col_white.png"><br>
+				<img id="button_latex"  src="/static/images/button_maths.png"><br>
 				<img id="button_clear"  src="/static/images/clear.png"><br>
 				<img id="colour_blue"   src="/static/images/col_blue.png"><br>
 				<img id="colour_red"    src="/static/images/col_red.png"><br>
