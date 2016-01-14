@@ -92,3 +92,8 @@ div.toolbar {
 #modal_image {
 	position: fixed;
 }
+
+#modal_latex_positionable {
+	display: none;
+	position: fixed;
+}
