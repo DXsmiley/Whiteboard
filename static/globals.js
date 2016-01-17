@@ -23,3 +23,7 @@ function setWhiteboardId(wid) {
 function makeTool(tool) {
 	tools[tool.name] = tool;
 }
+
+function nullFunction() {
+	// a function that does nothing
+}
