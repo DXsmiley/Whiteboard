@@ -7,6 +7,9 @@ var context_preview = document.getElementById('canvas2').getContext('2d'); // to
 var active_tool = null;
 var global_colour = null;
 var tools = {};
+var paint_blobs_mine = [];
+var paint_blobs_undone = {};
+var paint_blobs_all = [];
 
 function setWhiteboardId(wid) {
 	whiteboard_id = wid;

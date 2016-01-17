@@ -1,14 +1,19 @@
 function sendPaintEvent(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
+	var event_id = Math.random();
 	socket.emit('paint',
 		{
 			data: {
+				'unique_number': event_id,
 				'tool': tool_name,
 				'data': action_data,
 				'board_id': whiteboard_id
 			}
 		}
 	);
+	if (tool_name != 'undo') {
+		paint_blobs_mine.push(event_id);
+	}
 	drawCommand(tool_name, action_data);
 }
 
@@ -143,6 +148,7 @@ $(document).ready( function() {
 		console.log(i, 'is a tool');
 		function clojure() {
 			var name = tools[i].name;
+
 			$('#button_' + name).click(function(e) {triggerToolButton(name);});
 		}
 		clojure();
@@ -191,6 +197,16 @@ function toolbarActivate(to_activate) {
 
 toolbarActivate('#toolbar_normal');
 
+function drawEverything() {
+	console.log('Drawing everything!');
+	drawClear(context_picture);
+	for (i in paint_blobs_all) {
+		if (! (paint_blobs_all[i]['unique_number'] in paint_blobs_undone)) {
+			drawCommand(paint_blobs_all[i].tool, paint_blobs_all[i].data);
+		}
+	}
+}
+
 // Data transfer
 
 $(document).ready(function() {
@@ -206,10 +222,20 @@ $(document).ready(function() {
 	socket.on('paint', function(msg) {
 		// console.log('paint', msg);
 		if (msg.data.board_id == whiteboard_id) {
+			var contained_undo = false;
 			actions = msg.data.actions;
 			for (i in actions) {
 				// console.log(actions[i].tool, actions[i].points);
 				drawCommand(actions[i].tool, actions[i].data);
+				if (actions[i].tool == 'undo') {
+					contained_undo = true;
+				} else {
+					paint_blobs_all.push(actions[i]);
+				}
+			}
+			if (contained_undo) {
+				console.log('There was an undo!');
+				drawEverything();
 			}
 		}
 	});

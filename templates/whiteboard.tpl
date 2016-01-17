@@ -24,6 +24,7 @@
 				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
 				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
+				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
 			</div>
 			<div id="toolbar_confirmcancel">
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
@@ -59,7 +60,7 @@
 			</div>
 		</div>
 	</body>
-
+	
 	<script type="text/javascript" src="//code.jquery.com/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 	<script type="text/javascript" src="/static/geometry.js"></script>
@@ -72,6 +73,7 @@
 	<script type="text/javascript" src="/static/tool_text.js"></script>
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/whiteboard.js"></script>
 	<script type="text/javascript">setWhiteboardId("{{board_id}}");</script>
 
