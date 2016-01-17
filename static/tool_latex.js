@@ -29,9 +29,9 @@
 		this.stage = 0;
 		// 0 - text input
 		// 1 - placement
-		modelOpen('.modal_latex');
-		$('#model_latex_input').text('\sqrt{a^2 + b^2} = c');
-		$('#model_latex_input').show();
+		modalOpen('.modal_latex');
+		$('#modal_latex_input').text('\sqrt{a^2 + b^2} = c');
+		$('#modal_latex_input').show();
 		$('#modal_latex_positionable').hide();
 	}
 
@@ -63,7 +63,7 @@
 	}
 
 	LatexHead.prototype.onModalCancel = function() {
-		modelClose('.modal_latex');
+		modalClose('.modal_latex');
 	}
 
 	var latex_get_timeout = null;

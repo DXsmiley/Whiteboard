@@ -12,13 +12,13 @@ function sendPaintEvent(tool_name, action_data) {
 	drawCommand(tool_name, action_data);
 }
 
-function modelClose(extra_thing) {
+function modalClose(extra_thing) {
 	toolbarActivate('#toolbar_normal');
 	$('#modal_pane').hide();
 	$(extra_thing).hide();
 }
 
-function modelOpen(extra_thing) {
+function modalOpen(extra_thing) {
 	toolbarActivate('#toolbar_confirmcancel');
 	$('#modal_pane').show();
 	$(extra_thing).show();
