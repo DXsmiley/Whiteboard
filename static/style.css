@@ -97,3 +97,7 @@ div.toolbar {
 	display: none;
 	position: fixed;
 }
+
+img.toolbar_button:hover {
+	transform: scale(0.9);
+}

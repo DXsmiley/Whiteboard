@@ -15,19 +15,19 @@
 		<!-- Normal Toolbar -->
 		<div class="toolbar">
 			<div id="toolbar_normal">
-				<img id="button_pencil" src="/static/images/pencil_select.png"><br>
-				<img id="button_eraser" src="/static/images/eraser.png"><br>
-				<img id="button_text"   src="/static/images/text.png"><br>
-				<img id="button_image"  src="/static/images/button_image.png"><br>
-				<img id="button_latex"  src="/static/images/button_maths.png"><br>
-				<img id="button_clear"  src="/static/images/clear.png"><br>
-				<img id="colour_blue"   src="/static/images/col_blue.png"><br>
-				<img id="colour_red"    src="/static/images/col_red.png"><br>
-				<img id="colour_black"  src="/static/images/col_black.png"><br>
+				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil_select.png"><br>
+				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
+				<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
+				<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
+				<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
+				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
+				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
+				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
+				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
 			</div>
 			<div id="toolbar_confirmcancel">
-				<img src="/static/images/cancel.png" id="button_cancel"><br>
-				<img src="/static/images/confirm.png" id="button_confirm"><br>
+				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
+				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
 			<!-- We can change the colour whenever we want... might change this -->
 			</div>
