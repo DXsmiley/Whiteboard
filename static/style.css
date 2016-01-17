@@ -98,6 +98,14 @@ div.toolbar {
 	position: fixed;
 }
 
+.modal_clear {
+	display: none;
+}
+
+.modal_latex {
+	display: none;
+}
+
 img.toolbar_button:hover {
 	transform: scale(0.9);
 }

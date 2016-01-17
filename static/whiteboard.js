@@ -117,7 +117,9 @@ function triggerToolButton(t) {
 	// Tigger the click event
 	var n = tools[t].name;
 	var p = tools[t].buttonImageSelected;
-	if (tools[t].onButtonClick()) {
+	var click_result = tools[t].onButtonClick();
+	if (click_result === true) {
+		// Button was selected. This is good.
 		active_tool = tools[t];
 		// Change button images
 		for (i in tools) {
@@ -126,6 +128,12 @@ function triggerToolButton(t) {
 			document.getElementById('button_' + n2).src = '/static/images/' + p2;
 		}
 		document.getElementById('button_' + n).src = '/static/images/' + p;
+	} else if (click_result === false) {
+		// The button did an action, we don't need to do anything.
+	} else {
+		// The button produced a toolhead.
+		// Probably means the modal pane was opened, for clear confirmation or something.
+		tool_heads[0] = click_result;
 	}
 }
 

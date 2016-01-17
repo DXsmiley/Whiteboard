@@ -48,6 +48,14 @@
 					</center>
 					<img id="modal_latex_positionable" class="modal_latex" src="http://localhost:5000/i.png?c=%5Csqrt%7Ba%5E2%20%2B%20b%5E2%7D%20%3D%20c">
 				</div>
+				<div class="modal_clear">
+					<center>
+						<h1 class="modal_clear">Clear the whiteboard?</h1>
+						<img class="toolbar_button" src="/static/images/confirm.png" onclick="modalInputConfirm()">
+						<img class="toolbar_button" src="/static/images/cancel.png" onclick="modalInputCancel()">
+						<!-- <p class="modal_clear"><a onclick="modalInputConfirm()">Yes</a> | <a onclick="modalInputCancel()">No</a></p> -->
+					</center>
+				</div>
 			</div>
 		</div>
 	</body>
