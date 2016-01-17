@@ -188,6 +188,7 @@ toolbarActivate('#toolbar_normal');
 $(document).ready(function() {
 
 	triggerToolButton('pencil');
+	triggerColourButton('blue');
 
 	console.log('Board ID:', whiteboard_id);
 	
