@@ -75,7 +75,7 @@
 			return new TextHead(global_colour);
 		},
 		drawFull: function(data) {
-			console.log('tool_text.drawFull', data);
+			// console.log('tool_text.drawFull', data);
 			var pos = data.position;
 			var text = data.text;
 			var colour = data.colour;
