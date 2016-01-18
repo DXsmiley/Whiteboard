@@ -127,12 +127,16 @@ document.addEventListener('touchcancel', mouseUp, false);
 
 // Tool buttons
 
-function triggerToolButton(t) {
+function triggerToolButton(t, dbl) {
 	console.log('Triggering...', t);
 	// Tigger the click event
-	var n = tools[t].name;
+	var click_result = false;
+	if (dbl) {
+		click_result = tools[t].onDoubleClick();
+	} else {
+		click_result = tools[t].onButtonClick();
+	}
 	var p = tools[t].buttonImageSelected;
-	var click_result = tools[t].onButtonClick();
 	if (click_result === true) {
 		// Button was selected. This is good.
 		active_tool = tools[t];
@@ -142,7 +146,7 @@ function triggerToolButton(t) {
 			var p2 = tools[i].buttonImage;
 			document.getElementById('button_' + n2).src = '/static/images/' + p2;
 		}
-		document.getElementById('button_' + n).src = '/static/images/' + p;
+		document.getElementById('button_' + t).src = '/static/images/' + p;
 	} else if (click_result === false) {
 		// The button did an action, we don't need to do anything.
 	} else {
@@ -158,8 +162,8 @@ $(document).ready( function() {
 		console.log(i, 'is a tool');
 		function clojure() {
 			var name = tools[i].name;
-
-			$('#button_' + name).click(function(e) {triggerToolButton(name);});
+			$('#button_' + name).click(function(e) {triggerToolButton(name, false);});
+			$('#button_' + name).dblclick(function(e) {triggerToolButton(name, true);})
 		}
 		clojure();
 	}
