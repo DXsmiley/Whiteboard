@@ -3,19 +3,30 @@ import json
 import collections
 import random
 import flask.ext.socketio as socketio
+import datetime
 
 class Whiteboard:
 	def __init__(self):
 		self.layers = []
 
+	def update_time(self):
+		self.last_changed = datetime.datetime.now()
+
 	def full_image(self):
+		self.update_time()
 		return self.layers[:]
 
 	def add_action(self, action):
+		self.update_time()
 		self.layers.append(action)
 
 	def undo_action(self, action):
+		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
+
+	def recency_formatted(self):
+		delta = datetime.datetime.now() - self.last_changed
+		return '{} hours, {} minutes, {} seconds'.format(delta.seconds // 3600, (delta.seconds // 60) % 60, delta.seconds % 60)
 
 whiteboards = collections.defaultdict(lambda : Whiteboard())
 
@@ -34,6 +45,16 @@ def server_board_new():
 	while s in whiteboards:
 		s = hex(random.randint(0, 2 ** 31))[2:]
 	return flask.redirect('/board/' + s)
+
+@app.route('/listing')
+def serve_listing():
+	boards = []
+	for i in whiteboards:
+		boards.append({
+			'name': i,
+			'recency': 	whiteboards[i].recency_formatted()
+		})
+	return flask.render_template('listing.tpl', boards = boards)
 
 @app.route('/board/<board_id>')
 def serve_board(board_id):
