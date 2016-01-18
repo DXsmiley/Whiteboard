@@ -182,6 +182,9 @@ function triggerColourButton(col) {
 		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
 	}
 	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
+	if (active_tool.name == 'eraser') {
+		triggerToolButton('pencil');
+	}
 }
 
 $(document).ready( function() {
