@@ -1,19 +1,29 @@
+function sendUndoEvent(action_id) {
+	socket.emit('undo',
+		{
+			'data': {
+				'action_id': action_id,
+				'board_id': whiteboard_id
+			}
+		}
+	);
+	paint_blobs_undone[action_id] = action_id;
+}
+
 function sendPaintEvent(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
-	var event_id = Math.random();
+	var action_id = Math.random();
 	socket.emit('paint',
 		{
-			data: {
-				'unique_number': event_id,
+			'data': {
+				'action_id': action_id,
 				'tool': tool_name,
 				'data': action_data,
 				'board_id': whiteboard_id
 			}
 		}
 	);
-	if (tool_name != 'undo') {
-		paint_blobs_mine.push(event_id);
-	}
+	paint_blobs_mine.push(action_id);
 	drawCommand(tool_name, action_data);
 }
 
@@ -201,7 +211,7 @@ function drawEverything() {
 	console.log('Drawing everything!');
 	drawClear(context_picture);
 	for (i in paint_blobs_all) {
-		if (! (paint_blobs_all[i]['unique_number'] in paint_blobs_undone)) {
+		if (! (paint_blobs_all[i]['action_id'] in paint_blobs_undone)) {
 			drawCommand(paint_blobs_all[i].tool, paint_blobs_all[i].data);
 		}
 	}
@@ -215,29 +225,39 @@ $(document).ready(function() {
 	triggerColourButton('blue');
 
 	console.log('Board ID:', whiteboard_id);
-	
+
 	socket = io.connect('http://' + document.domain + ':' + location.port + '/');
-	socket.emit('full image', {data:{'board_id': whiteboard_id}});
 
 	socket.on('paint', function(msg) {
 		// console.log('paint', msg);
 		if (msg.data.board_id == whiteboard_id) {
-			var contained_undo = false;
 			actions = msg.data.actions;
 			for (i in actions) {
 				// console.log(actions[i].tool, actions[i].points);
 				drawCommand(actions[i].tool, actions[i].data);
-				if (actions[i].tool == 'undo') {
-					contained_undo = true;
-				} else {
-					paint_blobs_all.push(actions[i]);
-				}
-			}
-			if (contained_undo) {
-				console.log('There was an undo!');
-				drawEverything();
+				paint_blobs_all.push(actions[i]);
 			}
 		}
 	});
 
+	socket.on('undo', function(msg) {
+		if (msg.data.board_id == whiteboard_id) {
+			aid = msg.data.action_id;
+			console.log('Received Undo', aid);
+			paint_blobs_undone[aid] = aid;
+			drawEverything();
+		}
+	});
+
+	socket.emit('full image', {data:{'board_id': whiteboard_id}})
+
+	// window.setTimeout(
+	// 	function() {socket.emit('full image', {data:{'board_id': whiteboard_id}});},
+	// 	10
+	// );
+
+});
+
+$(window).on('beforeunload', function(){
+	socket.close();
 });

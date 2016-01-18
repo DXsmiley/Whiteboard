@@ -7,13 +7,15 @@ import flask.ext.socketio as socketio
 class Whiteboard:
 	def __init__(self):
 		self.layers = []
-		self.last_clear = 0
+
 	def full_image(self):
-		return self.layers[self.last_clear:]
+		return self.layers[:]
+
 	def add_action(self, action):
 		self.layers.append(action)
-		if action['tool'] == 'clear':
-			self.last_clear = len(self.layers) - 1
+
+	def undo_action(self, action):
+		self.layers = [i for i in self.layers if i['action_id'] != action]
 
 whiteboards = collections.defaultdict(lambda : Whiteboard())
 
@@ -68,6 +70,19 @@ def socketio_full_image(message):
 		}
 	}
 	socketio.emit('paint', data)
+
+@sock.on('undo')
+def socketio_undo(message):
+	bid = message['data']['board_id']
+	aid = message['data']['action_id']
+	whiteboards[bid].undo_action(aid)
+	data = {
+		'data': {
+			'board_id': bid,
+			'action_id': aid
+		}
+	}
+	socketio.emit('undo', data, broadcast = True)
 
 if __name__ == '__main__':
 	sock.run(app, host = '0.0.0.0', port = 8080)
