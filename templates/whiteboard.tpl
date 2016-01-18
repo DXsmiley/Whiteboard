@@ -31,8 +31,6 @@
 				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
 			<!-- We can change the colour whenever we want... might change this -->
-			</div>
-			</div>
 		</div>
 		<div class="absolute">
 			<div id="modal_pane">
