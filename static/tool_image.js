@@ -1,5 +1,8 @@
 (function () {
 
+	var image_scale = 1;
+	var scale_per_click = 1.2;
+
 	function ImageHead(url) {
 		this.url = url;
 		$('#modal_image').attr('src', url);
@@ -18,7 +21,8 @@
 	ImageHead.prototype.onModalConfirm = function() {
 		sendPaintEvent('image', {
 			position: this.position,
-			url: this.url
+			url: this.url,
+			scale: image_scale,
 		});
 		this.onModalCancel();
 	}
@@ -26,6 +30,16 @@
 	ImageHead.prototype.onModalCancel = function() {
 		modalClose('.modal_image');
 	}
+
+	$('#button_shrink').click(function (event){
+		image_scale /= scale_per_click;
+		$("#modal_image").css('transform', 'scale(' + image_scale + ')');
+	});
+
+	$('#button_enlarge').click(function (event){
+		image_scale *= scale_per_click;
+		$("#modal_image").css('transform', 'scale(' + image_scale + ')');
+	});
 
 	makeTool({
 		name: 'image',
@@ -43,7 +57,11 @@
 			return null;
 		},
 		drawFull: function(data) {
-			drawImage(data.url, data.position, context_picture);
+			// Callback tp redraw the entire whiteboard when the image has loaded
+			function callback(url, position, context) {
+				drawEverything();
+			}
+			drawImageScaled(data.url, data.position, data.scale, context_picture, callback);
 		}
 	});
 

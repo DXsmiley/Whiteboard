@@ -30,6 +30,10 @@
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
 				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
+			<div id="toolbar_image" class="modal_image">
+				<img class="toolbar_button" src="/static/images/cancel.png" id="button_shrink"><br>
+				<img class="toolbar_button" src="/static/images/confirm.png" id="button_enlarge"><br>				
+			</div>
 			<!-- We can change the colour whenever we want... might change this -->
 		</div>
 		<div class="absolute">

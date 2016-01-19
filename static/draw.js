@@ -48,16 +48,25 @@ function drawText(position, text, colour, font, context) {
 var _imageCache = {}
 
 function drawImage(url, position, context, callback) {
+	drawImageScaled(url, position, 1, context, callback);
+}
+
+function drawImageScaled(url, position, scale, context, callback) {
 	if (!(url in _imageCache)) {
 		image = new Image();
 		image.src = url;
 		_imageCache[url] = image;
-		if (callback) {
-			context.drawImage(image, position.x, position.y);
+		image.onload = function() {
+			var w = image.width;
+			var h = image.height;
+			context.drawImage(image, position.x, position.y, w * scale, h * scale);
+			callback(url, position, context);
 		}
 	}
 	try {
-		context.drawImage(_imageCache[url], position.x, position.y);
+		var w = image.width;
+		var h = image.height;
+		context.drawImage(_imageCache[url], position.x, position.y, w * scale, h * scale);
 	} catch (error) {
 		// silence...
 	}

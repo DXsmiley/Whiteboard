@@ -88,6 +88,9 @@ div.toolbar {
 
 #modal_image {
 	position: fixed;
+	transition: all 0.1s ease-in-out;
+	transform: scale(1);
+	transform-origin: top left;
 }
 
 #modal_latex_positionable {
@@ -103,6 +106,10 @@ div.toolbar {
 	display: none;
 }
 
+img.toolbar_button {
+	transition: all 0.02s ease-in-out;
+}
+
 img.toolbar_button:hover {
-	transform: scale(0.9);
+	transform: scale(0.85);
 }
