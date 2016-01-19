@@ -73,10 +73,10 @@
 		buttonImageSelected: 'button_maths_selected.png',
 		onButtonClick: function() {
 			console.log('LaTeX!');
-			return true;
+			return new LatexHead();
 		},
 		makeToolHead: function() {
-			return new LatexHead();
+			return null;
 		},
 		drawFull: function(data) {
 			// This should never happen.

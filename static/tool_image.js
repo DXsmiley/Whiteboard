@@ -32,14 +32,14 @@
 		buttonImage: 'button_image.png',
 		buttonImageSelected: 'button_image_select.png',
 		onButtonClick: function() {
-			return true;
-		},
-		makeToolHead: function() {
 			var url = window.prompt('Enter image url', '');
 			if (url) {
 				modalOpen('.modal_image');
 				return new ImageHead(url);
 			}
+			return false;
+		},
+		makeToolHead: function() {
 			return null;
 		},
 		drawFull: function(data) {
