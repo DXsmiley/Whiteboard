@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="icons.svg"
-   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\static\images\button_line_select.png"
+   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\static\images\zoom_out.png"
    inkscape:export-xdpi="120"
    inkscape:export-ydpi="120">
   <defs
@@ -32,7 +32,7 @@
      inkscape:cx="42.509322"
      inkscape:cy="26.382436"
      inkscape:document-units="px"
-     inkscape:current-layer="layer13"
+     inkscape:current-layer="g4200"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -56,7 +56,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Ring"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <circle
        r="27.246998"
@@ -391,7 +391,7 @@
      inkscape:groupmode="layer"
      id="layer13"
      inkscape:label="ToolLine"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <path
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.23690665;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -427,5 +427,55 @@
        id="path4147-6"
        d="m 43.694293,32.50087 0.488697,4.99697 -3.319614,-3.635927 z"
        style="display:inline;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer14"
+     inkscape:label="ZoomSymbol">
+    <ellipse
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="path4193"
+       cx="25.803572"
+       cy="26.160715"
+       rx="7.8588939"
+       ry="7.769608" />
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4195"
+       width="1.9685067"
+       height="15.675144"
+       x="3.7646852"
+       y="43.985043"
+       ry="1.3143755"
+       transform="matrix(0.7847305,-0.61983711,0.61983711,0.7847305,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer15"
+     inkscape:label="ZoomPlus"
+     style="display:none">
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       id="rect4198"
+       width="1.875"
+       height="9.375"
+       x="24.821428"
+       y="21.607145"
+       ry="0.9375" />
+  </g>
+  <g
+     inkscape:label="ZoomMinus"
+     id="g4200"
+     inkscape:groupmode="layer"
+     style="display:inline">
+    <rect
+       ry="0.9375"
+       y="21.071428"
+       x="-27.232145"
+       height="9.375"
+       width="1.875"
+       id="rect4202"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       transform="matrix(0,-1,1,0,0,0)" />
   </g>
 </svg>
