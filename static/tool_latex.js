@@ -13,7 +13,7 @@
 		// 0 - text input
 		// 1 - placement
 		modalOpen('.modal_latex');
-		$('#modal_latex_input').text('\sqrt{a^2 + b^2} = c');
+		$('#modal_latex_input').text('\\sqrt{a^2 + b^2} = c');
 		$('#modal_latex_input').show();
 		$('#modal_latex_positionable').hide();
 	}
