@@ -3,7 +3,7 @@
 	function getLatexURL() {
 		// Todo: better way of getting the LaTeX address.
 		tex = $('#modal_latex_input').text();
-		url = 'http://localhost:5000/i.png?c=' + encodeURIComponent(tex);
+		url = 'http://' + document.domain + ':5000/i.png?c=' + encodeURIComponent(tex);
 		return url;
 	}
 
