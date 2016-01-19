@@ -49,6 +49,7 @@
 		name: 'text',
 		buttonImage: 'text.png',
 		buttonImageSelected: 'text_select.png',
+		desktopOnly: true,
 		onButtonClick: function() {
 			return true;
 		},

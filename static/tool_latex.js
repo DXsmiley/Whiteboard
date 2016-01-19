@@ -71,6 +71,7 @@
 		name: 'latex',
 		buttonImage: 'button_maths.png',
 		buttonImageSelected: 'button_maths_selected.png',
+		desktopOnly: true,
 		onButtonClick: function() {
 			return new LatexHead();
 		},

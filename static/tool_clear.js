@@ -5,7 +5,7 @@
 	};
 
 	ClearHead.prototype.onMove = nullFunction;
-	ClearHead.prototype.onRelease = function() nullFunction;
+	ClearHead.prototype.onRelease = nullFunction;
 
 	ClearHead.prototype.onModalConfirm = function() {
 		sendPaintEvent('clear', 0);

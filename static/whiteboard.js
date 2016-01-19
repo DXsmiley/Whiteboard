@@ -65,19 +65,22 @@ function eventToolUp(n) {
 
 function mouseDown(e) {
 	eventToolDown(0, new Point(e.pageX, e.pageY));
-	e.originalEvent.preventDefault();
+	// e.preventDefault();
 }
 
 function mouseMove(e) {
 	eventToolMove(0, new Point(e.pageX, e.pageY));
+	// e.preventDefault();
 }
 
 function mouseUp(e) {
 	eventToolUp(0);
+	// e.preventDefault();
 }
 
 function touchDown(e) {
 	mouseDown(e.touches[0]);
+	e.preventDefault();
 }
 
 function touchMove(e) {
@@ -120,10 +123,14 @@ $('#modal_pane').keydown(modalKeyHandle);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
 $('#canvas2').mouseup(mouseUp);
-document.addEventListener('touchstart', touchDown, false);
-document.addEventListener('touchmove', touchMove, false);
-document.addEventListener('touchend', mouseUp, false);
-document.addEventListener('touchcancel', mouseUp, false);
+// document.addEventListener('touchstart', touchDown, false);
+// document.addEventListener('touchmove', touchMove, false);
+// document.addEventListener('touchend', mouseUp, false);
+// document.addEventListener('touchcancel', mouseUp, false);
+document.getElementById('canvas2').addEventListener('touchstart', touchDown, false);
+document.getElementById('canvas2').addEventListener('touchmove', touchMove, false);
+document.getElementById('canvas2').addEventListener('touchend', mouseUp, false);
+document.getElementById('canvas2').addEventListener('touchcancel', mouseUp, false);
 
 // Tool buttons
 
@@ -162,8 +169,16 @@ $(document).ready( function() {
 		// console.log(i, 'is a tool');
 		function clojure() {
 			var name = tools[i].name;
-			$('#button_' + name).click(function(e) {triggerToolButton(name, false);});
-			$('#button_' + name).dblclick(function(e) {triggerToolButton(name, true);})
+			var desktop_only = tools[i]['desktopOnly'];
+			if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				// disable the stuff
+				console.log('Disabling tool', i);
+				$('#button_' + name).hide();
+				$('#button_' + name).next().hide();
+			} else {
+				$('#button_' + name).click(function(e) {triggerToolButton(name, false);});
+				$('#button_' + name).dblclick(function(e) {triggerToolButton(name, true);})
+			}
 		}
 		clojure();
 	}

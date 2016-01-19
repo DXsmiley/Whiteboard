@@ -45,6 +45,7 @@
 		name: 'image',
 		buttonImage: 'button_image.png',
 		buttonImageSelected: 'button_image_select.png',
+		desktopOnly: true,
 		onButtonClick: function() {
 			var url = window.prompt('Enter image url', '');
 			if (url) {
