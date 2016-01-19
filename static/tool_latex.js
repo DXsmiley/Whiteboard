@@ -72,7 +72,6 @@
 		buttonImage: 'button_maths.png',
 		buttonImageSelected: 'button_maths_selected.png',
 		onButtonClick: function() {
-			console.log('LaTeX!');
 			return new LatexHead();
 		},
 		makeToolHead: function() {

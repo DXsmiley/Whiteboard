@@ -7,7 +7,6 @@
 		buttonImage: 'pencil.png',
 		buttonImageSelected: 'pencil_select.png',
 		onButtonClick: function() {
-			console.log('Selected Pencil');
 			return true;
 		},
 		onDoubleClick: function() {

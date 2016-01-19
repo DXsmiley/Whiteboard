@@ -128,7 +128,7 @@ document.addEventListener('touchcancel', mouseUp, false);
 // Tool buttons
 
 function triggerToolButton(t, dbl) {
-	console.log('Triggering...', t);
+	console.log('Tool:', t);
 	// Tigger the click event
 	var click_result = false;
 	if (dbl) {
@@ -159,7 +159,7 @@ function triggerToolButton(t, dbl) {
 $(document).ready( function() {
 	for (i in tools) {
 		// Clojures because javascript is strange...
-		console.log(i, 'is a tool');
+		// console.log(i, 'is a tool');
 		function clojure() {
 			var name = tools[i].name;
 			$('#button_' + name).click(function(e) {triggerToolButton(name, false);});
@@ -193,7 +193,7 @@ function triggerColourButton(col) {
 
 $(document).ready( function() {
 	for (i in colours) {
-		console.log(i, 'is a colour');
+		// console.log(i, 'is a colour');
 		function clojure() {
 			var x = i;
 			$('#colour_' + x).click(function(e) {triggerColourButton(x);});

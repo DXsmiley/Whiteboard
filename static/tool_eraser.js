@@ -3,7 +3,6 @@ makeTool({
 	buttonImage: 'eraser.png',
 	buttonImageSelected: 'eraser_select.png',
 	onButtonClick: function() {
-		console.log('Selected Eraser');
 		return true;
 	},
 	makeToolHead: function() {

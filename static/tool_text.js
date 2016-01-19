@@ -50,7 +50,6 @@
 		buttonImage: 'text.png',
 		buttonImageSelected: 'text_select.png',
 		onButtonClick: function() {
-			console.log('Selected Text');
 			return true;
 		},
 		makeToolHead: function() {
