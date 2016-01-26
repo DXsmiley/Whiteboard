@@ -8,6 +8,7 @@ import datetime
 class Whiteboard:
 	def __init__(self):
 		self.layers = []
+		self.update_time()
 
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
