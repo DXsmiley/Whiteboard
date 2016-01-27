@@ -4,35 +4,105 @@ import collections
 import random
 import flask.ext.socketio as socketio
 import datetime
+import threading
+import queue
+import time
+
+# Apply a lock to a method in a class.
+def locked_method(func):
+	def internal(instance, *args, **kwargs):
+		# Make sure the object has a lock
+		if not hasattr(instance, '_object_lock_'):
+			setattr(instance, '_object_lock_', threading.RLock())
+		instance._object_lock_.acquire() # Lock the object
+		result = func(instance, *args, **kwargs) # Call the function
+		instance._object_lock_.release() # Unlock the object
+		return result
+	return internal
 
 class Whiteboard:
 	def __init__(self):
 		self.layers = []
-		self.update_time()
+		self.last_changed = datetime.datetime.now()
+		self.last_saved = datetime.datetime.now()
 
+	@locked_method
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
 
+	@locked_method
+	def update_save_time(self):
+		self.last_changed = datetime.datetime.now()
+		self.last_saved = datetime.datetime.now()
+
+	@locked_method
+	def changed_since_save(self):
+		return self.last_changed != self.last_saved
+
+	@locked_method
 	def full_image(self):
 		self.update_time()
 		return self.layers[:]
 
+	@locked_method
 	def add_action(self, action):
 		self.update_time()
 		self.layers.append(action)
 
+	@locked_method
 	def undo_action(self, action):
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
 
+	@locked_method
 	def recency_formatted(self):
 		delta = datetime.datetime.now() - self.last_changed
 		return '{} hours, {} minutes, {} seconds'.format(delta.seconds // 3600, (delta.seconds // 60) % 60, delta.seconds % 60)
 
+	@locked_method
+	def jsonise(self):
+		return {
+			'layers': self.layers[:],
+			'last_changed': {
+				'year': self.last_changed.year,
+				'month': self.last_changed.month,
+				'day': self.last_changed.day,
+				'hour': self.last_changed.hour,
+				'minute': self.last_changed.minute,
+				'second': self.last_changed.second
+			}
+		}
+
 whiteboards = collections.defaultdict(lambda : Whiteboard())
 
+storage_queue = queue.Queue()
+
+def storage_daemon():
+	print('Storage daemon started')
+	while True:
+		if storage_queue.empty():
+			time.sleep(5)
+		else:
+			name = storage_queue.get()
+			print('Dequeue', name)
+			board = whiteboards[name]
+			if board.changed_since_save():
+				board.update_save_time()
+				data = board.jsonise()
+				try:
+					with open('./store/' + name + '.json', 'w') as f:
+						f.write(json.dumps(data))
+					print('Saved', name)
+				except Exception as e:
+					print('Save failed', name)
+					print(e)
+
+def queue_board_store(board_name):
+	storage_queue.put(board_name)
+	print('Enqueue', board_name)
+
 app = flask.Flask(__name__)
-# app.debug = True
+app.debug = True
 
 sock = socketio.SocketIO(app)
 
@@ -78,6 +148,7 @@ def socketio_paint(message):
 			]
 		}
 	}
+	queue_board_store(bid)
 	whiteboards[bid].add_action(message['data'])
 	socketio.emit('paint', data, broadcast = True)
 
@@ -104,7 +175,11 @@ def socketio_undo(message):
 			'action_id': aid
 		}
 	}
+	queue_board_store(bid)
 	socketio.emit('undo', data, broadcast = True)
 
 if __name__ == '__main__':
+	storage_thread_object = threading.Thread(target = storage_daemon)
+	storage_thread_object.daemon = True
+	storage_thread_object.start()
 	sock.run(app, host = '0.0.0.0', port = 8080)
