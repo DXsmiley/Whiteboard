@@ -1,5 +1,8 @@
-import gevent.monkey
-gevent.monkey.patch_all()
+try:
+	import gevent.monkey
+	gevent.monkey.patch_all()
+except:
+	print('Could not import gevent')
 
 import flask
 import json
