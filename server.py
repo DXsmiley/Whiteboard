@@ -63,7 +63,10 @@ class Whiteboard:
 	@locked_method
 	def recency_formatted(self):
 		delta = datetime.datetime.now() - self.last_changed
-		return '{} hours, {} minutes, {} seconds'.format(delta.seconds // 3600, (delta.seconds // 60) % 60, delta.seconds % 60)
+		hours = delta.seconds // 3600
+		minutes = (delta.seconds // 60) % 60
+		seconds = delta.seconds % 60
+		return '{} hours, {} minutes, {} seconds'.format(hours, minutes, seconds)
 
 	@locked_method
 	def jsonise(self):
