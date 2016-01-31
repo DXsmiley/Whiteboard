@@ -1,5 +1,7 @@
 (function () {
 
+	var click_on_text = false;
+
 	function TextHead(colour) {
 		this.colour = colour;
 		this.point = new Point(0, 0);
@@ -10,15 +12,19 @@
 
 	TextHead.prototype.onMove = function(a) {
 		// Move text and display
-		var new_point = new Point(a.x, a.y);
-		this.point = new_point;
-		window.setTimeout(function () {
-			var e = $('#text_input_text');
-			e.css('left', new_point.x);
-			e.css('top', new_point.y - 8);
-			e.selectText();
-			e.focus();
-		}, 10);
+		// console.log('TextHead.onMove');
+		if (!click_on_text) {
+			var new_point = new Point(a.x, a.y);
+			this.point = new_point;
+			window.setTimeout(function () {
+				var e = $('#text_input_text');
+				e.css('left', new_point.x);
+				e.css('top', new_point.y - 8);
+				e.selectText();
+				e.focus();
+			}, 30);
+		}
+		click_on_text = false;
 	}
 
 	TextHead.prototype.onRelease = function() {
@@ -44,6 +50,11 @@
 	$(document).ready(function() {
 		$('#text_input_text').keydown(modalKeyHandle);
 	});
+
+	$('#text_input_text').mousedown(function(event) {
+		// console.log('Clicked text input!');
+		click_on_text = true;
+	})
 
 	makeTool({
 		name: 'text',
