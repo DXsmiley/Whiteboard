@@ -9,11 +9,11 @@
 
 	ClearHead.prototype.onModalConfirm = function() {
 		sendPaintEvent('clear', 0);
-		modalClose();
+		modalClose('.modal_clear');
 	};
 
 	ClearHead.prototype.onModalCancel = function() {
-		modalClose();
+		modalClose('.modal_clear');
 	};
 
 	makeTool({
