@@ -65,7 +65,7 @@ function eventToolUp(n) {
 
 function mouseDown(e) {
 	eventToolDown(0, new Point(e.pageX, e.pageY));
-	// e.preventDefault();
+	e.preventDefault();
 }
 
 function mouseMove(e) {
