@@ -116,8 +116,8 @@ function modalKeyHandle(event) {
 }
 
 $('#modal_pane').mousedown(mouseMove);
-$('#button_cancel').mousedown(modalInputCancel);
-$('#button_confirm').mousedown(modalInputConfirm);
+$('#button_cancel').click(modalInputCancel);
+$('#button_confirm').click(modalInputConfirm);
 $('#modal_pane').keydown(modalKeyHandle);
 // $('#modal_pane').mousemove(mouseMove);
 $('#canvas2').mousedown(mouseDown);
