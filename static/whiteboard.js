@@ -115,6 +115,23 @@ function modalKeyHandle(event) {
 	if (event.keyCode == 27) modalInputCancel();
 }
 
+// Smartboard Integration
+
+var use_full_integration = false;
+
+if (use_full_integration) {
+	SB.wantsSDKEvents = true;
+	SB.enableDebugBanners = true;
+	window.SD.onPoint = function(event) {
+		console.log('Smartboard event:', event)
+	}
+} else {
+	SB.wantsTouches = false;
+	SB.wantsDDKEvents = false;
+}
+
+// Input events
+
 $('#modal_pane').mousedown(mouseMove);
 $('#button_cancel').click(modalInputCancel);
 $('#button_confirm').click(modalInputConfirm);
