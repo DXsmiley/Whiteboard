@@ -20,18 +20,7 @@ function point_lerp(a, b, k) {
 // Functions for manipulating lines
 
 function cleanupLine(p) {
-	var o = Array();
-	var d = 0.0;
-	o.push(p[0]);
-	for (var i = 1; i < p.length - 1; ++i) {
-		d += distance(p[i], o[o.length - 1]);
-		if (d > 50.0) {
-			d = 0.0;
-			o.push(p[i]);
-		}
-	}
-	o.push(p[p.length - 1]);
-	return o;
+	return simplify(p, 1.0, true);
 }
 
 function bezier(p, steps) {
