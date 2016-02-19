@@ -63,8 +63,8 @@
 		</div>
 	</body>
 	
-	<script type="text/javascript" src="//code.jquery.com/jquery-1.9.0.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
+	<script type="text/javascript" src="/static/socket.io.min.js"></script>
 	<script type="text/javascript" src="/static/geometry.js"></script>
 	<script type="text/javascript" src="/static/draw.js"></script>
 	<script type="text/javascript" src="/static/globals.js"></script>
