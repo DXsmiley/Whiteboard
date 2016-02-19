@@ -25,7 +25,7 @@
 			return new PencilHead('pencil', global_colour, 2);
 		},
 		drawFull: function(data) {
-			drawLine(data.points, context_picture, data.colour, 2);
+			drawLineCalligraphy(data.points, context_picture, data.colour, 2);
 		}
 	}
 

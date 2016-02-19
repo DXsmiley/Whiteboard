@@ -15,10 +15,32 @@ function drawSegment(start, end, context, colour, thickness) {
 	context.stroke();
 }
 
+function shiftPoint(p, x, y) {
+	return new Point(p.x + x, p.y + y);
+}
+
 function drawLine(points, context, colour, thickness) {
 	if (points.length > 1) {
 		for (var i = 1; i < points.length; i++) {
 			drawSegment(points[i - 1], points[i], context, colour, thickness);
+		}
+	}
+}
+
+var calligraphy_x = 1;
+var calligraphy_y = -1;
+
+function drawLineCalligraphy(points, context, colour, thickness) {
+	thickness /= 2;
+	if (points.length > 1) {
+		for (var i = 1; i < points.length; i++) {
+			drawSegment(points[i - 1], points[i], context, colour, thickness);
+			var p1 = shiftPoint(points[i - 1],   calligraphy_x, calligraphy_y);
+			var p2 = shiftPoint(points[i],       calligraphy_x, calligraphy_y);
+			drawSegment(p1, p2, context, colour, thickness);
+			// var p3 = shiftPoint(points[i - 1],  -calligraphy_x, -calligraphy_y);
+			// var p4 = shiftPoint(points[i],      -calligraphy_x, -calligraphy_y);
+			// drawSegment(p3, p4, context, colour, thickness);
 		}
 	}
 }
