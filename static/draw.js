@@ -23,21 +23,6 @@ function drawLine(points, context, colour, thickness) {
 	}
 }
 
-function drawLineTimed(points, context, colour, thickness, interval) {
-	// This seems extremely inefficient...
-	if (points.length > 1) {
-		var i = 1;
-		function func() {
-			if (i < points.length) {
-				drawSegment(points[i - 1], points[i], context, colour, thickness);
-				i += 1;
-				window.setTimeout(func, interval);
-			}
-		}
-		func();
-	}
-}
-
 function drawText(position, text, colour, font, context) {
 	context.textBaseline = 'top';
 	context.font = font;
