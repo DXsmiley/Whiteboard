@@ -24,6 +24,9 @@ PencilHead.prototype.pushData = function() {
 var projection_weight = 9;
 var use_trace_prediction = false;
 
+var push_distance_requirement = 2000;
+var push_point_requirement = 200;
+
 PencilHead.prototype.onMove = function(new_point) {
 	if (new_point) {
 		this.points.push(new_point);
@@ -44,7 +47,7 @@ PencilHead.prototype.onMove = function(new_point) {
 			}
 			this.distance += distance(this.points[l - 2], new_point);
 		}
-		if (this.distance > 2000 && l > 200) {
+		if (this.distance > push_distance_requirement && l > push_point_requirement) {
 			this.pushData()
 			this.distance = 0;
 		}
