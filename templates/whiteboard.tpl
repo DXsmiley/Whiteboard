@@ -36,6 +36,7 @@
 			</div>
 			<!-- We can change the colour whenever we want... might change this -->
 		</div>
+
 		<div class="absolute">
 			<div id="modal_pane">
 				<div class="modal_text">
@@ -61,6 +62,7 @@
 				</div>
 			</div>
 		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
