@@ -7,8 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/style.css">
 	</head>
 
-	<body class="whiteboard">
-		<div>
+	<body class="whiteboard" oncontextmenu="return false;">
+		<div id="canvas_wrapper">
 			<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
