@@ -66,14 +66,6 @@ function eventToolUp(n) {
 var pan_x = 0;
 var pan_y = 0;
 
-$(window).keydown(function(event) {
-	console.log('Keydown:', event);
-	if (event.key == 'ArrowLeft') panCanvas(40, 0);
-	if (event.key == 'ArrowRight') panCanvas(40, 0);
-	if (event.key == 'ArrowUp') panCanvas(0, 40);
-	if (event.key == 'ArrowDown') panCanvas(0, 40);
-});
-
 function panCanvas(x, y) {
 	pan_x += x;
 	pan_y += y;
