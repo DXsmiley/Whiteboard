@@ -34,10 +34,17 @@ function drawLineCalligraphy(points, context, colour, thickness) {
 	thickness /= 2;
 	if (points.length > 1) {
 		for (var i = 1; i < points.length; i++) {
-			drawSegment(points[i - 1], points[i], context, colour, thickness);
+			var dist = distance(points[i - 1], points[i]);
+			var time = points[i].time - points[i - 1].time;
+			var speed = dist / time;
+			if (speed < 4) speed = 4;
+			if (speed > 10) speed = 10;
+			speed /= 4;
+			thk = Math.max(0.8, thickness / speed);
+			drawSegment(points[i - 1], points[i], context, colour, thk);
 			var p1 = shiftPoint(points[i - 1],   calligraphy_x, calligraphy_y);
 			var p2 = shiftPoint(points[i],       calligraphy_x, calligraphy_y);
-			drawSegment(p1, p2, context, colour, thickness);
+			drawSegment(p1, p2, context, colour, thk);
 			// var p3 = shiftPoint(points[i - 1],  -calligraphy_x, -calligraphy_y);
 			// var p4 = shiftPoint(points[i],      -calligraphy_x, -calligraphy_y);
 			// drawSegment(p3, p4, context, colour, thickness);

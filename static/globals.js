@@ -23,6 +23,12 @@ function setWhiteboardId(wid) {
 // 	image: tool_image
 // };
 
+// Retuns number of milliseconds since the epoch.
+function getSysClock() {
+	var d = new Date();
+	return d.getTime();
+}
+
 function makeTool(tool) {
 	tools[tool.name] = tool;
 }
