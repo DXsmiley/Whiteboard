@@ -20,8 +20,8 @@
 
 	LatexHead.prototype.onMove = function(p) {
 		this.position = new Point(p.x, p.y);
-		$('#modal_latex_positionable').css('left', p.x);
-		$('#modal_latex_positionable').css('top', p.y);
+		$('#modal_latex_positionable').css('left', p.x + pan_x);
+		$('#modal_latex_positionable').css('top', p.y + pan_y);
 	}
 
 	LatexHead.prototype.onRelease = function() {
