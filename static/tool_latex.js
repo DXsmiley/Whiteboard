@@ -33,6 +33,7 @@
 			console.log('LaTeX confirmed');
 			sendPaintEvent('image', {
 				position: this.position,
+				scale: 1,
 				url: getLatexURL()
 			});
 			this.onModalCancel();
