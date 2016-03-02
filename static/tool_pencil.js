@@ -1,38 +1,37 @@
-(function() {
+function PencilTool() {
+	this.line_mode = false;
+	this.name = 'pencil';
+	this.buttonImage = 'pencil.png';
+	this.buttonImageSelected = 'pencil_select.png';
+}
 
-	var line_mode = false;
+PencilTool.prototype.onButtonClick = function() {
+	return true;
+};
 
-	var pencil_tool = {
-		name: 'pencil',
-		buttonImage: 'pencil.png',
-		buttonImageSelected: 'pencil_select.png',
-		onButtonClick: function() {
-			return true;
-		},
-		onDoubleClick: function() {
-			line_mode = !line_mode;
-			if (line_mode) {
-				pencil_tool.buttonImage = 'button_line.png';
-				pencil_tool.buttonImageSelected = 'button_line_select.png';
-			} else {
-				pencil_tool.buttonImage = 'pencil.png';
-				pencil_tool.buttonImageSelected = 'pencil_select.png';
-			}
-			return true;
-		},
-		makeToolHead: function() {
-			if (line_mode) return new LineHead('pencil', global_colour, 2);
-			return new PencilHead('pencil', global_colour, 2, 'calligraphy');
-		},
-		drawFull: function(data) {
-			if (data.style == 'calligraphy') {
-				drawLineCalligraphy(data.points, context_picture, data.colour, 2);
-			} else {
-				drawLine(data.points, context_picture, data.colour, 2);
-			}
-		}
+PencilTool.prototype.onDoubleClick = function() {
+	this.line_mode = !this.line_mode;
+	if (this.line_mode) {
+		this.buttonImage = 'button_line.png';
+		this.buttonImageSelected = 'button_line_select.png';
+	} else {
+		this.buttonImage = 'pencil.png';
+		this.buttonImageSelected = 'pencil_select.png';
 	}
+	return true;
+};
 
-	makeTool(pencil_tool);
+PencilTool.prototype.makeToolHead = function() {
+	if (this.line_mode) return new LineHead('pencil', global_colour, 2);
+	return new PencilHead('pencil', global_colour, 2, 'calligraphy');
+};
 
-})();
+PencilTool.prototype.drawFull = function(data) {
+	if (data.style == 'calligraphy') {
+		drawLineCalligraphy(data.points, context_picture, data.colour, 2);
+	} else {
+		drawLine(data.points, context_picture, data.colour, 2);
+	}
+};
+
+makeTool(new PencilTool());
