@@ -14,3 +14,5 @@ UndoTool.prototype.onButtonClick = function() {
 	}
 	return false;
 };
+
+makeTool(new UndoTool());
