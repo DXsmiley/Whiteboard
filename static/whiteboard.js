@@ -139,17 +139,21 @@ function drawCommand(the_tool, the_data) {
 }
 
 function modalInputConfirm() {
-	for (i in tool_heads) {
+	for (var i in tool_heads) {
 		if (tool_heads[i] != null) {
-			tool_heads[i].onModalConfirm();
+			if (!tool_heads[i].onModalConfirm()) {
+				tool_heads[i] = null;
+			}
 		}
 	}
 }
 
 function modalInputCancel() {
-	for (i in tool_heads) {
+	for (var i in tool_heads) {
 		if (tool_heads[i] != null) {
-			tool_heads[i].onModalCancel();
+			if (!tool_heads[i].onModalCancel()) {
+				tool_heads[i] = null;
+			}
 		}
 	}
 }
