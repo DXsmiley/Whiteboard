@@ -205,7 +205,7 @@ function triggerToolButton(t, dbl) {
 		// Button was selected. This is good.
 		active_tool = tools[t];
 		// Change button images
-		for (i in tools) {
+		for (var i in tools) {
 			var n2 = tools[i].name;
 			var p2 = tools[i].buttonImage;
 			document.getElementById('button_' + n2).src = '/static/images/' + p2;
@@ -221,7 +221,7 @@ function triggerToolButton(t, dbl) {
 }
 
 $(document).ready( function() {
-	for (i in tools) {
+	for (var i in tools) {
 		// Clojures because javascript is strange...
 		// console.log(i, 'is a tool');
 		function clojure() {
@@ -254,7 +254,7 @@ global_colour = colours['black'];
 function triggerColourButton(col) {
 	console.log('Colour: ', col, colours[col]);
 	global_colour = colours[col];
-	for (i in colours) {
+	for (var i in colours) {
 		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
 	}
 	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
@@ -264,7 +264,7 @@ function triggerColourButton(col) {
 }
 
 $(document).ready( function() {
-	for (i in colours) {
+	for (var i in colours) {
 		// console.log(i, 'is a colour');
 		function clojure() {
 			var x = i;
@@ -278,7 +278,7 @@ $(document).ready( function() {
 
 function toolbarActivate(to_activate) {
 	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel'];
-	for (i in toolbars) {
+	for (var i in toolbars) {
 		$(toolbars[i]).css('display', 'none');
 	}
 	$(to_activate).css('display', 'block');
@@ -289,7 +289,7 @@ toolbarActivate('#toolbar_normal');
 function drawEverything() {
 	console.log('Drawing everything!');
 	drawClear(context_picture);
-	for (i in paint_blobs_all) {
+	for (var i in paint_blobs_all) {
 		if (! (paint_blobs_all[i]['action_id'] in paint_blobs_undone)) {
 			drawCommand(paint_blobs_all[i].tool, paint_blobs_all[i].data);
 		}
@@ -311,7 +311,7 @@ $(document).ready(function() {
 		// console.log('paint', msg);
 		if (msg.data.board_id == whiteboard_id) {
 			actions = msg.data.actions;
-			for (i in actions) {
+			for (var i in actions) {
 				// console.log(actions[i].tool, actions[i].points);
 				drawCommand(actions[i].tool, actions[i].data);
 				paint_blobs_all.push(actions[i]);
