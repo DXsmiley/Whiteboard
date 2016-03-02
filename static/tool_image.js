@@ -10,8 +10,8 @@
 
 	ImageHead.prototype.onMove = function(p) {
 		this.position = new Point(p.x, p.y);
-		$('#modal_image').css('left', p.x);
-		$('#modal_image').css('top', p.y);
+		$('#modal_image').css('left', p.x + pan_x);
+		$('#modal_image').css('top', p.y + pan_y);
 	}
 
 	ImageHead.prototype.onRelease = function() {

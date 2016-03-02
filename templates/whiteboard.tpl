@@ -7,8 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/style.css">
 	</head>
 
-	<body class="whiteboard">
-		<div>
+	<body class="whiteboard" oncontextmenu="return false;">
+		<div id="canvas_wrapper">
 			<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
@@ -36,6 +36,7 @@
 			</div>
 			<!-- We can change the colour whenever we want... might change this -->
 		</div>
+
 		<div class="absolute">
 			<div id="modal_pane">
 				<div class="modal_text">
@@ -61,6 +62,7 @@
 				</div>
 			</div>
 		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>

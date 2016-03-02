@@ -61,21 +61,63 @@ function eventToolUp(n) {
 	}
 }
 
+// Pan and Zoom
+
+var pan_x = 0;
+var pan_y = 0;
+
+function panCanvas(x, y) {
+	pan_x += x;
+	pan_y += y;
+	$('#canvas_wrapper').css('left', pan_x + 'px');
+	$('#canvas_wrapper').css('top', pan_y + 'px');
+	// make sure the display updates
+	$('#canvas_wrapper').toggle();
+	$('#canvas_wrapper').toggle();
+	// $('#canvas_wrapper').focus();
+}
+
 // Interperet events
 
+var last_mouse_x = 0;
+var last_mouse_y = 0;
+var panning = false;
+
 function mouseDown(e) {
-	eventToolDown(0, new Point(e.pageX, e.pageY));
+	// console.log(e);
+	if (e.which == 1) {
+		eventToolDown(0, new Point(e.pageX - pan_x, e.pageY - pan_y));
+	}
+	if (e.which == 3) {
+		last_mouse_x = e.pageX;
+		last_mouse_y = e.pageY;
+		panning = true;
+	}
 	e.preventDefault();
 }
 
 function mouseMove(e) {
-	eventToolMove(0, new Point(e.pageX, e.pageY));
-	// e.preventDefault();
+	if (e.buttons == 0) {
+		panning = false;
+	}
+	if (panning) {
+		var dx = e.pageX - last_mouse_x;
+		var dy = e.pageY - last_mouse_y;
+		last_mouse_x = e.pageX;
+		last_mouse_y = e.pageY;
+		panCanvas(dx, dy);
+	} else {
+		eventToolMove(0, new Point(e.pageX - pan_x, e.pageY - pan_y));
+	}
+	e.preventDefault();
 }
 
 function mouseUp(e) {
-	eventToolUp(0);
-	// e.preventDefault();
+	if (e.which == 1) {
+		eventToolUp(0);
+	}
+	panning = false;
+	e.preventDefault();
 }
 
 function touchDown(e) {

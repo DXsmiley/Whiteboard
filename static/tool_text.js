@@ -18,8 +18,8 @@
 			this.point = new_point;
 			window.setTimeout(function () {
 				var e = $('#text_input_text');
-				e.css('left', new_point.x);
-				e.css('top', new_point.y - 8);
+				e.css('left', new_point.x + pan_x);
+				e.css('top', new_point.y - 8 + pan_y);
 				e.selectText();
 				e.focus();
 			}, 30);
