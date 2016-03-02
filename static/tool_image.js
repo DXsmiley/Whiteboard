@@ -1,69 +1,62 @@
-(function () {
+var image_scale = 1;
+var scale_per_click = 1.2;
 
-	var image_scale = 1;
-	var scale_per_click = 1.2;
+$('#button_shrink').click(function (event){
+	image_scale /= scale_per_click;
+	$("#modal_image").css('transform', 'scale(' + image_scale + ')');
+});
 
-	function ImageHead(url) {
-		this.url = url;
-		$('#modal_image').attr('src', url);
-	}
+$('#button_enlarge').click(function (event){
+	image_scale *= scale_per_click;
+	$("#modal_image").css('transform', 'scale(' + image_scale + ')');
+});
 
-	ImageHead.prototype.onMove = function(p) {
-		this.position = new Point(p.x, p.y);
-		$('#modal_image').css('left', p.x + pan_x);
-		$('#modal_image').css('top', p.y + pan_y);
-	}
+function ImageHead(url) {
+	this.url = url;
+	$('#modal_image').attr('src', url);
+}
 
-	ImageHead.prototype.onRelease = function() {
-		// do nothing..
-	}
+ImageHead.prototype.onMove = function(p) {
+	this.position = new Point(p.x, p.y);
+	$('#modal_image').css('left', p.x + pan_x);
+	$('#modal_image').css('top', p.y + pan_y);
+}
 
-	ImageHead.prototype.onModalConfirm = function() {
-		sendPaintEvent('image', {
-			position: this.position,
-			url: this.url,
-			scale: image_scale,
-		});
-		this.onModalCancel();
-	}
-
-	ImageHead.prototype.onModalCancel = function() {
-		modalClose('.modal_image');
-	}
-
-	$('#button_shrink').click(function (event){
-		image_scale /= scale_per_click;
-		$("#modal_image").css('transform', 'scale(' + image_scale + ')');
+ImageHead.prototype.onModalConfirm = function() {
+	sendPaintEvent('image', {
+		position: this.position,
+		url: this.url,
+		scale: image_scale
 	});
+	modalClose('.modal_image');
+}
 
-	$('#button_enlarge').click(function (event){
-		image_scale *= scale_per_click;
-		$("#modal_image").css('transform', 'scale(' + image_scale + ')');
-	});
+ImageHead.prototype.onModalCancel = function() {
+	modalClose('.modal_image');
+}
 
-	makeTool({
-		name: 'image',
-		buttonImage: 'button_image.png',
-		buttonImageSelected: 'button_image_select.png',
-		desktopOnly: true,
-		onButtonClick: function() {
-			var url = window.prompt('Enter image url', '');
-			if (url) {
-				modalOpen('.modal_image');
-				return new ImageHead(url);
-			}
-			return false;
-		},
-		makeToolHead: function() {
-			return null;
-		},
-		drawFull: function(data) {
-			// Callback tp redraw the entire whiteboard when the image has loaded
-			function callback(url, position, context) {
-				drawEverything();
-			}
-			drawImageScaled(data.url, data.position, data.scale, context_picture, callback);
-		}
-	});
+function ImageTool() {
+	this.name = 'image';
+	this.buttonImage = 'button_image.png';
+	this.buttonImageSelected = 'button_image_select.png';
+	this.desktopOnly = true;
+}
 
-})();
+ImageTool.prototype.onButtonClick = function() {
+	var iurl = window.prompt('Enter image url', '');
+	if (iurl) {
+		modalOpen('.modal_image');
+		return new ImageHead(iurl);
+	}
+	return false;
+
+};
+
+ImageTool.prototype.drawFull = function(data) {
+	function callback(url, position, context) {
+		drawEverything();
+	}
+	drawImageScaled(data.url, data.position, data.scale, context_picture, callback);
+};
+
+makeTool(new ImageTool());
