@@ -67,6 +67,7 @@
 	
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="/static/socket.io.min.js"></script>
+	<script type="text/javascript" src="/static/simplify.js"></script>
 	<script type="text/javascript" src="/static/geometry.js"></script>
 	<script type="text/javascript" src="/static/draw.js"></script>
 	<script type="text/javascript" src="/static/globals.js"></script>

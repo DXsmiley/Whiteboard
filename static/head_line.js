@@ -22,7 +22,8 @@ LineHead.prototype.onRelease = function() {
 		var action_data = {
 			points: [this.p_start, this.p_end],
 			colour: this.colour,
-			thickness: this.thickness
+			thickness: this.thickness,
+			style: 'straight'
 		}
 		sendPaintEvent(this.tool_name, action_data);
 		drawClear(context_preview);

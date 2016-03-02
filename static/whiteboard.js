@@ -157,6 +157,13 @@ function modalKeyHandle(event) {
 	if (event.keyCode == 27) modalInputCancel();
 }
 
+function canvasDoubleClick() {
+	if (active_tool) {
+		console.log('canvasDoubleClick', active_tool);
+		triggerToolButton(active_tool.name, true);
+	}
+}
+
 $('#modal_pane').mousedown(mouseMove);
 $('#button_cancel').click(modalInputCancel);
 $('#button_confirm').click(modalInputConfirm);
@@ -165,6 +172,7 @@ $('#modal_pane').keydown(modalKeyHandle);
 $('#canvas2').mousedown(mouseDown);
 $('#canvas2').mousemove(mouseMove);
 $('#canvas2').mouseup(mouseUp);
+$('#canvas2').dblclick(canvasDoubleClick);
 // document.addEventListener('touchstart', touchDown, false);
 // document.addEventListener('touchmove', touchMove, false);
 // document.addEventListener('touchend', mouseUp, false);
@@ -181,6 +189,7 @@ function triggerToolButton(t, dbl) {
 	// Tigger the click event
 	var click_result = false;
 	if (dbl) {
+		if (tools[t].onDoubleClick === undefined) return;
 		click_result = tools[t].onDoubleClick();
 	} else {
 		click_result = tools[t].onButtonClick();
