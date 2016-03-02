@@ -93,7 +93,7 @@ def storage_daemon():
 			time.sleep(5)
 		else:
 			name = storage_queue.get()
-			print('Dequeue', name)
+			# print('Dequeue', name)
 			board = whiteboards[name]
 			if board.changed_since_save():
 				board.update_save_time()
@@ -101,14 +101,14 @@ def storage_daemon():
 				try:
 					with open('./store/' + name + '.json', 'w') as f:
 						f.write(json.dumps(data))
-					print('Saved', name)
+					# print('Saved', name)
 				except Exception as e:
 					print('Save failed', name)
 					print(e)
 
 def queue_board_store(board_name):
 	storage_queue.put(board_name)
-	print('Enqueue', board_name)
+	# print('Enqueue', board_name)
 
 app = flask.Flask(__name__)
 app.debug = True
