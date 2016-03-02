@@ -43,20 +43,22 @@ function modalOpen(extra_thing) {
 
 function eventToolDown(n, p) {
 	tool_heads[n] = active_tool.makeToolHead();
-	if (tool_heads[n]) {
+	if (tool_heads[n] && tool_heads[n].onMove != undefined) {
 		tool_heads[n].onMove(p);
 	}
 }
 
 function eventToolMove(n, p) {
-	if (tool_heads[n]) {
+	if (tool_heads[n] && tool_heads[n].onMove != undefined) {
 		tool_heads[n].onMove(p);
 	}
 }
 
 function eventToolUp(n) {
 	if (tool_heads[n]) {
-		tool_heads[n].onRelease();
+		if (tool_heads[n].onRelease != undefined) {
+			tool_heads[n].onRelease();
+		}
 		tool_heads[n] = null;
 	}
 }
