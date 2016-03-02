@@ -1,6 +1,6 @@
 function UndoTool() {
 	this.name = 'undo';
-	this.image = 'button_undo.png',
+	this.buttonImage = 'button_undo.png';
 }
 
 UndoTool.prototype.onButtonClick = function() {
