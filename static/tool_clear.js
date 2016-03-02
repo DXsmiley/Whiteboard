@@ -1,34 +1,27 @@
-(function() {
+function ClearHead() {
+	modalOpen('.modal_clear');
+}
 
-	function ClearHead() {
-		// a dataless prototype
-	};
+ClearHead.prototype.onModalConfirm = function() {
+	sendPaintEvent('clear', 0);
+	modalClose('.modal_clear');
+};
 
-	ClearHead.prototype.onMove = nullFunction;
-	ClearHead.prototype.onRelease = nullFunction;
+ClearHead.prototype.onModalCancel = function() {
+	modalClose('.modal_clear');
+};
 
-	ClearHead.prototype.onModalConfirm = function() {
-		sendPaintEvent('clear', 0);
-		modalClose('.modal_clear');
-	};
+function ClearTool() {
+	this.name = 'clear';
+	this.buttonImage = 'clear.png';
+}
 
-	ClearHead.prototype.onModalCancel = function() {
-		modalClose('.modal_clear');
-	};
+ClearTool.prototype.onButtonClick = function() {
+	return new ClearHead();
+};
 
-	makeTool({
-		name: 'clear',
-		buttonImage: 'clear.png',
-		onButtonClick: function() {
-			// sendPaintEvent('clear', []);
-			modalOpen('.modal_clear');
-			// This is just a button.
-			return new ClearHead();
-		},
-		drawFull: function(data) {
-			drawClear(context_picture);
-		}
+ClearTool.prototype.drawFull = function() {
+	drawClear(context_picture);
+};
 
-	});
-
-})();
+makeTool(new ClearTool());
