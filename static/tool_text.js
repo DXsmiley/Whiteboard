@@ -1,81 +1,66 @@
-(function () {
-
-	var click_on_text = false;
-
-	function TextHead(colour) {
-		this.colour = colour;
-		this.point = new Point(0, 0);
-		$('.modal_text').show();
-		$('#modal_pane').show();
-		$('#text_input_text').text('Enter Text');
-	}
-
-	TextHead.prototype.onMove = function(a) {
-		// Move text and display
-		// console.log('TextHead.onMove');
-		if (!click_on_text) {
-			var new_point = new Point(a.x, a.y);
-			this.point = new_point;
-			window.setTimeout(function () {
-				var e = $('#text_input_text');
-				e.css('left', new_point.x + pan_x);
-				e.css('top', new_point.y - 8 + pan_y);
-				e.selectText();
-				e.focus();
-			}, 30);
-		}
-		click_on_text = false;
-	}
-
-	TextHead.prototype.onRelease = function() {
-		// do nothing...
-	}
-
-	TextHead.prototype.onModalConfirm = function() {
-		console.log('Committing text paint...');
-		sendPaintEvent('text', {
-			colour: this.colour,
-			position: this.point,
-			text: $('#text_input_text').text(),
-		});
-		this.onModalCancel();
-	}
-
-	TextHead.prototype.onModalCancel = function() {
-		$('.modal_text').hide();
-		$('#modal_pane').hide();
-		toolbarActivate('#toolbar_normal');
-	}
-
-	$(document).ready(function() {
-		$('#text_input_text').keydown(modalKeyHandle);
-	});
-
+function TextHead(colour) {
+	this.colour = colour;
+	this.point = new Point(0, 0);
+	this.click_on_text = false;
+	modalOpen('.modal_text');
+	$('#text_input_text').text('Enter Text');
+	var passback = this;
 	$('#text_input_text').mousedown(function(event) {
-		// console.log('Clicked text input!');
-		click_on_text = true;
+		passback.click_on_text = true;
 	})
+}
 
-	makeTool({
-		name: 'text',
-		buttonImage: 'text.png',
-		buttonImageSelected: 'text_select.png',
-		desktopOnly: true,
-		onButtonClick: function() {
-			return true;
-		},
-		makeToolHead: function() {
-			toolbarActivate("#toolbar_confirmcancel");
-			return new TextHead(global_colour);
-		},
-		drawFull: function(data) {
-			// console.log('tool_text.drawFull', data);
-			var pos = data.position;
-			var text = data.text;
-			var colour = data.colour;
-			var font = '30px Helvetica';
-			drawText(pos, text, colour, font, context_picture);
-		}
+TextHead.prototype.onMove = function(a) {
+	// Move text and display
+	if (!this.click_on_text) {
+		var new_point = new Point(a.x, a.y);
+		this.point = new_point;
+		window.setTimeout(function () {
+			var e = $('#text_input_text');
+			e.css('left', new_point.x + pan_x);
+			e.css('top', new_point.y - 8 + pan_y);
+			e.selectText();
+			e.focus();
+		}, 30);
+	}
+	this.click_on_text = false;
+}
+
+TextHead.prototype.onModalConfirm = function() {
+	sendPaintEvent('text', {
+		colour: this.colour,
+		position: this.point,
+		text: $('#text_input_text').text(),
 	});
+	this.onModalCancel();
+}
 
-})();
+TextHead.prototype.onModalCancel = function() {
+	modalClose('.modal_text');
+	$('#text_input_text').off('mousedown');
+}
+
+function TextTool() {
+	this.name = 'text';
+	this.buttonImage = 'text.png';
+	this.buttonImageSelected = 'text_select.png';
+	this.desktopOnly = true;
+}
+
+TextTool.prototype.onButtonClick = function() {
+	return true;
+};
+
+TextTool.prototype.makeToolHead = function() {
+	return new TextHead(global_colour);
+}
+
+TextTool.prototype.drawFull = function(data) {
+	var pos = data.position;
+	var text = data.text;
+	var colour = data.colour;
+	var font = '30px Helvetica';
+	drawText(pos, text, colour, font, context_picture);
+};
+
+makeTool(new TextTool());
