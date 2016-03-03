@@ -48,9 +48,9 @@
 				<div class="modal_latex">
 					<center>
 						<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
-						<img id="modal_latex_image" class="modal_latex" src="http://localhost:5000/i.png?c=%5Csqrt%7Ba%5E2%20%2B%20b%5E2%7D%20%3D%20c">
+						<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
 					</center>
-					<img id="modal_latex_positionable" class="modal_latex" src="http://localhost:5000/i.png?c=%5Csqrt%7Ba%5E2%20%2B%20b%5E2%7D%20%3D%20c">
+					<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
 				</div>
 				<div class="modal_clear">
 					<center>

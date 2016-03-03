@@ -22,10 +22,6 @@ LatexHead.prototype.onMove = function(p) {
 	$('#modal_latex_positionable').css('top', p.y + pan_y);
 }
 
-LatexHead.prototype.onRelease = function() {
-	// do nothing...
-}
-
 LatexHead.prototype.onModalConfirm = function() {
 	if (this.stage == 1) {
 		console.log('LaTeX confirmed');
