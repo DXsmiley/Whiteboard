@@ -350,16 +350,10 @@ $(document).ready(function() {
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mouseup(function(event) {whiteboard.mouseUp(event);});
 	$('#canvas2').dblclick(function(event) {whiteboard.canvasDoubleClick(event);});
-	// document.addEventListener('touchstart', touchDown, false);
-	// document.addEventListener('touchmove', touchMove, false);
-	// document.addEventListener('touchend', mouseUp, false);
-	// document.addEventListener('touchcancel', mouseUp, false);
-
-	// Touch controlls are currently disabled
-	// document.getElementById('canvas2').addEventListener('touchstart', touchDown, false);
-	// document.getElementById('canvas2').addEventListener('touchmove', touchMove, false);
-	// document.getElementById('canvas2').addEventListener('touchend', mouseUp, false);
-	// document.getElementById('canvas2').addEventListener('touchcancel', mouseUp, false);
+	document.getElementById('canvas2').addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
+	document.getElementById('canvas2').addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
+	document.getElementById('canvas2').addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
+	document.getElementById('canvas2').addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
 
 	whiteboard.startup();
 
