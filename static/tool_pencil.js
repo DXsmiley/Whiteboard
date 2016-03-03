@@ -22,8 +22,8 @@ PencilTool.prototype.onDoubleClick = function() {
 };
 
 PencilTool.prototype.makeToolHead = function() {
-	if (this.line_mode) return new LineHead('pencil', global_colour, 2);
-	return new PencilHead('pencil', global_colour, 2, 'calligraphy');
+	if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, 2);
+	return new PencilHead('pencil', whiteboard.global_colour, 2, 'calligraphy');
 };
 
 PencilTool.prototype.drawFull = function(data) {
@@ -34,4 +34,4 @@ PencilTool.prototype.drawFull = function(data) {
 	}
 };
 
-makeTool(new PencilTool());
+whiteboard.makeTool(new PencilTool());

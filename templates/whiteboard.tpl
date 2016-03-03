@@ -71,6 +71,8 @@
 	<script type="text/javascript" src="/static/geometry.js"></script>
 	<script type="text/javascript" src="/static/draw.js"></script>
 	<script type="text/javascript" src="/static/globals.js"></script>
+	<script type="text/javascript" src="/static/whiteboard.js"></script>
+	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
 	<script type="text/javascript" src="/static/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/head_line.js"></script>
 	<script type="text/javascript" src="/static/tool_pencil.js"></script>
@@ -80,7 +82,5 @@
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
-	<script type="text/javascript" src="/static/whiteboard.js"></script>
-	<script type="text/javascript">setWhiteboardId("{{board_id}}");</script>
 
 </html>

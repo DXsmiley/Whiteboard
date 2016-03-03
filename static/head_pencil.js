@@ -17,7 +17,7 @@ PencilHead.prototype.pushData = function() {
 			thickness: this.thickness,
 			style: this.style
 		}
-		sendPaintEvent(this.tool_name, action_data);
+		whiteboard.sendPaintEvent(this.tool_name, action_data);
 		this.points = [last_point];
 	}
 	drawClear(context_preview);
