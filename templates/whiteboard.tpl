@@ -8,11 +8,12 @@
 	</head>
 
 	<body class="whiteboard" oncontextmenu="return false;">
+
 		<div id="canvas_wrapper">
 			<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
-		<!-- Normal Toolbar -->
+
 		<div class="toolbar">
 			<div id="toolbar_normal">
 				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil_select.png"><br>
@@ -34,7 +35,6 @@
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
 				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
 			</div>
-			<!-- We can change the colour whenever we want... might change this -->
 		</div>
 
 		<div class="absolute">
@@ -57,7 +57,6 @@
 						<h1 class="modal_clear">Clear the whiteboard?</h1>
 						<img id="modal_clear_button_confirm" class="toolbar_button" src="/static/images/confirm_large.png">
 						<img id="modal_clear_button_cancel" class="toolbar_button" src="/static/images/cancel_large.png">
-						<!-- <p class="modal_clear"><a onclick="modalInputConfirm()">Yes</a> | <a onclick="modalInputCancel()">No</a></p> -->
 					</center>
 				</div>
 			</div>
