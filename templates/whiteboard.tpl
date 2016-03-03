@@ -55,8 +55,8 @@
 				<div class="modal_clear">
 					<center>
 						<h1 class="modal_clear">Clear the whiteboard?</h1>
-						<img class="toolbar_button" src="/static/images/confirm_large.png" onclick="modalInputConfirm()">
-						<img class="toolbar_button" src="/static/images/cancel_large.png" onclick="modalInputCancel()">
+						<img id="modal_clear_button_confirm" class="toolbar_button" src="/static/images/confirm_large.png">
+						<img id="modal_clear_button_cancel" class="toolbar_button" src="/static/images/cancel_large.png">
 						<!-- <p class="modal_clear"><a onclick="modalInputConfirm()">Yes</a> | <a onclick="modalInputCancel()">No</a></p> -->
 					</center>
 				</div>

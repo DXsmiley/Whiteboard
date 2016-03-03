@@ -4,15 +4,15 @@ function UndoTool() {
 }
 
 UndoTool.prototype.onButtonClick = function() {
-	if (paint_blobs_mine.length > 0) {
-		var uid = paint_blobs_mine.pop();
-		console.log('Undoing: ', uid, paint_blobs_mine.length);
-		sendUndoEvent(uid);
-		drawEverything();
+	if (whiteboard.paint_blobs_mine.length > 0) {
+		var uid = whiteboard.paint_blobs_mine.pop();
+		console.log('Undoing: ', uid, whiteboard.paint_blobs_mine.length);
+		whiteboard.sendUndoEvent(uid);
+		whiteboard.drawEverything();
 	} else {
 		console.log('Nothing to undo');
 	}
 	return false;
 };
 
-makeTool(new UndoTool());
+whiteboard.makeTool(new UndoTool());

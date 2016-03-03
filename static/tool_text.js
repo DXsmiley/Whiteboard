@@ -2,7 +2,7 @@ function TextHead(colour) {
 	this.colour = colour;
 	this.point = new Point(0, 0);
 	this.click_on_text = false;
-	modalOpen('.modal_text');
+	whiteboard.modalOpen('.modal_text');
 	$('#text_input_text').text('Enter Text');
 	var passback = this;
 	$('#text_input_text').mousedown(function(event) {
@@ -17,8 +17,8 @@ TextHead.prototype.onMove = function(a) {
 		this.point = new_point;
 		window.setTimeout(function () {
 			var e = $('#text_input_text');
-			e.css('left', new_point.x + pan_x);
-			e.css('top', new_point.y - 8 + pan_y);
+			e.css('left', new_point.x + whiteboard.pan_x);
+			e.css('top', new_point.y - 8 + whiteboard.pan_y);
 			e.selectText();
 			e.focus();
 		}, 30);
@@ -27,7 +27,7 @@ TextHead.prototype.onMove = function(a) {
 }
 
 TextHead.prototype.onModalConfirm = function() {
-	sendPaintEvent('text', {
+	whiteboard.sendPaintEvent('text', {
 		colour: this.colour,
 		position: this.point,
 		text: $('#text_input_text').text(),
@@ -36,7 +36,7 @@ TextHead.prototype.onModalConfirm = function() {
 }
 
 TextHead.prototype.onModalCancel = function() {
-	modalClose('.modal_text');
+	whiteboard.modalClose('.modal_text');
 	$('#text_input_text').off('mousedown');
 }
 
@@ -52,7 +52,7 @@ TextTool.prototype.onButtonClick = function() {
 };
 
 TextTool.prototype.makeToolHead = function() {
-	return new TextHead(global_colour);
+	return new TextHead(whiteboard.global_colour);
 }
 
 TextTool.prototype.drawFull = function(data) {
@@ -63,4 +63,4 @@ TextTool.prototype.drawFull = function(data) {
 	drawText(pos, text, colour, font, context_picture);
 };
 
-makeTool(new TextTool());
+whiteboard.makeTool(new TextTool());

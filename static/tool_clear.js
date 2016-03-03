@@ -1,14 +1,14 @@
 function ClearHead() {
-	modalOpen('.modal_clear');
+	whiteboard.modalOpen('.modal_clear');
 }
 
 ClearHead.prototype.onModalConfirm = function() {
-	sendPaintEvent('clear', 0);
-	modalClose('.modal_clear');
+	whiteboard.sendPaintEvent('clear', 0);
+	whiteboard.modalClose('.modal_clear');
 };
 
 ClearHead.prototype.onModalCancel = function() {
-	modalClose('.modal_clear');
+	whiteboard.modalClose('.modal_clear');
 };
 
 function ClearTool() {
@@ -24,4 +24,12 @@ ClearTool.prototype.drawFull = function() {
 	drawClear(context_picture);
 };
 
-makeTool(new ClearTool());
+whiteboard.makeTool(new ClearTool());
+
+$("#modal_clear_button_confirm").click(function() {
+	whiteboard.modalInputConfirm();
+})
+
+$("#modal_clear_button_cancel").click(function() {
+	whiteboard.modalInputCancel();
+})

@@ -10,7 +10,7 @@ function LatexHead() {
 	this.stage = 0;
 	// 0 - text input
 	// 1 - placement
-	modalOpen('.modal_latex');
+	whiteboard.modalOpen('.modal_latex');
 	$('#modal_latex_input').text('\\sqrt{a^2 + b^2} = c');
 	$('#modal_latex_input').show();
 	$('#modal_latex_positionable').hide();
@@ -25,7 +25,7 @@ LatexHead.prototype.onMove = function(p) {
 LatexHead.prototype.onModalConfirm = function() {
 	if (this.stage == 1) {
 		console.log('LaTeX confirmed');
-		sendPaintEvent('image', {
+		whiteboard.sendPaintEvent('image', {
 			position: this.position,
 			scale: 1,
 			url: getLatexURL()
@@ -42,7 +42,7 @@ LatexHead.prototype.onModalConfirm = function() {
 }
 
 LatexHead.prototype.onModalCancel = function() {
-	modalClose('.modal_latex');
+	whiteboard.modalClose('.modal_latex');
 }
 
 var latex_get_timeout = null;
@@ -74,4 +74,4 @@ LatexTool.prototype.onButtonClick = function() {
 	return new LatexHead();
 };
 
-makeTool(new LatexTool());
+whiteboard.makeTool(new LatexTool());

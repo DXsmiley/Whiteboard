@@ -16,4 +16,4 @@ EraserTool.prototype.drawFull = function(data) {
 	drawLine(data.points, context_picture, '#ffffff', 30);
 };
 
-makeTool(new EraserTool());
+whiteboard.makeTool(new EraserTool());

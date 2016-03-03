@@ -35,7 +35,7 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 		{
 			'data': {
 				'action_id': action_id,
-				'board_id': whiteboard_id
+				'board_id': this.whiteboard_id
 			}
 		}
 	);
@@ -60,7 +60,7 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
 };
 
 Whiteboard.prototype.modalClose = function(extra_thing) {
-	this.this.toolbarActivate('#toolbar_normal');
+	this.toolbarActivate('#toolbar_normal');
 	$('#modal_pane').hide();
 	$(extra_thing).hide();
 };
@@ -209,7 +209,6 @@ Whiteboard.prototype.triggerToolButton = function(t, dbl) {
 		click_result = this.tools[t].onButtonClick();
 		triggered = true;
 	}
-	console.log('triggerToolButton', t, triggered);
 	if (triggered) {
 		if (click_result === true) {
 			// Button was selected. This is good.
@@ -287,25 +286,31 @@ Whiteboard.prototype.startup = function() {
 	var the_whiteboard = this;
 
 	for (var i in this.colours) {
-		$('#colour_' + i).click(function(event) {triggerColourButton(i);});
+		(function() {
+			var x = i;
+			$('#colour_' + x).click(function(event) {the_whiteboard.triggerColourButton(x);});
+		})();
 	}
 
 	for (var i in this.tools) {
-		var name = this.tools[i].name;
-		var desktop_only = this.tools[i]['desktopOnly'];
-		if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-			// disable the stuff
-			console.log('Disabling tool', i);
-			$('#button_' + name).hide();
-			$('#button_' + name).next().hide();
-		} else {
-			$('#button_' + name).click(function(event) {the_whiteboard.triggerToolButton(name, false);});
-			$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
-		}
+		(function() {
+			var name = the_whiteboard.tools[i].name;
+			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
+			if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				// disable the stuff
+				console.log('Disabling tool', i);
+				$('#button_' + name).hide();
+				$('#button_' + name).next().hide();
+			} else {
+				$('#button_' + name).click(function(event) {the_whiteboard.triggerToolButton(name, false);});
+				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
+			}
+		})();
 	}
 
 	this.triggerToolButton('pencil');
 	this.triggerColourButton('blue');
+	this.toolbarActivate('#toolbar_normal');
 
 	console.log('Board ID:', this.whiteboard_id);
 

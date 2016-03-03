@@ -18,21 +18,21 @@ function ImageHead(url) {
 
 ImageHead.prototype.onMove = function(p) {
 	this.position = new Point(p.x, p.y);
-	$('#modal_image').css('left', p.x + pan_x);
-	$('#modal_image').css('top', p.y + pan_y);
+	$('#modal_image').css('left', p.x + whiteboard.pan_x);
+	$('#modal_image').css('top', p.y + whiteboard.pan_y);
 }
 
 ImageHead.prototype.onModalConfirm = function() {
-	sendPaintEvent('image', {
+	whiteboard.sendPaintEvent('image', {
 		position: this.position,
 		url: this.url,
 		scale: image_scale
 	});
-	modalClose('.modal_image');
+	whiteboard.modalClose('.modal_image');
 }
 
 ImageHead.prototype.onModalCancel = function() {
-	modalClose('.modal_image');
+	whiteboard.modalClose('.modal_image');
 }
 
 function ImageTool() {
@@ -45,7 +45,7 @@ function ImageTool() {
 ImageTool.prototype.onButtonClick = function() {
 	var iurl = window.prompt('Enter image url', '');
 	if (iurl) {
-		modalOpen('.modal_image');
+		whiteboard.modalOpen('.modal_image');
 		return new ImageHead(iurl);
 	}
 	return false;
@@ -54,9 +54,9 @@ ImageTool.prototype.onButtonClick = function() {
 
 ImageTool.prototype.drawFull = function(data) {
 	function callback(url, position, context) {
-		drawEverything();
+		whiteboard.drawEverything();
 	}
 	drawImageScaled(data.url, data.position, data.scale, context_picture, callback);
 };
 
-makeTool(new ImageTool());
+whiteboard.makeTool(new ImageTool());
