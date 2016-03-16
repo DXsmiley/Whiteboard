@@ -115,7 +115,14 @@ def serve_listing():
 
 @app.route('/board/<board_id>')
 def serve_board(board_id):
-	return flask.render_template('whiteboard.tpl', board_id = board_id)
+	show_controls = False
+	board = whiteboards[board_id]
+	if board.protected:
+		if flask.request.cookies.get('key_' + board_id) == board.key:
+			show_controls = True
+	else:
+		show_controls = True
+	return flask.render_template('whiteboard.tpl', board_id = board_id, show_controls = show_controls)
 
 @app.route('/static/<path:path>')
 def serve_static(path):
@@ -157,6 +164,7 @@ def socketio_full_image(message):
 def socketio_undo(message):
 	bid = message['data']['board_id']
 	aid = message['data']['action_id']
+	key = message['data']['key']
 	board = whiteboards[bid]
 	if not board.protected or board.key == key:
 		board.undo_action(aid)

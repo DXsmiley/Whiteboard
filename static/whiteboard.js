@@ -82,9 +82,11 @@ Whiteboard.prototype.modalOpen = function(extra_thing) {
 // Perform events
 
 Whiteboard.prototype.eventToolDown = function(n, p) {
-	this.tool_heads[n] = this.active_tool.makeToolHead();
-	if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-		this.tool_heads[n].onMove(p);
+	if (this.active_tool) {
+		this.tool_heads[n] = this.active_tool.makeToolHead();
+		if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
+			this.tool_heads[n].onMove(p);
+		}
 	}
 }
 
@@ -246,7 +248,7 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
 	}
 	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
-	if (this.active_tool.name == 'eraser') {
+	if (this.active_tool && this.active_tool.name == 'eraser') {
 		this.triggerToolButton('pencil');
 	}
 };
@@ -316,8 +318,6 @@ Whiteboard.prototype.startup = function() {
 		})();
 	}
 
-	this.triggerToolButton('pencil');
-	this.triggerColourButton('blue');
 	this.toolbarActivate('#toolbar_normal');
 
 	console.log('Board ID:', this.whiteboard_id);

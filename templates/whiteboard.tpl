@@ -14,53 +14,57 @@
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
 
-		<div class="toolbar">
-			<div id="toolbar_normal">
-				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil_select.png"><br>
-				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
-				<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
-				<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
-				<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
-				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
-				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
-				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
-				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
-				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
-			</div>
-			<div id="toolbar_confirmcancel">
-				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
-				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
-			</div>
-			<div id="toolbar_image" class="modal_image">
-				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
-				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
-			</div>
-		</div>
+		{% if show_controls %}
 
-		<div class="absolute">
-			<div id="modal_pane">
-				<div class="modal_text">
-					<p contenteditable id="text_input_text" class="modal_text">Enter Text</p>
+			<div class="toolbar">
+				<div id="toolbar_normal">
+					<img class="toolbar_button" id="button_pencil" src="/static/images/pencil_select.png"><br>
+					<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
+					<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
+					<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
+					<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
+					<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
+					<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
+					<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
+					<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
+					<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
 				</div>
-				<div class="modal_image">
-					<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
+				<div id="toolbar_confirmcancel">
+					<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
+					<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 				</div>
-				<div class="modal_latex">
-					<center>
-						<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
-						<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
-					</center>
-					<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
-				</div>
-				<div class="modal_clear">
-					<center>
-						<h1 class="modal_clear">Clear the whiteboard?</h1>
-						<img id="modal_clear_button_confirm" class="toolbar_button" src="/static/images/confirm_large.png">
-						<img id="modal_clear_button_cancel" class="toolbar_button" src="/static/images/cancel_large.png">
-					</center>
+				<div id="toolbar_image" class="modal_image">
+					<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
+					<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
 				</div>
 			</div>
-		</div>
+
+			<div class="absolute">
+				<div id="modal_pane">
+					<div class="modal_text">
+						<p contenteditable id="text_input_text" class="modal_text">Enter Text</p>
+					</div>
+					<div class="modal_image">
+						<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
+					</div>
+					<div class="modal_latex">
+						<center>
+							<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
+							<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
+						</center>
+						<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
+					</div>
+					<div class="modal_clear">
+						<center>
+							<h1 class="modal_clear">Clear the whiteboard?</h1>
+							<img id="modal_clear_button_confirm" class="toolbar_button" src="/static/images/confirm_large.png">
+							<img id="modal_clear_button_cancel" class="toolbar_button" src="/static/images/cancel_large.png">
+						</center>
+					</div>
+				</div>
+			</div>
+
+		{% endif %}
 
 	</body>
 	
@@ -82,5 +86,12 @@
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
+
+	{% if show_controls %}
+		<script type="text/javascript">
+			whiteboard.triggerToolButton('pencil');
+			whiteboard.triggerColourButton('blue');
+		</script>
+	{% endif %}
 
 </html>
