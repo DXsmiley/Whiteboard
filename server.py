@@ -21,8 +21,9 @@ class Whiteboard:
 		self.layers = []
 		self.last_changed = datetime.datetime.now()
 		self.last_saved = datetime.datetime.now()
-		self.protected = False
+		self.permissions = 'open'
 		self.key = ''
+		self.owner_key = ''
 
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
@@ -54,8 +55,20 @@ class Whiteboard:
 		return '{} hours, {} minutes, {} seconds'.format(hours, minutes, seconds)
 
 	def make_protected(self):
-		self.protected = True
+		self.permissions = 'protected'
 		self.key = make_humane_gibberish(6)
+		self.owner_key = make_humane_gibberish(30)
+
+	def make_private(self):
+		self.permissions = 'private'
+		self.key = make_humane_gibberish(6)
+		self.owner_key = make_humane_gibberish(30)
+
+	def may_view(self, key):
+		return self.permissions in ['open', 'protected'] or key in [self.key, self.owner_key]
+
+	def may_edit(self, key):
+		return self.permissions == 'open' or key in [self.key, self.owner_key]
 
 	def jsonise(self):
 		return {
@@ -77,15 +90,17 @@ app.debug = True
 
 sock = socketio.SocketIO(app)
 
-def make_board(protected = False):
+def make_board(permissions = 'open'):
 	attempts = 0
 	board_id = make_humane_gibberish(4)
 	while board_id in whiteboards:
 		board_id = make_humane_gibberish(attempts + 4)
 		attempts += 1
-	if protected:
+	if permissions == 'protected':
 		whiteboards[board_id].make_protected()
-	return (board_id, whiteboards[board_id].key)
+	if permissions == 'private':
+		whiteboards[board_id].make_private()
+	return (board_id, whiteboards[board_id].owner_key)
 
 @app.route('/')
 def serve_index():
@@ -115,14 +130,13 @@ def serve_listing():
 
 @app.route('/board/<board_id>')
 def serve_board(board_id):
-	show_controls = False
 	board = whiteboards[board_id]
-	if board.protected:
-		if flask.request.cookies.get('key_' + board_id) == board.key:
-			show_controls = True
+	key = flask.request.cookies.get('key_' + board_id)
+	if board.may_view(key):
+		show_controls = board.may_edit(key)
+		return flask.render_template('whiteboard.tpl', board_id = board_id, show_controls = show_controls)
 	else:
-		show_controls = True
-	return flask.render_template('whiteboard.tpl', board_id = board_id, show_controls = show_controls)
+		return 404
 
 @app.route('/static/<path:path>')
 def serve_static(path):
@@ -135,7 +149,7 @@ def socketio_paint(message):
 	bid = message['data']['board_id']
 	key = message['data']['key']
 	board = whiteboards[bid]
-	if not board.protected or board.key == key:
+	if board.may_edit(key):
 		data = {
 			'data': {
 				'board_id': bid,
@@ -151,14 +165,17 @@ def socketio_paint(message):
 def socketio_full_image(message):
 	# print('full image', message)
 	bid = message['data']['board_id']
-	socketio.join_room(bid)
-	data = {
-		'data': {
-			'board_id': bid,
-			'actions': whiteboards[bid].full_image()
+	key = message['data']['key']
+	board = whiteboards[bid]
+	if board.may_view(key):
+		socketio.join_room(bid)
+		data = {
+			'data': {
+				'board_id': bid,
+				'actions': board.full_image()
+			}
 		}
-	}
-	socketio.emit('paint', data)
+		socketio.emit('paint', data)
 
 @sock.on('undo')
 def socketio_undo(message):
@@ -166,7 +183,7 @@ def socketio_undo(message):
 	aid = message['data']['action_id']
 	key = message['data']['key']
 	board = whiteboards[bid]
-	if not board.protected or board.key == key:
+	if board.may_edit(key):
 		board.undo_action(aid)
 		data = {
 			'data': {

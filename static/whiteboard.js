@@ -24,7 +24,7 @@ function Whiteboard() {
 
 Whiteboard.prototype.getKey = function(key) {
 	key = Cookies.get('key_' + this.whiteboard_id);
-	if (key === undefined) key = '';
+	if (!key) key = '';
 	return key;
 };
 
@@ -332,7 +332,16 @@ Whiteboard.prototype.startup = function() {
 		the_whiteboard.sockHandleUndo(msg);
 	});
 
-	this.socket.emit('full image', {data:{'board_id': this.whiteboard_id}})
+	this.socket.emit('full image',
+		{
+			data:
+				{
+					'board_id': this.whiteboard_id,
+					'key': this.getKey()
+				}
+		}
+	);
+
 };
 
 Whiteboard.prototype.shutdown = function() {
