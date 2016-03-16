@@ -64,6 +64,9 @@ class Whiteboard:
 		self.key = make_humane_gibberish(6)
 		self.owner_key = make_humane_gibberish(30)
 
+	def unlock(self):
+		self.permissions = 'open'
+
 	def may_view(self, key):
 		return self.permissions in ['open', 'protected'] or key in [self.key, self.owner_key]
 
@@ -199,6 +202,14 @@ def socketio_undo(message):
 			}
 		}
 		socketio.emit('undo', data, broadcast = True, room = bid)
+
+@sock.on('unlock')
+def socketio_unlock(message):
+	bid = message['data']['board_id']
+	key = message['data']['key']
+	board = whiteboards[bid]
+	if board.may_edit(key):
+		board.unlock()
 
 if __name__ == '__main__':
 	sock.run(app, host = '0.0.0.0', port = 8080)
