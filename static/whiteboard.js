@@ -114,8 +114,8 @@ Whiteboard.prototype.mouseDown = function(event) {
 		this.eventToolDown(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
 	}
 	if (event.which == 3) {
-		last_mouse_x = event.pageX;
-		last_mouse_y = event.pageY;
+		this.last_mouse_x = event.pageX;
+		this.last_mouse_y = event.pageY;
 		this.panning = true;
 	}
 	event.preventDefault();
