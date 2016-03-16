@@ -103,12 +103,13 @@ def socketio_paint(message):
 		}
 	}
 	whiteboards[bid].add_action(message['data'])
-	socketio.emit('paint', data, broadcast = True)
+	socketio.emit('paint', data, broadcast = True, room = bid)
 
 @sock.on('full image')
 def socketio_full_image(message):
 	# print('full image', message)
 	bid = message['data']['board_id']
+	socketio.join_room(bid)
 	data = {
 		'data': {
 			'board_id': bid,
@@ -128,7 +129,7 @@ def socketio_undo(message):
 			'action_id': aid
 		}
 	}
-	socketio.emit('undo', data, broadcast = True)
+	socketio.emit('undo', data, broadcast = True, room = bid)
 
 if __name__ == '__main__':
 	sock.run(app, host = '0.0.0.0', port = 8080)
