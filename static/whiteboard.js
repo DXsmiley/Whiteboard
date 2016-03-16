@@ -20,7 +20,13 @@ function Whiteboard() {
 	this.panning = false;
 	this.last_mouse_x = 0;
 	this.last_mouse_y = 0;
-}
+};
+
+Whiteboard.prototype.getKey = function(key) {
+	key = Cookies.get('key_' + this.whiteboard_id);
+	if (key === undefined) key = '';
+	return key;
+};
 
 Whiteboard.prototype.makeTool = function(tool) {
 	this.tools[tool.name] = tool;
@@ -35,7 +41,8 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 		{
 			'data': {
 				'action_id': action_id,
-				'board_id': this.whiteboard_id
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
 			}
 		}
 	);
@@ -51,7 +58,8 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
 				'action_id': action_id,
 				'tool': tool_name,
 				'data': action_data,
-				'board_id': this.whiteboard_id
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
 			}
 		}
 	);
