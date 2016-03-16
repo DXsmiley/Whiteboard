@@ -113,7 +113,14 @@ def server_board_new():
 
 @app.route('/new/protected')
 def server_board_new_protected():
-	board_id, key = make_board(protected = True)
+	board_id, key = make_board(permissions = 'protected')
+	response = flask.make_response(flask.redirect('/board/' + board_id))
+	response.set_cookie('key_' + board_id, key)
+	return response
+
+@app.route('/new/private')
+def server_board_new_private():
+	board_id, key = make_board(permissions = 'private')
 	response = flask.make_response(flask.redirect('/board/' + board_id))
 	response.set_cookie('key_' + board_id, key)
 	return response
@@ -136,7 +143,7 @@ def serve_board(board_id):
 		show_controls = board.may_edit(key)
 		return flask.render_template('whiteboard.tpl', board_id = board_id, show_controls = show_controls)
 	else:
-		return 404
+		flask.abort(403)
 
 @app.route('/static/<path:path>')
 def serve_static(path):
