@@ -10,7 +10,7 @@ div.headder {
 
 .smiley {
 	margin: 10px;
-	position: fixed;
+	position: absolute;
 	border: 1px solid #eeeeee;
 }
 
