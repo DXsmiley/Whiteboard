@@ -62,7 +62,10 @@ td {
 	padding: 20px;
 }
 
-canvas.fancy {
-	width: 800px;
+#anim_canvas {
+	width: 1600px;
 	height: 800px;
+	margin: 0px auto;
+	z-index: -1;
+	position: absolute;
 }

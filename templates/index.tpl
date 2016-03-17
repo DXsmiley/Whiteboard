@@ -2,7 +2,7 @@
 {% block title %}Whiteboard{% endblock %}
 {% block nav_class_home %}nav_button_current{% endblock %}
 {% block content %}
-	<div class="background"></div>
+	<canvas id="anim_canvas" width="1600px" height="800px"></canvas>
 	<div class="container">
 		<br><br><br><br>
 		<h1>Express Yourself Visually</h1>
@@ -33,4 +33,6 @@
 			</tr>
 		</table>
 	</div>
+	<script type="text/javascript" src="/static/draw.js"></script>
+	<script type="text/javascript" src="/static/auto_drawer.js"></script>
 {% endblock %}
