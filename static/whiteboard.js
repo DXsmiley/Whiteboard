@@ -49,6 +49,18 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 	this.paint_blobs_undone[action_id] = action_id;
 };
 
+Whiteboard.prototype.sendUnlockEvent = function(target) {
+	this.socket.emit('unlock',
+		{
+			'data': {
+				'board_id': this.whiteboard_id,
+				'level': 'open',
+				'key': this.getKey()
+			}
+		}
+	);
+}
+
 Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
 	var action_id = Math.random();
@@ -227,7 +239,8 @@ Whiteboard.prototype.triggerToolButton = function(t, dbl) {
 			for (var i in this.tools) {
 				var t_name = this.tools[i].name;
 				var t_image = this.tools[i].buttonImage;
-				document.getElementById('button_' + t_name).src = '/static/images/' + t_image;
+				var bt_elem = document.getElementById('button_' + t_name);
+				if (bt_elem !== null) bt_elem.src = '/static/images/' + t_image;
 			}
 			var t_image = this.tools[t].buttonImageSelected;
 			document.getElementById('button_' + t).src = '/static/images/' + t_image;
@@ -273,7 +286,7 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 };
 
 Whiteboard.prototype.toolbarActivate = function (to_activate) {
-	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel'];
+	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel', '#toolbar_unlock'];
 	for (var i in toolbars) {
 		$(toolbars[i]).css('display', 'none');
 	}
@@ -318,8 +331,6 @@ Whiteboard.prototype.startup = function() {
 		})();
 	}
 
-	this.toolbarActivate('#toolbar_normal');
-
 	console.log('Board ID:', this.whiteboard_id);
 
 	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/');
@@ -330,6 +341,10 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('undo', function(msg) {
 		the_whiteboard.sockHandleUndo(msg);
+	});
+
+	this.socket.on('refresh', function(msg) {
+		location.reload(true);
 	});
 
 	this.socket.emit('full image',

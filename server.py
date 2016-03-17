@@ -144,7 +144,12 @@ def serve_board(board_id):
 	key = flask.request.cookies.get('key_' + board_id)
 	if board.may_view(key):
 		show_controls = board.may_edit(key)
-		return flask.render_template('whiteboard.tpl', board_id = board_id, show_controls = show_controls)
+		return flask.render_template(
+			'whiteboard.tpl',
+			board_id = board_id,
+			show_controls = show_controls,
+			permissions = board.permissions
+		)
 	else:
 		flask.abort(403)
 
@@ -210,6 +215,7 @@ def socketio_unlock(message):
 	board = whiteboards[bid]
 	if board.may_edit(key):
 		board.unlock()
+		socketio.emit('refresh', broadcast = True, room = bid)
 
 if __name__ == '__main__':
 	sock.run(app, host = '0.0.0.0', port = 8080)
