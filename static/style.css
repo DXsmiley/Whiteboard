@@ -49,13 +49,19 @@ a.no_underline {
 	text-decoration: none;
 }
 
-span.nav_button {
-	padding: 11px 30px 10px 30px;
+span.nav_button, span.nav_button_current {
+	padding: 11px 20px 10px 20px;
+	margin: 0px 20px 0px 20px;
 	color: #000000;
 }
 
-span.nav_button:hover {
-	background-color: #eeeeee;
+span.nav_button_current {
+	border-bottom: 4px #eeeeee solid;
+}
+
+span.nav_button:hover, span.nav_button_current:hover {
+	/*background-color: #eeeeee;*/
+	border-bottom: 4px #2a7fff solid;
 }
 
 div.large_container {
