@@ -34,56 +34,6 @@ body.whiteboard {
 	background-color: gray;
 }
 
-div.headder {
-	border-bottom: 1px solid #eeeeee;
-	text-align: center;
-	padding: 10px;
-}
-
-span.float_left {
-	float: left;
-}
-
-a.no_underline {
-	text-decoration-line: none;
-	text-decoration: none;
-}
-
-span.nav_button, span.nav_button_current {
-	padding: 11px 20px 10px 20px;
-	margin: 0px 20px 0px 20px;
-	color: #000000;
-}
-
-span.nav_button_current {
-	border-bottom: 4px #eeeeee solid;
-}
-
-span.nav_button:hover, span.nav_button_current:hover {
-	/*background-color: #eeeeee;*/
-	border-bottom: 4px #2a7fff solid;
-}
-
-div.large_container {
-	width: 1000px;
-	margin: 0px auto;
-}
-
-div.background {
-	width: 1000px;
-	height: 300px;
-	position: absolute;
-	background-image: url("/static/images/splash.png");
-	z-index: -1;
-}
-
-div.container {
-	text-align: center;
-	/*text-align: center;*/
-	margin: 0px auto;
-	width: 800px;
-}
-
 div.absolute {
 	position: absolute;
 	left: 0px;
@@ -93,8 +43,6 @@ div.absolute {
 div.toolbar {
 	background-color: #383333;
 	height: 100%;
-	/*margin: 0px auto;*/
-	/*width: 100px;*/
 	float: left;
 	z-index: 100;
 	position: relative;
@@ -108,8 +56,6 @@ div.toolbar {
 	margin: 0px auto;
 	background-color: rgba(255, 255, 255, 0.8);
 	display: none;
-	/*float: right;*/
-	/*visibility: hidden;*/
 }
 
 #text_input_text {
@@ -131,10 +77,6 @@ div.toolbar {
 .modal_image {
 	display: none;
 }
-
-/*#toolbar_confirmcancel {
-	display: none;
-}*/
 
 #modal_image {
 	position: fixed;
@@ -158,18 +100,4 @@ div.toolbar {
 
 img.toolbar_button {
 	transition: all 0.02s ease-in-out;
-}
-
-/*img.toolbar_button:hover {
-	transform: scale(0.92);
-}*/
-
-table {
-	width: 100%;
-}
-
-td {
-	width: 50%;
-	text-align: center;
-	padding: 20px;
 }
