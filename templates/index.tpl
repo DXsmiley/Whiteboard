@@ -4,7 +4,7 @@
 {% block content %}
 	<canvas id="anim_canvas" width="1600px" height="800px"></canvas>
 	<div class="container">
-		<br><br><br><br>
+		<br><br><br><br><br>
 		<h1>Express Yourself Visually</h1>
 		<p><a href="/new">Start Drawing Now</a></p>
 		<br><br><br><br><br><br>
