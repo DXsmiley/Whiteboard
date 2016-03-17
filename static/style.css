@@ -34,8 +34,40 @@ body.whiteboard {
 	background-color: gray;
 }
 
-body.index {
-	text-align: center;	
+div.headder {
+	border-bottom: 1px solid #eeeeee;
+	text-align: center;
+	padding: 10px;
+}
+
+span.float_left {
+	float: left;
+}
+
+span.nav_button {
+	padding: 10px 30px 10px 30px;
+	color: #000000;
+	text-decoration-line: none;	
+	text-decoration: none;
+}
+
+span.nav_button:hover {
+	background-color: #eeeeee;
+	text-decoration-line: none;	
+	text-decoration: none;
+}
+
+div.large_container {
+	width: 1000px;
+	margin: 0px auto;	
+}
+
+div.background {
+	width: 1000px;
+	height: 300px;
+	position: absolute;
+	background-image: url("/static/images/splash.png");
+	z-index: -1;
 }
 
 div.container {
