@@ -14,6 +14,7 @@
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
 
+
 		<div class="toolbar">
 			<div id="toolbar_normal">
 				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil_select.png"><br>
@@ -26,6 +27,9 @@
 				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
 				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
+				{% if permissions != 'open' %}
+					<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
+				{% endif %}
 			</div>
 			<div id="toolbar_confirmcancel">
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
@@ -34,6 +38,9 @@
 			<div id="toolbar_image" class="modal_image">
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
 				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
+			</div>
+			<div id="toolbar_empty">
+				
 			</div>
 		</div>
 
@@ -64,6 +71,7 @@
 
 	</body>
 	
+	<script type="text/javascript" src="/static/cookies.js"></script>
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="/static/socket.io.min.js"></script>
 	<script type="text/javascript" src="/static/simplify.js"></script>
@@ -81,5 +89,18 @@
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
+	<script type="text/javascript" src="/static/tool_unlock.js"></script>
+
+	{% if show_controls %}
+		<script type="text/javascript">
+			whiteboard.toolbarActivate('#toolbar_normal');
+			whiteboard.triggerToolButton('pencil');
+			whiteboard.triggerColourButton('blue');
+		</script>
+	{% else %}
+		<script type="text/javascript">
+			whiteboard.toolbarActivate('#toolbar_empty');
+		</script>
+	{% endif %}
 
 </html>

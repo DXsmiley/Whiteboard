@@ -20,7 +20,13 @@ function Whiteboard() {
 	this.panning = false;
 	this.last_mouse_x = 0;
 	this.last_mouse_y = 0;
-}
+};
+
+Whiteboard.prototype.getKey = function(key) {
+	key = Cookies.get('key_' + this.whiteboard_id);
+	if (!key) key = '';
+	return key;
+};
 
 Whiteboard.prototype.makeTool = function(tool) {
 	this.tools[tool.name] = tool;
@@ -35,12 +41,25 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 		{
 			'data': {
 				'action_id': action_id,
-				'board_id': this.whiteboard_id
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
 			}
 		}
 	);
 	this.paint_blobs_undone[action_id] = action_id;
 };
+
+Whiteboard.prototype.sendUnlockEvent = function(target) {
+	this.socket.emit('unlock',
+		{
+			'data': {
+				'board_id': this.whiteboard_id,
+				'level': 'open',
+				'key': this.getKey()
+			}
+		}
+	);
+}
 
 Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
 	// console.log('sendPaintEvent', tool_name, the_points);
@@ -51,7 +70,8 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
 				'action_id': action_id,
 				'tool': tool_name,
 				'data': action_data,
-				'board_id': this.whiteboard_id
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
 			}
 		}
 	);
@@ -74,9 +94,11 @@ Whiteboard.prototype.modalOpen = function(extra_thing) {
 // Perform events
 
 Whiteboard.prototype.eventToolDown = function(n, p) {
-	this.tool_heads[n] = this.active_tool.makeToolHead();
-	if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-		this.tool_heads[n].onMove(p);
+	if (this.active_tool) {
+		this.tool_heads[n] = this.active_tool.makeToolHead();
+		if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
+			this.tool_heads[n].onMove(p);
+		}
 	}
 }
 
@@ -217,7 +239,8 @@ Whiteboard.prototype.triggerToolButton = function(t, dbl) {
 			for (var i in this.tools) {
 				var t_name = this.tools[i].name;
 				var t_image = this.tools[i].buttonImage;
-				document.getElementById('button_' + t_name).src = '/static/images/' + t_image;
+				var bt_elem = document.getElementById('button_' + t_name);
+				if (bt_elem !== null) bt_elem.src = '/static/images/' + t_image;
 			}
 			var t_image = this.tools[t].buttonImageSelected;
 			document.getElementById('button_' + t).src = '/static/images/' + t_image;
@@ -238,7 +261,7 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
 	}
 	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
-	if (this.active_tool.name == 'eraser') {
+	if (this.active_tool && this.active_tool.name == 'eraser') {
 		this.triggerToolButton('pencil');
 	}
 };
@@ -263,7 +286,7 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 };
 
 Whiteboard.prototype.toolbarActivate = function (to_activate) {
-	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel'];
+	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel', '#toolbar_unlock'];
 	for (var i in toolbars) {
 		$(toolbars[i]).css('display', 'none');
 	}
@@ -308,10 +331,6 @@ Whiteboard.prototype.startup = function() {
 		})();
 	}
 
-	this.triggerToolButton('pencil');
-	this.triggerColourButton('blue');
-	this.toolbarActivate('#toolbar_normal');
-
 	console.log('Board ID:', this.whiteboard_id);
 
 	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/');
@@ -324,7 +343,20 @@ Whiteboard.prototype.startup = function() {
 		the_whiteboard.sockHandleUndo(msg);
 	});
 
-	this.socket.emit('full image', {data:{'board_id': this.whiteboard_id}})
+	this.socket.on('refresh', function(msg) {
+		location.reload(true);
+	});
+
+	this.socket.emit('full image',
+		{
+			data:
+				{
+					'board_id': this.whiteboard_id,
+					'key': this.getKey()
+				}
+		}
+	);
+
 };
 
 Whiteboard.prototype.shutdown = function() {
