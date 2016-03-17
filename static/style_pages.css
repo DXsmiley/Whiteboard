@@ -8,8 +8,10 @@ div.headder {
 	padding: 10px;
 }
 
-span.float_left {
-	float: left;
+.smiley {
+	margin: 10px;
+	position: fixed;
+	border: 1px solid #eeeeee;
 }
 
 a.no_underline {

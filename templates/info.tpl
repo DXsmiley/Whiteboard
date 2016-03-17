@@ -6,8 +6,8 @@
 		<link rel="stylesheet" type="text/css" href="static/style_pages.css">
 	</head>
 	<body>
+		<a href="https://github.com/dxsmiley/" target="_blank"><img src="/static/images/smiley.png" class="smiley"></a>
 		<div class="headder">
-			<span class="float_left">Whiteboard</span>
 			<a class="no_underline" href="/">
 				<span class="{% block nav_class_home %}nav_button{% endblock %}">Home</span>
 			</a>
