@@ -44,17 +44,18 @@ span.float_left {
 	float: left;
 }
 
-span.nav_button {
-	padding: 10px 30px 10px 30px;
-	color: #000000;
-	text-decoration-line: none;	
+a.no_underline {
+	text-decoration-line: none;
 	text-decoration: none;
+}
+
+span.nav_button {
+	padding: 11px 30px 10px 30px;
+	color: #000000;
 }
 
 span.nav_button:hover {
 	background-color: #eeeeee;
-	text-decoration-line: none;	
-	text-decoration: none;
 }
 
 div.large_container {
