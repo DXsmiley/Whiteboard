@@ -13,12 +13,12 @@
 				<td>
 					<h2>Presentation Mode</h2>
 					<img src="/static/images/present.png">
-					<p>Don't want others messing with the board? With a protected board, everyone can see it, but only the chosen ones may draw.</p>
+					<p>Don't want others messing with the board? With a <a href="/new/protected">protected board</a>, everyone can see it, but only the chosen ones may draw.</p>
 				</td>
 				<td>
 					<h2>Stay Undercover</h2>
 					<img src="/static/images/spy.png">
-					<p>Paranoid about people stealing your million-dollar idea? Private boards can only be accessed by you.</p>
+					<p>Paranoid about people stealing your million-dollar idea? <a href="/new/private">Private boards</a> can only be accessed by you.</p>
 				</td>
 			</tr>
 			<tr>
