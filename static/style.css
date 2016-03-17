@@ -66,7 +66,7 @@ span.nav_button:hover, span.nav_button_current:hover {
 
 div.large_container {
 	width: 1000px;
-	margin: 0px auto;	
+	margin: 0px auto;
 }
 
 div.background {
@@ -163,3 +163,13 @@ img.toolbar_button {
 /*img.toolbar_button:hover {
 	transform: scale(0.92);
 }*/
+
+table {
+	width: 100%;
+}
+
+td {
+	width: 50%;
+	text-align: center;
+	padding: 20px;
+}
