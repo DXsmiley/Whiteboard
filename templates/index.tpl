@@ -11,9 +11,9 @@
 		<table>
 			<tr>
 				<td>
-					<h2>Present to others</h2>
+					<h2>Presentation Mode</h2>
 					<img src="/static/images/present.png">
-					<p>Don't want others drawing on the board? With a protected board, everyone can see it, but only the chosen ones may draw.</p>
+					<p>Don't want others messing with the board? With a protected board, everyone can see it, but only the chosen ones may draw.</p>
 				</td>
 				<td>
 					<h2>Stay Undercover</h2>
@@ -27,7 +27,7 @@
 					<p>Draw and view on any device! Well, maybe. I'm not really sure how well it works.</p>
 				</td>
 				<td>
-					<h2>LaTeX support</h2>
+					<h2>LaTeX Support</h2>
 					<p>This one's for the geeks! Format equations with full-featured LaTeX with live preview.</p>
 				</td>
 			</tr>
