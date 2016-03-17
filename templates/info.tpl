@@ -14,7 +14,7 @@
 			<a class="no_underline" href="/about">
 				<span class="{% block nav_class_about %}nav_button{% endblock %}">About</span>
 			</a>
-			<a class="no_underline" href="/">
+			<a class="no_underline" href="/ninjas">
 				<span class="{% block nav_class_ninjas %}nav_button{% endblock %}">Ninjas</span>
 			</a>
 			<a class="no_underline" href="https://github.com/DXsmiley/Whiteboard" target="_blank">
