@@ -62,7 +62,11 @@ sock = socketio.SocketIO(app)
 
 @app.route('/')
 def serve_index():
-	return serve_static('index.html')
+	return flask.render_template('index.tpl')
+
+@app.route('/about')
+def serve_about():
+	return flask.render_template('about.tpl')
 
 @app.route('/new')
 def server_board_new():
