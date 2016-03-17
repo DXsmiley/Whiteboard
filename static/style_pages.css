@@ -27,6 +27,11 @@ span.nav_button_current {
 	border-bottom: 4px #eeeeee solid;
 }
 
+a.bright {
+	color: #2a7fff;
+}
+
+
 span.nav_button:hover, span.nav_button_current:hover {
 	/*background-color: #eeeeee;*/
 	border-bottom: 4px #2a7fff solid;

@@ -6,7 +6,7 @@
 	<div class="container">
 		<br><br><br><br><br>
 		<h1>Express Yourself Visually</h1>
-		<p><a href="/new">Start Drawing Now</a></p>
+		<h3><a class="bright" href="/new">Start Drawing Now</a></h3>
 		<br><br><br><br><br><br>
 		<table>
 			<tr>

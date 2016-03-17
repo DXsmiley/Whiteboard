@@ -10,7 +10,7 @@ function singleDrawTick() {
 		// console.log(points[place]);
 		var p1 = points[place];
 		var p2 = points[place + 1];
-		if (p1.x != -1 && p2.x != -1) drawSegment(movePoint(p1), movePoint(p2), the_context, '#cccccc', 4);
+		if (p1.x != -1 && p2.x != -1) drawSegment(movePoint(p1), movePoint(p2), the_context, '#ff7f2a', 4);
 		place += 1;
 		window.setTimeout(singleDrawTick, 20);
 	}
