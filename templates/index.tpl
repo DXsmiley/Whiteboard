@@ -2,7 +2,7 @@
 {% block title %}Whiteboard{% endblock %}
 {% block nav_class_home %}nav_button_current{% endblock %}
 {% block content %}
-	<canvas id="anim_canvas" width="1600px" height="800px"></canvas>
+	<canvas id="anim_canvas" width="1000px" height="800px"></canvas>
 	<div class="container">
 		<br><br><br><br><br>
 		<h1>Express Yourself Visually</h1>
