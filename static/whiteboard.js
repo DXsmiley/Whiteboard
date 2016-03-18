@@ -140,7 +140,7 @@ Whiteboard.prototype.mouseDown = function(event) {
 		this.last_mouse_y = event.pageY;
 		this.panning = true;
 	}
-	event.preventDefault();
+	if (event.preventDefault) event.preventDefault();
 };
 
 Whiteboard.prototype.mouseMove = function(event) {
@@ -156,24 +156,59 @@ Whiteboard.prototype.mouseMove = function(event) {
 	} else {
 		this.eventToolMove(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
 	}
-	event.preventDefault();
+	if (event.preventDefault) event.preventDefault();
 };
 
 Whiteboard.prototype.mouseUp = function(event) {
-	if (event.which == 1) {
-		this.eventToolUp(0);
-	}
+	this.eventToolUp(0);
 	this.panning = false;
 	event.preventDefault();
 };
 
+function touchCentre(touches) {
+	var sx = 0;
+	var sy = 0;
+	for (var i = 0; i < touches.length; ++i) {
+		sx += touches[i].pageX;
+		sy += touches[i].pageY;
+	}
+	sx /= touches.length;
+	sy /= touches.length;
+	return {x: sx, y: sy};
+}
+
 Whiteboard.prototype.touchDown = function(event) {
-	this.mouseDown(event.touches[0]);
+	if (event.touches.length == 1) {
+		this.eventToolDown(0, new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y));
+	}
+	if (event.touches.length == 2) {
+		var c = touchCentre(event.touches);
+		this.last_mouse_x = c.x;
+		this.last_mouse_y = c.y;
+		this.panning = true;
+	}
 	event.preventDefault();
 };
 
 Whiteboard.prototype.touchMove = function(event) {
-	mouseMove(event.touches[0]);
+	if (this.panning) {
+		var c = touchCentre(event.touches);
+		var dx = c.x - this.last_mouse_x;
+		var dy = c.y - this.last_mouse_y;
+		this.last_mouse_x = c.x;
+		this.last_mouse_y = c.y;
+		this.panCanvas(dx, dy);
+	} else {
+		if (event.touches.length > 1) {
+			this.eventToolUp(0);
+			var c = touchCentre(event.touches);
+			this.last_mouse_x = c.x;
+			this.last_mouse_y = c.y;
+			this.panning = true;
+		} else {
+			this.eventToolMove(0, new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y));
+		}
+	}
 	event.preventDefault();
 };
 
