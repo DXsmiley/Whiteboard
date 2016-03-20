@@ -4,6 +4,7 @@ import collections
 import random
 import flask.ext.socketio as socketio
 import datetime
+import sys
 
 def make_humane_gibberish(length):
 	"""Generate a meaningless but human-friendly string.
@@ -226,4 +227,7 @@ def socketio_unlock(message):
 		socketio.emit('refresh', broadcast = True, room = bid)
 
 if __name__ == '__main__':
-	sock.run(app, host = '0.0.0.0', port = 8080)
+	port = 8080
+	if len(sys.argv) > 1:
+		port = int(sys.argv[1])
+	sock.run(app, host = '0.0.0.0', port = port)
