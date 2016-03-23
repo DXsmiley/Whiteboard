@@ -22,10 +22,10 @@
 				<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
 				<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
 				<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
-				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
 				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
 				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
+				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
 				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
 				{% if permissions != 'open' %}
 					<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
