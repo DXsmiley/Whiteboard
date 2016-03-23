@@ -147,6 +147,7 @@ def serve_listing():
 	return flask.render_template('listing.tpl', boards = boards)
 
 @app.route('/board/<board_id>')
+@app.route('/b/<board_id>')
 def serve_board(board_id):
 	board = whiteboards[board_id]
 	key = flask.request.cookies.get('key_' + board_id)
