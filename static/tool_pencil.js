@@ -1,4 +1,5 @@
 function PencilTool() {
+	this.thickness = 3.2;
 	this.line_mode = false;
 	this.name = 'pencil';
 	this.buttonImage = 'pencil.png';
@@ -22,15 +23,15 @@ PencilTool.prototype.onDoubleClick = function() {
 };
 
 PencilTool.prototype.makeToolHead = function() {
-	if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, 2);
-	return new PencilHead('pencil', whiteboard.global_colour, 2, 'calligraphy');
+	if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, this.thickness);
+	return new PencilHead('pencil', whiteboard.global_colour, this.thickness, 'calligraphy');
 };
 
 PencilTool.prototype.drawFull = function(data) {
 	if (data.style == 'calligraphy') {
-		drawLineCalligraphy(data.points, context_picture, data.colour, 2);
+		drawLineCalligraphy(data.points, context_picture, data.colour, this.thickness);
 	} else {
-		drawLine(data.points, context_picture, data.colour, 2);
+		drawLine(data.points, context_picture, data.colour, this.thickness);
 	}
 };
 
