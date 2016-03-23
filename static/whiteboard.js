@@ -368,7 +368,7 @@ Whiteboard.prototype.startup = function() {
 
 	console.log('Board ID:', this.whiteboard_id);
 
-	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+	this.socket = io.connect('https://' + document.domain + ':' + location.port + '/');
 
 	this.socket.on('paint', function(msg) {
 		the_whiteboard.sockHandlePaint(msg);

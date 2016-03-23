@@ -90,7 +90,6 @@ class Whiteboard:
 whiteboards = collections.defaultdict(lambda : Whiteboard())
 
 app = flask.Flask(__name__)
-app.debug = True
 
 sock = socketio.SocketIO(app)
 
