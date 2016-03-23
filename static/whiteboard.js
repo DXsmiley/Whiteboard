@@ -346,6 +346,7 @@ Whiteboard.prototype.startup = function() {
 	for (var i in this.colours) {
 		(function() {
 			var x = i;
+			$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
 			$('#colour_' + x).click(function(event) {the_whiteboard.triggerColourButton(x);});
 		})();
 	}
@@ -360,6 +361,7 @@ Whiteboard.prototype.startup = function() {
 				$('#button_' + name).hide();
 				$('#button_' + name).next().hide();
 			} else {
+				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
 				$('#button_' + name).click(function(event) {the_whiteboard.triggerToolButton(name, false);});
 				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
 			}
