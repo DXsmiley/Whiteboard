@@ -6,9 +6,9 @@ function Whiteboard() {
 	this.context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
 	this.active_tool = null;
 	this.colours = {
-		black: '#444444',
-		blue: '#484fc0',
-		red: '#df4b26'
+		black: '#2a2a2a',
+		blue: '#007fee',
+		red: '#ee7f00'
 	};
 	this.global_colour = this.colours['blue'];
 	this.tools = {};
