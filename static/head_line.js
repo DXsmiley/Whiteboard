@@ -25,7 +25,7 @@ LineHead.prototype.onRelease = function() {
 			thickness: this.thickness,
 			style: 'straight'
 		}
-		sendPaintEvent(this.tool_name, action_data);
+		whiteboard.sendPaintEvent(this.tool_name, action_data);
 		drawClear(context_preview);
 	}
 }

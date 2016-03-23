@@ -1,2 +1,10 @@
 Flask==0.10.1
 Flask-SocketIO==1.2
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+python-engineio==0.9.0
+python-socketio==1.1
+six==1.10.0
+Werkzeug==0.11.5
+git+https://github.com/DXsmiley/gevent-websocket.git
