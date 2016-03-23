@@ -8,7 +8,6 @@ UndoTool.prototype.onButtonClick = function() {
 		var uid = whiteboard.paint_blobs_mine.pop();
 		console.log('Undoing: ', uid, whiteboard.paint_blobs_mine.length);
 		whiteboard.sendUndoEvent(uid);
-		whiteboard.drawEverything();
 	} else {
 		console.log('Nothing to undo');
 	}

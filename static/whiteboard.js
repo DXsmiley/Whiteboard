@@ -37,6 +37,8 @@ Whiteboard.prototype.setId = function(wid) {
 };
 
 Whiteboard.prototype.sendUndoEvent = function(action_id) {
+	this.paint_blobs_undone[action_id] = action_id;
+	this.drawEverything();
 	this.socket.emit('undo',
 		{
 			'data': {
@@ -46,7 +48,6 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 			}
 		}
 	);
-	this.paint_blobs_undone[action_id] = action_id;
 };
 
 Whiteboard.prototype.sendUnlockEvent = function(target) {
@@ -315,8 +316,10 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	if (msg.data.board_id == this.whiteboard_id) {
 		aid = msg.data.action_id;
 		console.log('Received Undo', aid);
-		this.paint_blobs_undone[aid] = aid;
-		this.drawEverything();
+		if (this.paint_blobs_undone[aid] === undefined) {
+			this.paint_blobs_undone[aid] = aid;
+			this.drawEverything();
+		}
 	}
 };
 
@@ -331,8 +334,17 @@ Whiteboard.prototype.toolbarActivate = function (to_activate) {
 Whiteboard.prototype.drawEverything = function() {
 	console.log('Drawing everything!');
 	drawClear(this.context_picture);
-	for (var i in this.paint_blobs_all) {
-		if (! (this.paint_blobs_all[i]['action_id'] in this.paint_blobs_undone)) {
+	var last_clear = this.paint_blobs_all.length - 1;
+	while (last_clear >= 0) {
+		var aid = this.paint_blobs_all[last_clear]['action_id'];
+		if (this.paint_blobs_undone[aid] === undefined) {
+			if (this.paint_blobs_all[last_clear].tool == 'clear') break;
+		}
+		--last_clear;
+	}
+	for (var i = last_clear + 1; i < this.paint_blobs_all.length; ++i) {
+		var aid = this.paint_blobs_all[i]['action_id'];
+		if (this.paint_blobs_undone[aid] === undefined) {
 			this.drawCommand(this.paint_blobs_all[i].tool, this.paint_blobs_all[i].data);
 		}
 	}
@@ -347,7 +359,6 @@ Whiteboard.prototype.startup = function() {
 		(function() {
 			var x = i;
 			$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
-			$('#colour_' + x).click(function(event) {the_whiteboard.triggerColourButton(x);});
 		})();
 	}
 
@@ -362,7 +373,6 @@ Whiteboard.prototype.startup = function() {
 				$('#button_' + name).next().hide();
 			} else {
 				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
-				$('#button_' + name).click(function(event) {the_whiteboard.triggerToolButton(name, false);});
 				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
 			}
 		})();
