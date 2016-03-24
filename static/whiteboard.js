@@ -62,9 +62,12 @@ Whiteboard.prototype.sendUnlockEvent = function(target) {
 	);
 }
 
-Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
+Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 	// console.log('sendPaintEvent', tool_name, the_points);
 	var action_id = Math.random();
+	if (extend === true) {
+		action_id = this.paint_blobs_mine.pop();
+	}
 	this.socket.emit('paint',
 		{
 			'data': {
