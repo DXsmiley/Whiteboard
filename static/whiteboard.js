@@ -275,11 +275,14 @@ Whiteboard.prototype.triggerToolButton = function(t, dbl) {
 			for (var i in this.tools) {
 				var t_name = this.tools[i].name;
 				var t_image = this.tools[i].buttonImage;
-				var bt_elem = document.getElementById('button_' + t_name);
-				if (bt_elem !== null) bt_elem.src = '/static/images/' + t_image;
+				var bt_elem = $('#button_' + t_name);
+				if (bt_elem) {
+					bt_elem.removeClass('toolbar_button_selected');
+				}
 			}
 			var t_image = this.tools[t].buttonImageSelected;
-			document.getElementById('button_' + t).src = '/static/images/' + t_image;
+			var btn = $('#button_' + t);
+			btn.addClass('toolbar_button_selected');
 		} else if (click_result === false) {
 			// The button did an action, we don't need to do anything.
 		} else {
@@ -294,9 +297,9 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 	console.log('Colour: ', col, this.colours[col]);
 	this.global_colour = this.colours[col];
 	for (var i in this.colours) {
-		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
+		$("#colour_" + i).removeClass('toolbar_button_selected');
 	}
-	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
+	$('#colour_' + col).addClass('toolbar_button_selected');
 	if (this.active_tool && this.active_tool.name == 'eraser') {
 		this.triggerToolButton('pencil');
 	}

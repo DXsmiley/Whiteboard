@@ -15,6 +15,7 @@ canvas {
 	padding: 0px;
 	position: fixed;
 	overflow: hidden;
+	border: 1px #eeeeee solid;
 }
 
 #canvas1 {
@@ -31,7 +32,7 @@ body.whiteboard {
 	position: fixed;
 	overflow: hidden;
 	height:100%;
-	background-color: gray;
+	background-color: #f8f8f8;
 }
 
 div.absolute {
@@ -41,12 +42,14 @@ div.absolute {
 }
 
 div.toolbar {
-	background-color: #383333;
+	background-color: white;
+	border-right: 1px solid #eeeeee;
 	height: 100%;
 	float: left;
 	z-index: 100;
 	position: relative;
-	padding: 4px;
+	padding: 0px;
+	width: 70px;
 }
 
 #modal_pane {
@@ -98,6 +101,10 @@ div.toolbar {
 	display: none;
 }
 
-img.toolbar_button {
-	transition: all 0.02s ease-in-out;
+img.toolbar_button:hover {
+	border-right: 4px #2a7fff solid;
+}
+
+img.toolbar_button_selected {
+	border-right: 4px #eeeeee solid;
 }

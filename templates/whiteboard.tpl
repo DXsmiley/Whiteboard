@@ -62,8 +62,8 @@
 				<div class="modal_clear">
 					<center>
 						<h1 class="modal_clear">Clear the whiteboard?</h1>
-						<img id="modal_clear_button_confirm" class="toolbar_button" src="/static/images/confirm_large.png">
-						<img id="modal_clear_button_cancel" class="toolbar_button" src="/static/images/cancel_large.png">
+						<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
+						<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
 					</center>
 				</div>
 			</div>
