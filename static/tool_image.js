@@ -38,6 +38,9 @@ var onUpload = function(err, metadata) {
 		whiteboard.modalClose('.modal_image_upload_progress');
 		var url = metadata.url;
 		whiteboard.setToolHead(new ImageHead(url));
+	} else {
+		whiteboard.modalClose('.modal_image_upload_progress');
+		alert('Error in image uploading :(');
 	}
 };
 
