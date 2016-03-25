@@ -11,7 +11,24 @@ $('#button_enlarge').click(function (event){
 	$("#modal_image").css('transform', 'scale(' + image_scale + ')');
 });
 
+$("#modal_image_button_upload").click(function() {
+	// Does nothing at the moment...
+});
+
+$("#modal_image_button_url").click(function() {
+	var url = window.prompt('Enter image url', '');
+	if (url) {
+		whiteboard.setToolHead(new ImageHead(url));
+	}
+});
+
+$("#modal_image_button_cancel").click(function() {
+	whiteboard.modalInputCancel();
+});
+
 function ImageHead(url) {
+	whiteboard.modalClose('.modal_image_select');
+	whiteboard.modalOpen('.modal_image');
 	this.url = url;
 	$('#modal_image').attr('src', url);
 }
@@ -23,6 +40,7 @@ ImageHead.prototype.onMove = function(p) {
 }
 
 ImageHead.prototype.onModalConfirm = function() {
+	console.log('Modal Confirmed! Uploading image!');
 	whiteboard.sendPaintEvent('image', {
 		position: this.position,
 		url: this.url,
@@ -35,21 +53,25 @@ ImageHead.prototype.onModalCancel = function() {
 	whiteboard.modalClose('.modal_image');
 }
 
+function SelectHead() {
+	whiteboard.modalOpen('.modal_image_select');
+}
+
+SelectHead.prototype.onModalConfirm = function() {
+	whiteboard.modalClose('.modal_image_select');
+};
+
+SelectHead.prototype.onModalCancel = function() {
+	whiteboard.modalClose('.modal_image_select');
+}
+
 function ImageTool() {
 	this.name = 'image';
-	this.buttonImage = 'button_image.png';
-	this.buttonImageSelected = 'button_image_select.png';
 	this.desktopOnly = true;
 }
 
 ImageTool.prototype.onButtonClick = function() {
-	var iurl = window.prompt('Enter image url', '');
-	if (iurl) {
-		whiteboard.modalOpen('.modal_image');
-		return new ImageHead(iurl);
-	}
-	return false;
-
+	return new SelectHead();
 };
 
 ImageTool.prototype.drawFull = function(data) {

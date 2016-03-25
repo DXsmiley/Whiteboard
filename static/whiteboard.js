@@ -95,6 +95,10 @@ Whiteboard.prototype.modalOpen = function(extra_thing) {
 	$(extra_thing).show();
 };
 
+Whiteboard.prototype.setToolHead = function(head) {
+	this.tool_heads[0] = head;
+}
+
 // Perform events
 
 Whiteboard.prototype.eventToolDown = function(n, p) {

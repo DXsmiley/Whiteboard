@@ -66,6 +66,23 @@
 						<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
 					</center>
 				</div>
+				<div class="modal_image_select">
+					<center>
+						<h1>Where do you want to get the image from?</h1>
+						<table>
+							<tr>
+								<td><img id="modal_image_button_upload" src="/static/images/upload_large.png"></td>
+								<td><img id="modal_image_button_url" src="/static/images/link_large.png"></td>
+								<td><img id="modal_image_button_cancel" src="/static/images/cancel_large.png"></td>
+							</tr>
+							<tr>
+								<td><center><p>Upload</p></center></td>
+								<td><center><p>Link</p></center></td>
+								<td><center><p>Cancel</p></center></td>
+							</tr>
+						</table>
+					</center>
+				</div>
 			</div>
 		</div>
 
