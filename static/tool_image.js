@@ -76,6 +76,7 @@ ImageHead.prototype.onModalConfirm = function() {
 		scale: image_scale
 	});
 	whiteboard.modalClose('.modal_image');
+	$('#modal_image').attr('src', '/static/images/placeholder.png');
 }
 
 ImageHead.prototype.onModalCancel = function() {
@@ -88,10 +89,12 @@ function SelectHead() {
 
 SelectHead.prototype.onModalConfirm = function() {
 	whiteboard.modalClose('.modal_image_select');
+	whiteboard.modalClose('.modal_image_upload_progress');
 };
 
 SelectHead.prototype.onModalCancel = function() {
 	whiteboard.modalClose('.modal_image_select');
+	whiteboard.modalClose('.modal_image_upload_progress');
 }
 
 function ImageTool() {
