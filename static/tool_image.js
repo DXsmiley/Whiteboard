@@ -12,7 +12,7 @@ $('#button_enlarge').click(function (event){
 });
 
 $("#modal_image_button_upload").click(function() {
-	// Does nothing at the moment...
+	$("#image_upload_input").click();
 });
 
 $("#modal_image_button_url").click(function() {
@@ -26,7 +26,36 @@ $("#modal_image_button_cancel").click(function() {
 	whiteboard.modalInputCancel();
 });
 
+// Handle the image uploading process
+
+var ospry = new Ospry('pk-test-53z2t7ah9j8jhe2l6zjh9v2h');
+
+var onUpload = function(err, metadata) {
+	console.log('Upload result');
+	console.log(err);
+	console.log(metadata);
+	if (err === null) {
+		whiteboard.modalClose('.modal_image_upload_progress');
+		var url = metadata.url;
+		whiteboard.setToolHead(new ImageHead(url));
+	}
+};
+
+$('#image_upload_form').change(function(e) {
+	console.log('Uploading...');
+	console.log(this, e);
+	ospry.up({
+		form: this,
+		imageReady: onUpload,
+	});
+	whiteboard.modalClose('.modal_image_select');
+	whiteboard.modalOpen('.modal_image_upload_progress');
+});
+
+// Objects to interface with the whiteboard
+
 function ImageHead(url) {
+	whiteboard.modalClose('.modal_image_upload_progress');
 	whiteboard.modalClose('.modal_image_select');
 	whiteboard.modalOpen('.modal_image');
 	this.url = url;

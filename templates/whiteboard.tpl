@@ -52,36 +52,51 @@
 				<div class="modal_image">
 					<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
 				</div>
-				<div class="modal_latex">
-					<center>
-						<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
-						<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
-					</center>
-					<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
-				</div>
-				<div class="modal_clear">
-					<center>
-						<h1 class="modal_clear">Clear the whiteboard?</h1>
-						<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
-						<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
-					</center>
-				</div>
-				<div class="modal_image_select">
-					<center>
-						<h1>Where do you want to get the image from?</h1>
-						<table>
-							<tr>
-								<td><img id="modal_image_button_upload" src="/static/images/upload_large.png"></td>
-								<td><img id="modal_image_button_url" src="/static/images/link_large.png"></td>
-								<td><img id="modal_image_button_cancel" src="/static/images/cancel_large.png"></td>
-							</tr>
-							<tr>
-								<td><center><p>Upload</p></center></td>
-								<td><center><p>Link</p></center></td>
-								<td><center><p>Cancel</p></center></td>
-							</tr>
-						</table>
-					</center>
+				<div class="modal_centered_outer">
+					<div class="modal_centered_middle">
+						<div class="modal_centered_inner">
+							<div class="modal_latex">
+								<center>
+									<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
+									<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
+								</center>
+								<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
+							</div>
+							<div class="modal_clear">
+								<center>
+									<h1>Clear the whiteboard?</h1>
+									<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
+									<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
+								</center>
+							</div>
+							<div class="modal_image_select">
+								<center>
+									<h1>Where do you want to get the image from?</h1>
+									<table>
+										<tr>
+											<td><img id="modal_image_button_upload" src="/static/images/upload_large.png"></td>
+											<td><img id="modal_image_button_url" src="/static/images/link_large.png"></td>
+											<td><img id="modal_image_button_cancel" src="/static/images/cancel_large.png"></td>
+										</tr>
+										<tr>
+											<td><center><p>Upload</p></center></td>
+											<td><center><p>Link</p></center></td>
+											<td><center><p>Cancel</p></center></td>
+										</tr>
+									</table>
+									<form id="image_upload_form">
+										<input id="image_upload_input" type="file" />
+										<button type="submit">Upload</button>
+									</form>
+								</center>
+							</div>
+							<div class="modal_image_upload_progress">
+								<center>
+									<h1>Uploading image...</h1>
+								</center>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
