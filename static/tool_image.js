@@ -36,7 +36,7 @@ var onUpload = function(err, metadata) {
 	console.log(metadata);
 	if (err === null) {
 		whiteboard.modalClose('.modal_image_upload_progress');
-		var url = metadata.url;
+		var url = metadata.url + '?format=jpeg';
 		whiteboard.setToolHead(new ImageHead(url));
 	} else {
 		whiteboard.modalClose('.modal_image_upload_progress');
