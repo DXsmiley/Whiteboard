@@ -90,7 +90,7 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 };
 
 Whiteboard.prototype.modalOpen = function(extra_thing) {
-	this.toolbarActivate('#toolbar_confirmcancel');
+	this.toolbarActivate('#toolbar_empty');
 	$('#modal_pane').show();
 	$(extra_thing).show();
 };
@@ -333,12 +333,14 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	}
 };
 
-Whiteboard.prototype.toolbarActivate = function (to_activate) {
-	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel', '#toolbar_unlock'];
+Whiteboard.prototype.toolbarActivate = function() {
+	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
 		$(toolbars[i]).css('display', 'none');
 	}
-	$(to_activate).css('display', 'block');
+	for (var i in arguments) {
+		$(arguments[i]).css('display', 'block');
+	}
 }
 
 Whiteboard.prototype.drawEverything = function() {

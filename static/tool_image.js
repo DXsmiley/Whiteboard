@@ -53,6 +53,7 @@ $('#image_upload_form').change(function(e) {
 	});
 	whiteboard.modalClose('.modal_image_select');
 	whiteboard.modalOpen('.modal_image_upload_progress');
+	whiteboard.toolbarActivate('#toolbar_cancel');
 });
 
 // Objects to interface with the whiteboard
@@ -61,6 +62,7 @@ function ImageHead(url) {
 	whiteboard.modalClose('.modal_image_upload_progress');
 	whiteboard.modalClose('.modal_image_select');
 	whiteboard.modalOpen('.modal_image');
+	whiteboard.toolbarActivate('#toolbar_confirm', '#toolbar_cancel', '#toolbar_image');
 	this.url = url;
 	$('#modal_image').attr('src', url);
 }
@@ -72,7 +74,7 @@ ImageHead.prototype.onMove = function(p) {
 }
 
 ImageHead.prototype.onModalConfirm = function() {
-	console.log('Modal Confirmed! Uploading image!');
+	console.log('Painting image.');
 	whiteboard.sendPaintEvent('image', {
 		position: this.position,
 		url: this.url,

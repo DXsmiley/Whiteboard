@@ -31,11 +31,13 @@
 					<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
 				{% endif %}
 			</div>
-			<div id="toolbar_confirmcancel">
+			<div id="toolbar_cancel">
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
+			</div>
+			<div id="toolbar_confirm">
 				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
-			<div id="toolbar_image" class="modal_image">
+			<div id="toolbar_image">
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
 				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
 			</div>
