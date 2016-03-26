@@ -95,6 +95,7 @@
 							<div class="modal_image_upload_progress">
 								<center>
 									<h1>Uploading image...</h1>
+									<img src="/static/images/loading.svg">
 								</center>
 							</div>
 						</div>
