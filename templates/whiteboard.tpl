@@ -17,19 +17,29 @@
 
 		<div class="toolbar">
 			<div id="toolbar_normal">
-				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
-				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
-				<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
-				<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
-				<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
-				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
-				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
-				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
-				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
-				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
-				{% if permissions != 'open' %}
-					<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
-				{% endif %}
+				<table id="tb_table">
+					<tr>
+						<td valign="top">
+							<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
+							<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
+							<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
+							<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
+							<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
+							<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
+							<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
+							<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
+							<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
+						</td>
+					</tr>
+					<tr>
+						<td valign="bottom">
+							{% if permissions != 'open' %}
+								<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
+							{% endif %}
+							<img class="toolbar_button" id="button_settings" src="/static/images/settings.png"><br>
+						</td>
+					</tr>
+				</table>
 			</div>
 			<div id="toolbar_cancel">
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
@@ -98,6 +108,27 @@
 									<img src="/static/images/loading.svg">
 								</center>
 							</div>
+							<div class="modal_settings">
+								<center>
+									<h1>Settings and Extra Options</h1>
+									<table>
+										<tr>
+											<td><img id="modal_settings_button_clear" src="/static/images/clear_large.png"></td>
+											<td>
+												<a id="modal_settings_button_download">
+													<img src="/static/images/download_large.png">
+												</a>
+											</td>
+											<td><img id="modal_settings_button_cancel" src="/static/images/cancel_large.png"></td>
+										</tr>
+										<tr>
+											<td><center><p>Clear</p></center></td>
+											<td><center><p>Save Image</p></center></td>
+											<td><center><p>Return</p></center></td>
+										</tr>
+									</table>
+								</center>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -126,6 +157,7 @@
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/tool_unlock.js"></script>
+	<script type="text/javascript" src="/static/tool_settings.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">

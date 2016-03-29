@@ -85,7 +85,13 @@ div.toolbar {
 	position: fixed;
 }
 
-.modal_text, .modal_image, .modal_clear, .modal_latex, .modal_image_select, .modal_image_upload_progress {
+.modal_text,
+.modal_image,
+.modal_clear,
+.modal_latex,
+.modal_image_select,
+.modal_image_upload_progress,
+.modal_settings {
 	display: none;
 }
 
@@ -126,10 +132,31 @@ img.toolbar_button_selected {
     padding: 0px;
 }
 
-.modal_image_upload_progress, .modal_image_select, .modal_clear {
+.modal_image_upload_progress,
+.modal_image_select,
+.modal_clear,
+.modal_settings {
 	background-color: white;
     border-top: 1px #eeeeee solid;
 	border-bottom: 1px #eeeeee solid;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#toolbar_footer {
+	position: absolute;
+	bottom: 0;
+}
+
+#toolbar_footer_container {
+	position: relative;
+	bottom: 0;
+}
+
+#toolbar_normal {
+	height: 100%;
+}
+
+#tb_table {
+	height: 100%;
 }
