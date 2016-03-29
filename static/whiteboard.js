@@ -62,9 +62,12 @@ Whiteboard.prototype.sendUnlockEvent = function(target) {
 	);
 }
 
-Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data) {
+Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 	// console.log('sendPaintEvent', tool_name, the_points);
 	var action_id = Math.random();
+	if (extend === true) {
+		action_id = this.paint_blobs_mine.pop();
+	}
 	this.socket.emit('paint',
 		{
 			'data': {
@@ -87,10 +90,14 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 };
 
 Whiteboard.prototype.modalOpen = function(extra_thing) {
-	this.toolbarActivate('#toolbar_confirmcancel');
+	this.toolbarActivate('#toolbar_empty');
 	$('#modal_pane').show();
 	$(extra_thing).show();
 };
+
+Whiteboard.prototype.setToolHead = function(head) {
+	this.tool_heads[0] = head;
+}
 
 // Perform events
 
@@ -275,11 +282,14 @@ Whiteboard.prototype.triggerToolButton = function(t, dbl) {
 			for (var i in this.tools) {
 				var t_name = this.tools[i].name;
 				var t_image = this.tools[i].buttonImage;
-				var bt_elem = document.getElementById('button_' + t_name);
-				if (bt_elem !== null) bt_elem.src = '/static/images/' + t_image;
+				var bt_elem = $('#button_' + t_name);
+				if (bt_elem) {
+					bt_elem.removeClass('toolbar_button_selected');
+				}
 			}
 			var t_image = this.tools[t].buttonImageSelected;
-			document.getElementById('button_' + t).src = '/static/images/' + t_image;
+			var btn = $('#button_' + t);
+			btn.addClass('toolbar_button_selected');
 		} else if (click_result === false) {
 			// The button did an action, we don't need to do anything.
 		} else {
@@ -294,9 +304,9 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 	console.log('Colour: ', col, this.colours[col]);
 	this.global_colour = this.colours[col];
 	for (var i in this.colours) {
-		$("#colour_" + i).attr('src', '/static/images/col_' + i + '.png');
+		$("#colour_" + i).removeClass('toolbar_button_selected');
 	}
-	$('#colour_' + col).attr('src', '/static/images/col_s_' + col + '.png');
+	$('#colour_' + col).addClass('toolbar_button_selected');
 	if (this.active_tool && this.active_tool.name == 'eraser') {
 		this.triggerToolButton('pencil');
 	}
@@ -323,12 +333,14 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	}
 };
 
-Whiteboard.prototype.toolbarActivate = function (to_activate) {
-	var toolbars = ['#toolbar_normal', '#toolbar_confirmcancel', '#toolbar_unlock'];
+Whiteboard.prototype.toolbarActivate = function() {
+	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
 		$(toolbars[i]).css('display', 'none');
 	}
-	$(to_activate).css('display', 'block');
+	for (var i in arguments) {
+		$(arguments[i]).css('display', 'block');
+	}
 }
 
 Whiteboard.prototype.drawEverything = function() {

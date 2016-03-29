@@ -6,6 +6,7 @@ function PencilHead(tool_name, colour, thickness, style) {
 	this.distance = 0;
 	this.projection = new Point(0, 0);
 	this.style = style;
+	this.pushed_once = false;
 }
 
 PencilHead.prototype.pushData = function() {
@@ -17,7 +18,8 @@ PencilHead.prototype.pushData = function() {
 			thickness: this.thickness,
 			style: this.style
 		}
-		whiteboard.sendPaintEvent(this.tool_name, action_data);
+		whiteboard.sendPaintEvent(this.tool_name, action_data, this.pushed_once);
+		this.pushed_once = true;
 		this.points = [last_point];
 	}
 	drawClear(context_preview);
