@@ -58,30 +58,30 @@
 
 		<div class="absolute">
 			<div id="modal_pane">
-				<div class="modal_text">
-					<p contenteditable id="text_input_text" class="modal_text">Enter Text</p>
+				<div class="modal modal_text">
+					<p contenteditable id="text_input_text">Enter Text</p>
 				</div>
-				<div class="modal_image">
-					<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
+				<div class="modal modal_image">
+					<img id="modal_image" src="/static/images/placeholder.png"/>
 				</div>
 				<div class="modal_centered_outer">
 					<div class="modal_centered_middle">
 						<div class="modal_centered_inner">
-							<div class="modal_latex">
+							<div class="modal modal_latex">
 								<center>
-									<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
-									<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
+									<p contenteditable id="modal_latex_input">\sqrt{a^2 + b^2} = c</p>
+									<img id="modal_latex_image" src="/static/images/placeholder.png">
 								</center>
-								<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
+								<img id="modal_latex_positionable" src="/static/images/placeholder.png">
 							</div>
-							<div class="modal_clear">
+							<div class="modal modal_clear">
 								<center>
 									<h1>Clear the whiteboard?</h1>
 									<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
 									<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
 								</center>
 							</div>
-							<div class="modal_image_select">
+							<div class="modal modal_image_select">
 								<center>
 									<h1>Where do you want to get the image from?</h1>
 									<table>
@@ -102,13 +102,13 @@
 									</form>
 								</center>
 							</div>
-							<div class="modal_image_upload_progress">
+							<div class="modal modal_image_upload_progress">
 								<center>
 									<h1>Uploading image...</h1>
 									<img src="/static/images/loading.svg">
 								</center>
 							</div>
-							<div class="modal_settings">
+							<div class="modal modal_settings">
 								<center>
 									<h1>Settings and Extra Options</h1>
 									<table>
