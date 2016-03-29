@@ -27,9 +27,7 @@ a.bright {
 	color: #2a7fff;
 }
 
-
 span.nav_button:hover, span.nav_button_current:hover {
-	/*background-color: #eeeeee;*/
 	border-bottom: 4px #2a7fff solid;
 }
 
@@ -38,17 +36,8 @@ div.large_container {
 	margin: 0px auto;
 }
 
-div.background {
-	width: 1000px;
-	height: 300px;
-	position: absolute;
-	background-image: url("/static/images/splash.png");
-	z-index: -1;
-}
-
 div.container {
 	text-align: center;
-	/*text-align: center;*/
 	margin: 0px auto;
 	width: 800px;
 }
