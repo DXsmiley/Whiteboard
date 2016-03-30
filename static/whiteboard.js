@@ -350,7 +350,7 @@ Whiteboard.prototype.toolbarActivate = function() {
 
 Whiteboard.prototype.drawEverything = function() {
 	console.log('Drawing everything!');
-	drawClear(this.context_picture);
+	drawClearSolid(this.context_picture);
 	var last_clear = this.paint_blobs_all.length - 1;
 	while (last_clear >= 0) {
 		var aid = this.paint_blobs_all[last_clear]['action_id'];

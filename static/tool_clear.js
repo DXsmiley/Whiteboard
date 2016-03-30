@@ -21,7 +21,7 @@ ClearTool.prototype.onButtonClick = function() {
 };
 
 ClearTool.prototype.drawFull = function() {
-	drawClear(context_picture);
+	drawClearSolid(context_picture);
 };
 
 whiteboard.makeTool(new ClearTool());
