@@ -69,21 +69,21 @@
 						<div class="modal_centered_middle">
 							<div class="modal_centered_inner">
 								<div class="modal modal_latex">
-									<center>
+									<div class="center">
 										<p contenteditable id="modal_latex_input">\sqrt{a^2 + b^2} = c</p>
 										<img id="modal_latex_image" src="/static/images/placeholder.png">
-									</center>
+									</div>
 									<img id="modal_latex_positionable" src="/static/images/placeholder.png">
 								</div>
 								<div class="modal modal_clear">
-									<center>
+									<div class="center">
 										<h1>Clear the whiteboard?</h1>
 										<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
 										<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
-									</center>
+									</div>
 								</div>
 								<div class="modal modal_image_select">
-									<center>
+									<div class="center">
 										<h1>Where do you want to get the image from?</h1>
 										<table>
 											<tr>
@@ -92,25 +92,25 @@
 												<td><img id="modal_image_button_cancel" src="/static/images/cancel_large.png"></td>
 											</tr>
 											<tr>
-												<td><center><p>Upload</p></center></td>
-												<td><center><p>Link</p></center></td>
-												<td><center><p>Cancel</p></center></td>
+												<td><div class="center"><p>Upload</p></div></td>
+												<td><div class="center"><p>Link</p></div></td>
+												<td><div class="center"><p>Cancel</p></div></td>
 											</tr>
 										</table>
 										<form id="image_upload_form">
 											<input id="image_upload_input" type="file" />
 											<button type="submit">Upload</button>
 										</form>
-									</center>
+									</div>
 								</div>
 								<div class="modal modal_image_upload_progress">
-									<center>
+									<div class="center">
 										<h1>Uploading image...</h1>
 										<img src="/static/images/loading.svg">
-									</center>
+									</div>
 								</div>
 								<div class="modal modal_settings">
-									<center>
+									<div class="center">
 										<h1>Settings and Extra Options</h1>
 										<table>
 											<tr>
@@ -123,12 +123,12 @@
 												<td><img id="modal_settings_button_cancel" src="/static/images/cancel_large.png"></td>
 											</tr>
 											<tr>
-												<td><center><p>Clear</p></center></td>
-												<td><center><p>Save Image</p></center></td>
-												<td><center><p>Return</p></center></td>
+												<td><div class="center"><p>Clear</p></div></td>
+												<td><div class="center"><p>Save Image</p></div></td>
+												<td><div class="center"><p>Return</p></div></td>
 											</tr>
 										</table>
-									</center>
+									</div>
 								</div>
 							</div>
 						</div>
