@@ -1,6 +1,6 @@
 $('#modal_settings_button_clear').click(function() {
 	whiteboard.modalClose('.modal_settings');
-	whiteboard.modalOpen('.modal_clear');
+	whiteboard.modalOpen('.modal_clear', '.modal_centered');
 	whiteboard.setToolHead(new ClearHead());
 });
 
@@ -22,7 +22,7 @@ function SettingsTool() {
 }
 
 SettingsTool.prototype.onButtonClick = function() {
-	whiteboard.modalOpen('.modal_settings');
+	whiteboard.modalOpen('.modal_settings', '.modal_centered');
 };
 
 whiteboard.makeTool(new SettingsTool());

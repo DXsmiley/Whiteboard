@@ -52,7 +52,7 @@ $('#image_upload_form').change(function(e) {
 		imageReady: onUpload,
 	});
 	whiteboard.modalClose('.modal_image_select');
-	whiteboard.modalOpen('.modal_image_upload_progress');
+	whiteboard.modalOpen('.modal_image_upload_progress', '.modal_centered');
 	whiteboard.toolbarActivate('#toolbar_cancel');
 });
 
@@ -89,7 +89,7 @@ ImageHead.prototype.onModalCancel = function() {
 }
 
 function SelectHead() {
-	whiteboard.modalOpen('.modal_image_select');
+	whiteboard.modalOpen('.modal_image_select', '.modal_centered');
 }
 
 SelectHead.prototype.onModalConfirm = function() {

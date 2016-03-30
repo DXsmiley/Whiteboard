@@ -83,16 +83,21 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 	this.drawCommand(tool_name, action_data);
 };
 
-Whiteboard.prototype.modalClose = function(extra_thing) {
+Whiteboard.prototype.modalClose = function() {
 	this.toolbarActivate('#toolbar_normal');
 	$('#modal_pane').hide();
-	$(extra_thing).hide();
+	$('.modal_centered').hide();
+	for (var i in arguments) {
+		$(arguments[i]).hide();
+	}
 };
 
-Whiteboard.prototype.modalOpen = function(extra_thing) {
+Whiteboard.prototype.modalOpen = function() {
 	this.toolbarActivate('#toolbar_empty');
 	$('#modal_pane').show();
-	$(extra_thing).show();
+	for (var i in arguments) {
+		$(arguments[i]).show();
+	}
 };
 
 Whiteboard.prototype.setToolHead = function(head) {

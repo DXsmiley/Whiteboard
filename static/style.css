@@ -101,6 +101,10 @@ img.toolbar_button_selected {
 	display: none;
 }
 
+.modal_centered {
+	display: none;
+}
+
 .modal_centered_outer {
     display: table;
     position: absolute;

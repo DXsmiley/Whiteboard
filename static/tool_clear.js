@@ -1,5 +1,5 @@
 function ClearHead() {
-	whiteboard.modalOpen('.modal_clear');
+	whiteboard.modalOpen('.modal_clear', '.modal_centered');
 }
 
 ClearHead.prototype.onModalConfirm = function() {
