@@ -1,0 +1,29 @@
+{
+	"__named__":
+	{
+		"number":
+		[
+			"int",
+			"float"
+		]
+	},
+	"action_id": "float",
+	"tool": "string",
+	"board_id": "string",
+	"key": "string",
+	"data": [
+		{
+			"colour": "string",
+			"thickness": "float",
+			"style": "string",
+			"points": {
+				"__type__": "list",
+				"__item__": {
+					"x": "@number",
+					"y": "@number",
+					"time": ["none", "int"]
+				}
+			}
+		}
+	]
+}
