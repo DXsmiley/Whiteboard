@@ -38,6 +38,11 @@
 			"position": "@point",
 			"url": "string",
 			"scale": "@number"
+		},
+		{
+			"colour": "string",
+			"position": "@point",
+			"text": "string"
 		}
 	]
 }
