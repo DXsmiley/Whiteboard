@@ -12,6 +12,7 @@
 	"board_id": "string",
 	"key": "string",
 	"data": [
+		"int",
 		{
 			"colour": "string",
 			"thickness": "float",
