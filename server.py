@@ -177,7 +177,7 @@ SCHEMA_PAINT = load_schema('paint')
 @sock.on('paint')
 def socketio_paint(message):
 	# print('paint', message)
-	if edgy.check(SCHEMA_PAINT, message, trace = True):
+	if edgy.check(SCHEMA_PAINT, message):
 		print('Yeah!')
 		bid = message['board_id']
 		key = message['key']
