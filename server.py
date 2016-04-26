@@ -13,7 +13,7 @@ def make_humane_gibberish(length):
 	"""
 	result = ''
 	for i in range(6):
-		result += random.choice('ABCDEFHJKNPQRSTVXYZ2345869')
+		result += random.choice('ACEFHJKNPQRTVXY34869')
 	return result
 
 class Whiteboard:
