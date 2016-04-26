@@ -12,7 +12,7 @@ def make_humane_gibberish(length):
 	Easily confused characters, such as '1' and 'l' are also excluded.
 	"""
 	result = ''
-	for i in range(6):
+	for i in range(length):
 		result += random.choice('ACEFHJKNPQRTVXY34869')
 	return result
 
