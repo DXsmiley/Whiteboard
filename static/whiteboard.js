@@ -41,11 +41,9 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 	this.drawEverything();
 	this.socket.emit('undo',
 		{
-			'data': {
-				'action_id': action_id,
-				'board_id': this.whiteboard_id,
-				'key': this.getKey()
-			}
+			'action_id': action_id,
+			'board_id': this.whiteboard_id,
+			'key': this.getKey()
 		}
 	);
 };
@@ -53,11 +51,9 @@ Whiteboard.prototype.sendUndoEvent = function(action_id) {
 Whiteboard.prototype.sendUnlockEvent = function(target) {
 	this.socket.emit('unlock',
 		{
-			'data': {
-				'board_id': this.whiteboard_id,
-				'level': 'open',
-				'key': this.getKey()
-			}
+			'board_id': this.whiteboard_id,
+			'level': 'open',
+			'key': this.getKey()
 		}
 	);
 }
@@ -70,13 +66,11 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 	}
 	this.socket.emit('paint',
 		{
-			'data': {
-				'action_id': action_id,
-				'tool': tool_name,
-				'data': action_data,
-				'board_id': this.whiteboard_id,
-				'key': this.getKey()
-			}
+			'action_id': action_id,
+			'tool': tool_name,
+			'data': action_data,
+			'board_id': this.whiteboard_id,
+			'key': this.getKey()
 		}
 	);
 	this.paint_blobs_mine.push(action_id);
@@ -313,8 +307,8 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 };
 
 Whiteboard.prototype.sockHandlePaint = function(msg) {
-	if (msg.data.board_id == this.whiteboard_id) {
-		actions = msg.data.actions;
+	if (msg.board_id == this.whiteboard_id) {
+		actions = msg.actions;
 		for (var i in actions) {
 			this.drawCommand(actions[i].tool, actions[i].data);
 			this.paint_blobs_all.push(actions[i]);
@@ -323,8 +317,8 @@ Whiteboard.prototype.sockHandlePaint = function(msg) {
 };
 
 Whiteboard.prototype.sockHandleUndo = function(msg) {
-	if (msg.data.board_id == this.whiteboard_id) {
-		aid = msg.data.action_id;
+	if (msg.board_id == this.whiteboard_id) {
+		aid = msg.action_id;
 		console.log('Received Undo', aid);
 		if (this.paint_blobs_undone[aid] === undefined) {
 			this.paint_blobs_undone[aid] = aid;
@@ -408,11 +402,8 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.emit('full image',
 		{
-			data:
-				{
-					'board_id': this.whiteboard_id,
-					'key': this.getKey()
-				}
+			'board_id': this.whiteboard_id,
+			'key': this.getKey()
 		}
 	);
 

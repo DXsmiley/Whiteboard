@@ -177,21 +177,19 @@ SCHEMA_PAINT = load_schema('paint')
 @sock.on('paint')
 def socketio_paint(message):
 	# print('paint', message)
-	if edgy.check(SCHEMA_PAINT, message['data'], trace = True):
+	if edgy.check(SCHEMA_PAINT, message, trace = True):
 		print('Yeah!')
-		bid = message['data']['board_id']
-		key = message['data']['key']
+		bid = message['board_id']
+		key = message['key']
 		board = whiteboards[bid]
 		if board.may_edit(key):
 			data = {
-				'data': {
-					'board_id': bid,
-					'actions': [
-						message['data']
-					]
-				}
+				'board_id': bid,
+				'actions': [
+					message
+				]
 			}
-			board.add_action(message['data'])
+			board.add_action(message)
 			socketio.emit('paint', data, broadcast = True, room = bid)
 	else:
 		print('Noo!')
@@ -199,39 +197,35 @@ def socketio_paint(message):
 @sock.on('full image')
 def socketio_full_image(message):
 	# print('full image', message)
-	bid = message['data']['board_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_view(key):
 		socketio.join_room(bid)
 		data = {
-			'data': {
-				'board_id': bid,
-				'actions': board.full_image()
-			}
+			'board_id': bid,
+			'actions': board.full_image()
 		}
 		socketio.emit('paint', data)
 
 @sock.on('undo')
 def socketio_undo(message):
-	bid = message['data']['board_id']
-	aid = message['data']['action_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	aid = message['action_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_edit(key):
 		board.undo_action(aid)
 		data = {
-			'data': {
-				'board_id': bid,
-				'action_id': aid
-			}
+			'board_id': bid,
+			'action_id': aid
 		}
 		socketio.emit('undo', data, broadcast = True, room = bid)
 
 @sock.on('unlock')
 def socketio_unlock(message):
-	bid = message['data']['board_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_edit(key):
 		board.unlock()
