@@ -178,7 +178,6 @@ SCHEMA_PAINT = load_schema('paint')
 def socketio_paint(message):
 	# print('paint', message)
 	if edgy.check(SCHEMA_PAINT, message):
-		print('Yeah!')
 		bid = message['board_id']
 		key = message['key']
 		board = whiteboards[bid]
@@ -192,7 +191,8 @@ def socketio_paint(message):
 			board.add_action(message)
 			socketio.emit('paint', data, broadcast = True, room = bid)
 	else:
-		print('Noo!')
+		print('A paint action failed')
+		print(message)
 
 @sock.on('full image')
 def socketio_full_image(message):

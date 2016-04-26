@@ -27,7 +27,7 @@
 		"int",
 		{
 			"colour": "string",
-			"thickness": "float",
+			"thickness": "@number",
 			"style": "string",
 			"points": {
 				"__type__": "list",
