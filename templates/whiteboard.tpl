@@ -112,6 +112,7 @@
 	<script type="text/javascript" src="https://code.ospry.io/v1/ospry.js"></script>
 	<script type="text/javascript" src="/static/simplify.js"></script>
 	<script type="text/javascript" src="/static/geometry.js"></script>
+	<script type="text/javascript" src="/static/detect_shape.js"></script>
 	<script type="text/javascript" src="/static/draw.js"></script>
 	<script type="text/javascript" src="/static/globals.js"></script>
 	<script type="text/javascript" src="/static/whiteboard.js"></script>

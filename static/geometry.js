@@ -14,7 +14,20 @@ function distance(a, b) {
 function point_lerp(a, b, k) {
 	var x = a.x + (b.x - a.x) * k;
 	var y = a.y + (b.y - a.y) * k;
-	return {'x': x, 'y': y}
+	return {x: x, y: y}
+}
+
+function lineThroughTwoPoints(p, q) {
+	return {
+		a: p.y - q.y,
+		b: q.x - p.x,
+		c: (p.x - q.x) * p.y + (q.y - p.y) * p.x
+	}
+}
+
+function pointLineDistance(p, l) {
+	d = Math.sqrt(l.a * l.a + l.b * l.b);
+	return Math.abs((p.x * l.a + p.y * l.b + l.c) / d);
 }
 
 // Functions for manipulating lines
@@ -39,4 +52,20 @@ function bezier(p, steps) {
 	}
 	o.push(p[p.length - 1]);
 	return o;
+}
+
+function boundingBox(line) {
+	box = {
+		left: line[0].x,
+		right: line[0].x,
+		top: line[0].y,
+		bottom: line[0].y
+	};
+	for (var i in line) {
+		box.left = Math.min(box.left, line[i].x);
+		box.right = Math.max(box.right, line[i].x);
+		box.top = Math.min(box.top, line[i].y);
+		box.bottom = Math.max(box.bottom, line[i].y);
+	}
+	return box;
 }
