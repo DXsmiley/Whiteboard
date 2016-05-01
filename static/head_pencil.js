@@ -12,10 +12,11 @@ function PencilHead(tool_name, colour, thickness, style) {
 PencilHead.prototype.pushData = function() {
 	if (this.points.length > 1) {
 		// .slice() makes a copy, might edit a .copy into the prototype later
+		this.points = cleanupLine(this.points);
 		this.points = detectShape(this.points.slice());
 		var last_point = this.points[this.points.length - 1];
 		var action_data = {
-			points: cleanupLine(this.points),
+			points: this.points,
 			colour: this.colour,
 			thickness: this.thickness,
 			style: this.style
