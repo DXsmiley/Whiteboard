@@ -11,6 +11,12 @@ function PencilHead(tool_name, colour, thickness, style) {
 
 PencilHead.prototype.pushData = function() {
 	if (this.points.length > 1) {
+		// DEBUG ONLY: draw a colourful instance of the line to show timings
+		// for (var i = 0; i < this.points.length - 1; ++i) {
+		// 	var speed_colour = Math.min(255, (this.points[i + 1].time - this.points[i].time) * 10);
+		// 	// console.log('rgb(' + speed_colour + ', 0, 0)', this.colour);
+		// 	drawSegment(this.points[i], this.points[i + 1], context_picture, 'rgb(' + speed_colour + ', 0, 0)', 2);
+		// }
 		// .slice() makes a copy, might edit a .copy into the prototype later
 		this.points = cleanupLine(this.points);
 		this.points = detectShape(this.points.slice());

@@ -54,8 +54,8 @@ function bezier(p, steps) {
 	return o;
 }
 
-function boundingBox(line) {
-	box = {
+function boundingBox(line, shrinkage) {
+	var box = {
 		left: line[0].x,
 		right: line[0].x,
 		top: line[0].y,
@@ -66,6 +66,16 @@ function boundingBox(line) {
 		box.right = Math.max(box.right, line[i].x);
 		box.top = Math.min(box.top, line[i].y);
 		box.bottom = Math.max(box.bottom, line[i].y);
+	}
+	if (shrinkage !== undefined) {
+		var centre = {
+			x: (box.left + box.right) / 2,
+			y: (box.top + box.bottom) / 2
+		};
+		box.left = centre.x - (centre.x - box.left) * shrinkage;
+		box.right = centre.x - (centre.x - box.right) * shrinkage;
+		box.top = centre.y - (centre.y - box.top) * shrinkage;
+		box.bottom = centre.y - (centre.y - box.bottom) * shrinkage;
 	}
 	return box;
 }
