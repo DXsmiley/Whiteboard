@@ -171,6 +171,10 @@ def serve_static(path):
 def serve_test_embed():
 	return flask.render_template('embed.tpl')
 
+@app.route('/test/embed2')
+def serve_test_embed2():
+	return flask.render_template('embed2.tpl')
+
 @sock.on('paint')
 def socketio_paint(message):
 	# print('paint', message)

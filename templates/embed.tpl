@@ -30,6 +30,15 @@
 			</iframe>
 			<p>It is possible to enbed the whiteboard within other web pages, like this one here.</p>
 			<p>Look at the source code of this page to see how.</p>
+			<!--
+			<script type="text/javascript">
+				api = new BoardInterface();
+				api.loadPlugin('some_url_here');
+				api.require('pencil', 'eraser', 'text', 'clear');
+				api.addButtons('pencil', 'eraser', 'text', 'colour:blue', 'colour:orange', 'colour:black', 'undo')
+				api.startup();
+			</script>
+			-->
 		</div>
 	</body>
 </html>
