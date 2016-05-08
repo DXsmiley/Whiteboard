@@ -1,5 +1,10 @@
 // Functions for drawing things on canvases
 
+function drawClearSolid(context) {
+	context.fillStyle = "#ffffff";
+	context.fillRect(0, 0, context.canvas.width, context.canvas.height); 
+}
+
 function drawClear(context) {
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }

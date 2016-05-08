@@ -52,12 +52,21 @@ div.toolbar {
 	width: 70px;
 }
 
+div.center {
+	text-align: center;
+}
+
+.center > div, .center > table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #modal_pane {
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	margin: 0px auto;
-	background-color: rgba(96, 96, 96, 0.4);
+	background-color: rgba(255, 255, 255, 0.8);
 	display: none;
 }
 
@@ -85,16 +94,9 @@ div.toolbar {
 	position: fixed;
 }
 
-.modal_text, .modal_image, .modal_clear, .modal_latex, .modal_image_select, .modal_image_upload_progress {
+.modal {
 	display: none;
 }
-
-/*.modal_image_select {
-	background-color: #ffffff;
-	border-top: 1px #eeeeee solid;
-	border-bottom: 1px #eeeeee solid;
-	margin-top: 120px;
-}*/
 
 img.toolbar_button:hover {
 	border-right: 4px #2a7fff solid;
@@ -105,6 +107,10 @@ img.toolbar_button_selected {
 }
 
 #image_upload_form {
+	display: none;
+}
+
+.modal_centered {
 	display: none;
 }
 
@@ -124,12 +130,27 @@ img.toolbar_button_selected {
     margin-left: auto;
     margin-right: auto;
     padding: 0px;
-}
-
-.modal_image_upload_progress, .modal_image_select, .modal_clear {
 	background-color: white;
-    border-top: 1px #eeeeee solid;
+	border-top: 1px #eeeeee solid;
 	border-bottom: 1px #eeeeee solid;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#toolbar_footer {
+	position: absolute;
+	bottom: 0;
+}
+
+#toolbar_footer_container {
+	position: relative;
+	bottom: 0;
+}
+
+#toolbar_normal {
+	height: 100%;
+}
+
+#tb_table {
+	height: 100%;
 }
