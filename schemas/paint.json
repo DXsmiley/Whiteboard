@@ -1,0 +1,48 @@
+{
+	"__named__":
+	{
+		"number":
+		[
+			"int",
+			"float"
+		],
+		"point":
+		{
+			"x": "@number",
+			"y": "@number",
+			"time": ["int", "none"]
+		},
+		"point_time":
+		{
+			"x": "@number",
+			"y": "@number",
+			"time": ["int", "none"]
+		}
+	},
+	"action_id": "float",
+	"tool": "string",
+	"board_id": "string",
+	"key": "string",
+	"data": [
+		"int",
+		{
+			"colour": "string",
+			"thickness": "@number",
+			"style": "string",
+			"points": {
+				"__type__": "list",
+				"__item__": "@point_time"
+			}
+		},
+		{
+			"position": "@point",
+			"url": "string",
+			"scale": "@number"
+		},
+		{
+			"colour": "string",
+			"position": "@point",
+			"text": "string"
+		}
+	]
+}
