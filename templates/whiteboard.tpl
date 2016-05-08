@@ -16,34 +16,7 @@
 
 
 		<div class="toolbar" id="toolbar_container">
-			<div id="toolbar_normal">
-				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
-				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
-				<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
-				<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
-				<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
-				<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
-				<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
-				<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
-				<img class="toolbar_button" id="button_clear"  src="/static/images/clear.png"><br>
-				<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
-				{% if permissions != 'open' %}
-					<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
-				{% endif %}
-			</div>
-			<div id="toolbar_cancel">
-				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
-			</div>
-			<div id="toolbar_confirm">
-				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
-			</div>
-			<div id="toolbar_image">
-				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
-				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
-			</div>
-			<div id="toolbar_empty">
-				
-			</div>
+
 		</div>
 
 		<div class="absolute">
@@ -106,6 +79,8 @@
 
 	</body>
 	
+	
+	<script type="text/javascript" src="/static/modules.js"></script>
 	<script type="text/javascript" src="/static/cookies.js"></script>
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="/static/socket.io.min.js"></script>
@@ -115,7 +90,6 @@
 	<script type="text/javascript" src="/static/draw.js"></script>
 	<script type="text/javascript" src="/static/globals.js"></script>
 	<script type="text/javascript" src="/static/whiteboard.js"></script>
-	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
 	<script type="text/javascript" src="/static/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/head_line.js"></script>
 	<script type="text/javascript" src="/static/tool_pencil.js"></script>
@@ -128,11 +102,18 @@
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/tool_unlock.js"></script> -->
 
+	<script type="text/javascript">
+		var whiteboard = modules.require('whiteboard');
+		var pencil = modules.require('tool_pencil');
+		whiteboard.setId("{{board_id}}");
+		whiteboard.toolCreate(new pencil());
+	</script>
+
 	{% if show_controls %}
 		<script type="text/javascript">
-			whiteboard.toolbarActivate('#toolbar_normal');
-			whiteboard.triggerToolButton('pencil');
-			whiteboard.triggerColourButton('blue');
+			// whiteboard.toolbarActivate('#toolbar_main');
+			// whiteboard.triggerToolButton('pencil');
+			// whiteboard.triggerColourButton('blue');
 		</script>
 	{% else %}
 		<script type="text/javascript">
