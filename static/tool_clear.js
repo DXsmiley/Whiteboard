@@ -1,5 +1,5 @@
 function ClearHead() {
-	whiteboard.modalOpen('.modal_clear');
+	whiteboard.modalOpen('.modal_clear', '.modal_centered');
 }
 
 ClearHead.prototype.onModalConfirm = function() {
@@ -21,7 +21,7 @@ ClearTool.prototype.onButtonClick = function() {
 };
 
 ClearTool.prototype.drawFull = function() {
-	drawClear(context_picture);
+	drawClearSolid(context_picture);
 };
 
 whiteboard.makeTool(new ClearTool());
