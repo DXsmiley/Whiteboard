@@ -1,3 +1,4 @@
+
 function PencilTool() {
 	this.thickness = 3.2;
 	this.line_mode = false;
@@ -5,6 +6,10 @@ function PencilTool() {
 	this.buttonImage = 'pencil.png';
 	this.buttonImageSelected = 'pencil_select.png';
 }
+
+PencilTool.prototype.init = function(settings) {
+	whiteboard.toolbarAddButton('main', '/static/images/pencil.png', this);
+};
 
 PencilTool.prototype.onButtonClick = function() {
 	return true;
@@ -36,3 +41,5 @@ PencilTool.prototype.drawFull = function(data) {
 };
 
 whiteboard.makeTool(new PencilTool());
+
+// whiteboard.addButton(require('pencil_button'));

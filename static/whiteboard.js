@@ -1,16 +1,23 @@
 function Whiteboard() {
 	this.whiteboard_id = 'unknown';
 	this.socket = undefined;
-	this.tool_heads = [null, null, null, null, null]; // support up to five fingers! not.
+	// Old method
 	this.context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
 	this.context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
+	// New method
+	this.context = {
+		picture: this.context_picture,
+		preview: this.context_preview
+	};
+	// should probably add a third layer for debugging
 	this.active_tool = null;
+	// Will need to replace this at some point.
 	this.colours = {
 		black: '#2a2a2a',
 		blue: '#007fee',
 		red: '#ee7f00'
 	};
-	this.global_colour = this.colours['blue'];
+	this.global_colour = '#ff0000';
 	this.tools = {};
 	this.paint_blobs_mine = [];
 	this.paint_blobs_undone = {};
@@ -20,7 +27,14 @@ function Whiteboard() {
 	this.panning = false;
 	this.last_mouse_x = 0;
 	this.last_mouse_y = 0;
+	// New things... woo!
+	this.toolbars = {};
+	this.modals = {};
+	this.nib = null; // The 'nib' is the new toolhead.
+	this.allow_pan = true;
 };
+
+// Access Information
 
 Whiteboard.prototype.getKey = function(key) {
 	key = Cookies.get('key_' + this.whiteboard_id);
@@ -28,60 +42,31 @@ Whiteboard.prototype.getKey = function(key) {
 	return key;
 };
 
-Whiteboard.prototype.makeTool = function(tool) {
-	this.tools[tool.name] = tool;
-};
-
 Whiteboard.prototype.setId = function(wid) {
 	this.whiteboard_id = wid;
 };
 
-Whiteboard.prototype.sendUndoEvent = function(action_id) {
-	this.paint_blobs_undone[action_id] = action_id;
-	this.drawEverything();
-	this.socket.emit('undo',
-		{
-			'data': {
-				'action_id': action_id,
-				'board_id': this.whiteboard_id,
-				'key': this.getKey()
-			}
-		}
-	);
+// Toolbars
+
+Whiteboard.prototype.toolbarAddButton = function(tb_name, image, weight, callback) {
+	if (this.toolbars[tb_name] === undefined) this.toolbars[tb_name] = [];
+	this.toolbars[tb_name].push({
+		weight: weight,
+		callback: callback,
+		image: image
+	});
 };
 
-Whiteboard.prototype.sendUnlockEvent = function(target) {
-	this.socket.emit('unlock',
-		{
-			'data': {
-				'board_id': this.whiteboard_id,
-				'level': 'open',
-				'key': this.getKey()
-			}
-		}
-	);
-}
-
-Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
-	// console.log('sendPaintEvent', tool_name, the_points);
-	var action_id = Math.random();
-	if (extend === true) {
-		action_id = this.paint_blobs_mine.pop();
+Whiteboard.prototype.toolbarActivate = function() {
+	for (var i in this.toolbars) {
+		$('#toolbar_' + toolbars[i]).css('display', 'none');
 	}
-	this.socket.emit('paint',
-		{
-			'data': {
-				'action_id': action_id,
-				'tool': tool_name,
-				'data': action_data,
-				'board_id': this.whiteboard_id,
-				'key': this.getKey()
-			}
-		}
-	);
-	this.paint_blobs_mine.push(action_id);
-	this.drawCommand(tool_name, action_data);
+	for (var i in arguments) {
+		$('#toolbar_' + arguments[i]).css('display', 'block');
+	}
 };
+
+// Modals
 
 Whiteboard.prototype.modalClose = function(extra_thing) {
 	this.toolbarActivate('#toolbar_normal');
@@ -95,33 +80,45 @@ Whiteboard.prototype.modalOpen = function(extra_thing) {
 	$(extra_thing).show();
 };
 
+// Tool control
+
+Whiteboard.prototype.toolCreate = function(tool) {
+	this.tools[tool.name] = tool;
+};
+
+// Backwards compatibility. Will be deprecated.
+Whiteboard.prototype.makeTool = function(tool) {
+	this.tools[tool.name] = tool;
+};
+
+
 Whiteboard.prototype.setToolHead = function(head) {
 	this.tool_heads[0] = head;
-}
+};
 
 // Perform events
 
-Whiteboard.prototype.eventToolDown = function(n, p) {
+Whiteboard.prototype.eventToolDown = function(p) {
 	if (this.active_tool) {
-		this.tool_heads[n] = this.active_tool.makeToolHead();
-		if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-			this.tool_heads[n].onMove(p);
+		this.nib = this.active_tool.makeToolHead();
+		if (this.nib && this.nib.onMove != undefined) {
+			this.nib.onMove(p);
 		}
 	}
 }
 
-Whiteboard.prototype.eventToolMove = function(n, p) {
-	if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-		this.tool_heads[n].onMove(p);
+Whiteboard.prototype.eventToolMove = function(p) {
+	if (this.nib && this.nib.onMove != undefined) {
+		this.nib.onMove(p);
 	}
 };
 
-Whiteboard.prototype.eventToolUp = function(n) {
-	if (this.tool_heads[n]) {
-		if (this.tool_heads[n].onRelease != undefined) {
-			this.tool_heads[n].onRelease();
+Whiteboard.prototype.eventToolUp = function() {
+	if (this.nib) {
+		if (this.nib.onRelease != undefined) {
+			this.nib.onRelease();
 		}
-		this.tool_heads[n] = null;
+		this.nib = null;
 	}
 };
 
@@ -137,13 +134,13 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 	$('#canvas_wrapper').toggle();
 };
 
-// Interperet events
+// Input events
 
 Whiteboard.prototype.mouseDown = function(event) {
 	if (event.which == 1) {
-		this.eventToolDown(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
+		this.eventToolDown(new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
 	}
-	if (event.which == 3) {
+	if (event.which == 3 && this.allow_pan) {
 		this.last_mouse_x = event.pageX;
 		this.last_mouse_y = event.pageY;
 		this.panning = true;
@@ -170,7 +167,7 @@ Whiteboard.prototype.mouseMove = function(event) {
 Whiteboard.prototype.mouseUp = function(event) {
 	this.eventToolUp(0);
 	this.panning = false;
-	event.preventDefault();
+	if (event.preventDefault) event.preventDefault();
 };
 
 function touchCentre(touches) {
@@ -183,7 +180,7 @@ function touchCentre(touches) {
 	sx /= touches.length;
 	sy /= touches.length;
 	return {x: sx, y: sy};
-}
+};
 
 Whiteboard.prototype.touchDown = function(event) {
 	if (event.touches.length == 1) {
@@ -227,22 +224,14 @@ Whiteboard.prototype.drawCommand = function(the_tool, the_data) {
 };
 
 Whiteboard.prototype.modalInputConfirm = function() {
-	for (var i in this.tool_heads) {
-		if (this.tool_heads[i] != null) {
-			if (!this.tool_heads[i].onModalConfirm()) {
-				this.tool_heads[i] = null;
-			}
-		}
+	if (this.nib && !this.nib.onModalConfirm()) {
+		this.nib = null;
 	}
 };
 
 Whiteboard.prototype.modalInputCancel = function() {
-	for (var i in this.tool_heads) {
-		if (this.tool_heads[i] != null) {
-			if (!this.tool_heads[i].onModalCancel()) {
-				this.tool_heads[i] = null;
-			}
-		}
+	if (this.nib && !this.nib.onModalCancel()) {
+		this.nib = null;
 	}
 };
 
@@ -251,12 +240,14 @@ Whiteboard.prototype.modalKeyHandle = function(event) {
 	if (event.keyCode == 27) this.modalInputCancel();
 };
 
-Whiteboard.prototype.canvasDoubleClick = function() {
-	if (this.active_tool) {
-		console.log('canvasDoubleClick', this.active_tool);
-		this.triggerToolButton(this.active_tool.name, true);
-	}
-};
+// This is not currently being used by any of the tools.
+// I might put in pack in later if I have a use for it.
+// Whiteboard.prototype.canvasDoubleClick = function() {
+	// if (this.active_tool) {
+	// 	console.log('canvasDoubleClick', this.active_tool);
+	// 	this.triggerToolButton(this.active_tool.name, true);
+	// }
+// };
 
 // Tool buttons
 
@@ -312,7 +303,9 @@ Whiteboard.prototype.triggerColourButton = function(col) {
 	}
 };
 
-Whiteboard.prototype.sockHandlePaint = function(msg) {
+// Socket stuff
+
+Whiteboard.prototype.receivePaintEvent = function(msg) {
 	if (msg.data.board_id == this.whiteboard_id) {
 		actions = msg.data.actions;
 		for (var i in actions) {
@@ -322,7 +315,7 @@ Whiteboard.prototype.sockHandlePaint = function(msg) {
 	}
 };
 
-Whiteboard.prototype.sockHandleUndo = function(msg) {
+Whiteboard.prototype.receiveUndoEvent = function(msg) {
 	if (msg.data.board_id == this.whiteboard_id) {
 		aid = msg.data.action_id;
 		console.log('Received Undo', aid);
@@ -333,15 +326,54 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	}
 };
 
-Whiteboard.prototype.toolbarActivate = function() {
-	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
-	for (var i in toolbars) {
-		$(toolbars[i]).css('display', 'none');
-	}
-	for (var i in arguments) {
-		$(arguments[i]).css('display', 'block');
-	}
+Whiteboard.prototype.sendUndoEvent = function(action_id) {
+	this.paint_blobs_undone[action_id] = action_id;
+	this.drawEverything();
+	this.socket.emit('undo',
+		{
+			'data': {
+				'action_id': action_id,
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
+			}
+		}
+	);
+};
+
+Whiteboard.prototype.sendUnlockEvent = function(target) {
+	this.socket.emit('unlock',
+		{
+			'data': {
+				'board_id': this.whiteboard_id,
+				'level': 'open',
+				'key': this.getKey()
+			}
+		}
+	);
 }
+
+Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
+	// console.log('sendPaintEvent', tool_name, the_points);
+	var action_id = Math.random();
+	if (extend === true) {
+		action_id = this.paint_blobs_mine.pop();
+	}
+	this.socket.emit('paint',
+		{
+			'data': {
+				'action_id': action_id,
+				'tool': tool_name,
+				'data': action_data,
+				'board_id': this.whiteboard_id,
+				'key': this.getKey()
+			}
+		}
+	);
+	this.paint_blobs_mine.push(action_id);
+	this.drawCommand(tool_name, action_data);
+};
+
+// Draw methods
 
 Whiteboard.prototype.drawEverything = function() {
 	console.log('Drawing everything!');
@@ -362,44 +394,69 @@ Whiteboard.prototype.drawEverything = function() {
 	}
 };
 
+// Startup and shutdown
+
 Whiteboard.prototype.startup = function() {
 
 	// Workaround for javascript clojure funkyness.
 	var the_whiteboard = this;
 
-	for (var i in this.colours) {
-		(function() {
-			var x = i;
-			$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
-		})();
-	}
+	// for (var i in this.colours) {
+	// 	(function() {
+	// 		var x = i;
+	// 		$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
+	// 	})();
+	// }
 
 	for (var i in this.tools) {
-		(function() {
-			var name = the_whiteboard.tools[i].name;
-			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
-			if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-				// disable the stuff
-				console.log('Disabling tool', i);
-				$('#button_' + name).hide();
-				$('#button_' + name).next().hide();
-			} else {
-				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
-				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
-			}
-		})();
+		this.tools[i].init();
 	}
+
+	var tb_container = $("#toolbar_container");
+	for (var i in this.toolbars) {
+		this.toolbars[i].sort((a, b) => (a.weight < b.weight));
+		var toolbar = $("<div/>", {id: 'tb_' + i});
+		tb_container.append(toolbar);
+		for (j in this.toolbars[i]) {
+			var button = $('<img/>', {
+				'class': 'toolbar_button',
+				'src': this.toolbars[i][j].image,
+				'mouseDown': this.toolbars[i][j].callback
+			});
+			// button.mouseDown(this.toolbars[i][j].callback);
+			toolbar.append(button);
+		}
+	}
+
+	var modal_container_outer = $("#modal_pane");
+	var modal_container_inner = $("#modal_centered_inner");
+
+	// for (var i in this.tools) {
+	// 	(function() {
+	// 		var name = the_whiteboard.tools[i].name;
+	// 		var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
+	// 		if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	// 			// disable the stuff
+	// 			console.log('Disabling tool', i);
+	// 			$('#button_' + name).hide();
+	// 			$('#button_' + name).next().hide();
+	// 		} else {
+	// 			$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
+	// 			$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
+	// 		}
+	// 	})();
+	// }
 
 	console.log('Board ID:', this.whiteboard_id);
 
 	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/');
 
 	this.socket.on('paint', function(msg) {
-		the_whiteboard.sockHandlePaint(msg);
+		the_whiteboard.receivePaintEvent(msg);
 	});
 
 	this.socket.on('undo', function(msg) {
-		the_whiteboard.sockHandleUndo(msg);
+		the_whiteboard.receiveUndoEvent(msg);
 	});
 
 	this.socket.on('refresh', function(msg) {

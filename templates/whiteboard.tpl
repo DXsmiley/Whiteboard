@@ -15,7 +15,7 @@
 		</div>
 
 
-		<div class="toolbar">
+		<div class="toolbar" id="toolbar_container">
 			<div id="toolbar_normal">
 				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
 				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
@@ -119,13 +119,14 @@
 	<script type="text/javascript" src="/static/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/head_line.js"></script>
 	<script type="text/javascript" src="/static/tool_pencil.js"></script>
-	<script type="text/javascript" src="/static/tool_eraser.js"></script>
+	<!-- <script type="text/javascript" src="/static/tool_eraser.js"></script> -->
+	<!-- 
 	<script type="text/javascript" src="/static/tool_clear.js"></script>
 	<script type="text/javascript" src="/static/tool_text.js"></script>
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
-	<script type="text/javascript" src="/static/tool_unlock.js"></script>
+	<script type="text/javascript" src="/static/tool_unlock.js"></script> -->
 
 	{% if show_controls %}
 		<script type="text/javascript">
