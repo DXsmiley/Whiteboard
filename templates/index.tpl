@@ -28,7 +28,8 @@
 				</td>
 				<td>
 					<h2>LaTeX Support</h2>
-					<p>This one's for the geeks! Format equations with full-featured LaTeX with live preview.</p>
+					<p><s>This one's for the geeks! Format equations with full-featured LaTeX with live preview.</s></p>
+					<p>Currently broken.</p>
 				</td>
 			</tr>
 		</table>
