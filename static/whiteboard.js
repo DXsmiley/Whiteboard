@@ -336,10 +336,10 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 Whiteboard.prototype.toolbarActivate = function() {
 	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
-		$(toolbars[i]).css('display', 'none');
+		$(toolbars[i]).css('left', '-80px');
 	}
 	for (var i in arguments) {
-		$(arguments[i]).css('display', 'block');
+		$(arguments[i]).css('left', '0px');
 	}
 }
 

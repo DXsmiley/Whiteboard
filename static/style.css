@@ -52,6 +52,11 @@ div.toolbar {
 	width: 70px;
 }
 
+div.toolbar div, .toolbar_hidden {
+	position: absolute;
+	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
 #modal_pane {
 	position: fixed;
 	width: 100%;
@@ -96,12 +101,24 @@ div.toolbar {
 	margin-top: 120px;
 }*/
 
+img.toolbar_button {
+	transition: border-right 0.2s ease-in-out;
+	border-right-width: 0px;
+	border-right-style: solid;
+	border-right-color: #2a7fff;
+}
+
 img.toolbar_button:hover {
 	border-right: 4px #2a7fff solid;
 }
 
 img.toolbar_button_selected {
 	border-right: 4px #eeeeee solid;
+}
+
+div.toolbar div[left = -80px] img {
+	border-right-width: 0px;
+	/*transition: border-right-width 0s;*/
 }
 
 #image_upload_form {

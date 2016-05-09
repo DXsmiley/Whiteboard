@@ -33,9 +33,9 @@
 			</div>
 			<div id="toolbar_cancel">
 				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
+				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
 			<div id="toolbar_confirm">
-				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
 			<div id="toolbar_image">
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
