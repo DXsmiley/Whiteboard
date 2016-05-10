@@ -50,9 +50,11 @@ div.toolbar {
 	position: relative;
 	padding: 0px;
 	width: 70px;
+	border-left: 80px solid white;
+	margin-left: -80px;
 }
 
-div.toolbar div, .toolbar_hidden {
+div.toolbar, div.toolbar div, .toolbar_hidden {
 	position: absolute;
 	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
 }

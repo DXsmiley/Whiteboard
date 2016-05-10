@@ -15,7 +15,7 @@
 		</div>
 
 
-		<div class="toolbar">
+		<div class="toolbar" id="toolbar_wrapper">
 			<div id="toolbar_normal">
 				<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
 				<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>

@@ -97,7 +97,7 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 };
 
 Whiteboard.prototype.modalOpen = function(extra_thing) {
-	this.toolbarActivate('#toolbar_empty');
+	this.toolbarActivate();
 	$('#modal_pane').css('display', 'block');
 	$(extra_thing).css('display', 'block');
 	setTimeout(function() {
@@ -344,8 +344,6 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	}
 };
 
-
-
 Whiteboard.prototype.toolbarActivate = function() {
 	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
@@ -353,6 +351,11 @@ Whiteboard.prototype.toolbarActivate = function() {
 	}
 	for (var i in arguments) {
 		$(arguments[i]).css('left', '0px');
+	}
+	if (arguments.length == 0) {
+		$('#toolbar_wrapper').css('left', '-80px');
+	} else {
+		$('#toolbar_wrapper').css('left', '0px');
 	}
 }
 
