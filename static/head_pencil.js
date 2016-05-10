@@ -28,8 +28,9 @@ PencilHead.prototype.pushData = function() {
 var projection_weight = 9;
 var use_trace_prediction = false;
 
-var push_distance_requirement = 2000;
-var push_point_requirement = 200;
+var push_distance_requirement = 50;
+var push_point_requirement = 10;
+var push_time_requirement = 500;
 
 PencilHead.prototype.onMove = function(input_point) {
 	if (input_point) {
@@ -60,8 +61,11 @@ PencilHead.prototype.onMove = function(input_point) {
 			}
 			this.distance += distance(this.points[l - 2], new_point);
 		}
-		if (this.distance > push_distance_requirement && l > push_point_requirement) {
-			this.pushData()
+		var dist_req = this.distance > push_distance_requirement;
+		var point_req = l > push_point_requirement;
+		var time_req = new_point.time - this.points[0].time > push_time_requirement;
+		if (dist_req && point_req && time_req) {
+			this.pushData();
 			this.distance = 0;
 		}
 	}
