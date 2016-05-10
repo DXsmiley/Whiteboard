@@ -57,7 +57,10 @@ TextTool.prototype.makeToolHead = function() {
 }
 
 TextTool.prototype.drawFull = function(data) {
-	var pos = data.position;
+	var pos = {
+		x: data.position.x - 1,
+		y: data.position.y - 4
+	}
 	var text = data.text;
 	var colour = data.colour;
 	var font = '30px Helvetica';
