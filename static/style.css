@@ -59,12 +59,21 @@ div.toolbar, div.toolbar div, .toolbar_hidden {
 	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
 }
 
+div.center {
+	text-align: center;
+}
+
+.center > div, .center > table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #modal_pane {
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	margin: 0px auto;
-	background-color: rgba(96, 96, 96, 0.4);
+	background-color: rgba(255, 255, 255, 0.8);
 	display: none;
 }
 
@@ -97,7 +106,7 @@ div.toolbar, div.toolbar div, .toolbar_hidden {
 	position: fixed;
 }
 
-.modal_text, .modal_image, .modal_clear, .modal_latex, .modal_image_select, .modal_image_upload_progress {
+.modal {
 	display: none;
 }
 
@@ -132,6 +141,10 @@ div.toolbar div[left = -80px] img {
 	display: none;
 }
 
+.modal_centered {
+	display: none;
+}
+
 .modal_centered_outer {
     display: table;
     position: absolute;
@@ -148,12 +161,27 @@ div.toolbar div[left = -80px] img {
     margin-left: auto;
     margin-right: auto;
     padding: 0px;
-}
-
-.modal_image_upload_progress, .modal_image_select, .modal_clear {
 	background-color: white;
-    border-top: 1px #eeeeee solid;
+	border-top: 1px #eeeeee solid;
 	border-bottom: 1px #eeeeee solid;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#toolbar_footer {
+	position: absolute;
+	bottom: 0;
+}
+
+#toolbar_footer_container {
+	position: relative;
+	bottom: 0;
+}
+
+#toolbar_normal {
+	height: 100%;
+}
+
+#tb_table {
+	height: 100%;
 }

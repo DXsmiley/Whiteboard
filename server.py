@@ -4,6 +4,7 @@ import collections
 import random
 import flask.ext.socketio as socketio
 import datetime
+import edgy
 
 def make_humane_gibberish(length):
 	"""Generate a meaningless but human-friendly string.
@@ -167,60 +168,64 @@ def serve_static(path):
 	print('Serving static: ', path)
 	return flask.send_from_directory('static', path)
 
+def load_schema(name):
+	text = open('schemas/' + name + '.json').read()
+	return json.loads(text)
+
+SCHEMA_PAINT = load_schema('paint')
+
 @sock.on('paint')
 def socketio_paint(message):
 	# print('paint', message)
-	bid = message['data']['board_id']
-	key = message['data']['key']
-	board = whiteboards[bid]
-	if board.may_edit(key):
-		data = {
-			'data': {
+	if edgy.check(SCHEMA_PAINT, message):
+		bid = message['board_id']
+		key = message['key']
+		board = whiteboards[bid]
+		if board.may_edit(key):
+			data = {
 				'board_id': bid,
 				'actions': [
-					message['data']
+					message
 				]
 			}
-		}
-		board.add_action(message['data'])
-		socketio.emit('paint', data, broadcast = True, room = bid)
+			board.add_action(message)
+			socketio.emit('paint', data, broadcast = True, room = bid)
+	else:
+		print('A paint action failed')
+		print(message)
 
 @sock.on('full image')
 def socketio_full_image(message):
 	# print('full image', message)
-	bid = message['data']['board_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_view(key):
 		socketio.join_room(bid)
 		data = {
-			'data': {
-				'board_id': bid,
-				'actions': board.full_image()
-			}
+			'board_id': bid,
+			'actions': board.full_image()
 		}
 		socketio.emit('paint', data)
 
 @sock.on('undo')
 def socketio_undo(message):
-	bid = message['data']['board_id']
-	aid = message['data']['action_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	aid = message['action_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_edit(key):
 		board.undo_action(aid)
 		data = {
-			'data': {
-				'board_id': bid,
-				'action_id': aid
-			}
+			'board_id': bid,
+			'action_id': aid
 		}
 		socketio.emit('undo', data, broadcast = True, room = bid)
 
 @sock.on('unlock')
 def socketio_unlock(message):
-	bid = message['data']['board_id']
-	key = message['data']['key']
+	bid = message['board_id']
+	key = message['key']
 	board = whiteboards[bid]
 	if board.may_edit(key):
 		board.unlock()
