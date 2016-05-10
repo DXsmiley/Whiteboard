@@ -465,6 +465,17 @@ $(document).ready(function() {
 	can2.addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
 	can2.addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
 
+	var toolbar_y = 0;
+
+	function scrollToolbar(event) {
+		toolbar_y += event.deltaY * 16;
+		toolbar_y = Math.max(toolbar_y, 0);
+		toolbar_y = Math.min(toolbar_y, 80 * 5); // size of toolbar times
+		$('#toolbar_scrollable').css('top', (-toolbar_y) + 'px');
+	}
+
+	document.getElementById("toolbar_wrapper").addEventListener('wheel', scrollToolbar);
+
 	whiteboard.startup();
 
 });

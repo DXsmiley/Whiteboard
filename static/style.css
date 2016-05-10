@@ -176,10 +176,17 @@ div.toolbar div[left = -80px] img {
 #toolbar_footer_container {
 	position: relative;
 	bottom: 0;
+	z-index: 20;
+	background-color: #ffffff;
 }
 
 #toolbar_normal {
 	height: 100%;
+}
+
+#toolbar_scrollable {
+	align: relative;
+	transition: top 0.1s ease-out;
 }
 
 #tb_table {

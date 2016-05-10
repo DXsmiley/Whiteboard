@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	#myDIV {
+		position: absolute;
+		top: 0px;
+	}
+</style>
+<body>
+	<div id="myDIV">
+		<p>Hello, world!</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var t = 0;
+	document.getElementById("myDIV").addEventListener("wheel", myFunction);
+	function myFunction() {
+		console.log(arguments, arguments[0], arguments[1], arguments[2]);
+		t += 1;
+		this.style.top = t + 'px';
+	}
+</script>
+</html>
