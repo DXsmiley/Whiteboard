@@ -85,14 +85,25 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 
 Whiteboard.prototype.modalClose = function(extra_thing) {
 	this.toolbarActivate('#toolbar_normal');
-	$('#modal_pane').hide();
-	$(extra_thing).hide();
+	$('#modal_pane').css('opacity', 0);
+	$(extra_thing).css('opacity', 0);
+	setTimeout(function() {
+		console.log($('#modal_pane').css('opacity'));
+		if ($('#modal_pane').css('opacity') < 0.5) {
+			$('#modal_pane').hide();
+		}
+		$(extra_thing).hide();
+	}, 500);
 };
 
 Whiteboard.prototype.modalOpen = function(extra_thing) {
 	this.toolbarActivate('#toolbar_empty');
-	$('#modal_pane').show();
-	$(extra_thing).show();
+	$('#modal_pane').css('display', 'block');
+	$(extra_thing).css('display', 'block');
+	setTimeout(function() {
+		$('#modal_pane').css('opacity', 1);
+		$(extra_thing).css('opacity', 1);
+	}, 1);
 };
 
 Whiteboard.prototype.setToolHead = function(head) {
@@ -333,6 +344,8 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 	}
 };
 
+
+
 Whiteboard.prototype.toolbarActivate = function() {
 	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
@@ -362,6 +375,10 @@ Whiteboard.prototype.drawEverything = function() {
 	}
 };
 
+function isMobile() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 Whiteboard.prototype.startup = function() {
 
 	// Workaround for javascript clojure funkyness.
@@ -378,7 +395,7 @@ Whiteboard.prototype.startup = function() {
 		(function() {
 			var name = the_whiteboard.tools[i].name;
 			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
-			if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			if (desktop_only === true && isMobile()) {
 				// disable the stuff
 				console.log('Disabling tool', i);
 				$('#button_' + name).hide();
@@ -441,10 +458,11 @@ $(document).ready(function() {
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mouseup(function(event) {whiteboard.mouseUp(event);});
 	$('#canvas2').dblclick(function(event) {whiteboard.canvasDoubleClick(event);});
-	document.getElementById('canvas2').addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
+	var can2 = document.getElementById('canvas2');
+	can2.addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
+	can2.addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
+	can2.addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
+	can2.addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
 
 	whiteboard.startup();
 

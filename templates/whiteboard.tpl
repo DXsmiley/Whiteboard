@@ -48,30 +48,30 @@
 
 		<div class="absolute">
 			<div id="modal_pane">
-				<div class="modal_text">
+				<div class="modal_text fadein">
 					<p contenteditable id="text_input_text" class="modal_text">Enter Text</p>
 				</div>
-				<div class="modal_image">
+				<div class="modal_image fadein">
 					<img id="modal_image" src="/static/images/placeholder.png" class="modal_image" />
 				</div>
 				<div class="modal_centered_outer">
 					<div class="modal_centered_middle">
 						<div class="modal_centered_inner">
-							<div class="modal_latex">
+							<div class="modal_latex fadein">
 								<center>
 									<p contenteditable id="modal_latex_input" class="modal_latex">\sqrt{a^2 + b^2} = c</p>
 									<img id="modal_latex_image" class="modal_latex" src="/static/images/placeholder.png">
 								</center>
 								<img id="modal_latex_positionable" class="modal_latex" src="/static/images/placeholder.png">
 							</div>
-							<div class="modal_clear">
+							<div class="modal_clear fadein">
 								<center>
 									<h1>Clear the whiteboard?</h1>
 									<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
 									<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
 								</center>
 							</div>
-							<div class="modal_image_select">
+							<div class="modal_image_select fadein">
 								<center>
 									<h1>Where do you want to get the image from?</h1>
 									<table>
@@ -92,7 +92,7 @@
 									</form>
 								</center>
 							</div>
-							<div class="modal_image_upload_progress">
+							<div class="modal_image_upload_progress fadein">
 								<center>
 									<h1>Uploading image...</h1>
 									<img src="/static/images/loading.svg">
@@ -109,7 +109,7 @@
 	<script type="text/javascript" src="/static/cookies.js"></script>
 	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
 	<script type="text/javascript" src="/static/socket.io.min.js"></script>
-	<script type="text/javascript" src="https://code.ospry.io/v1/ospry.js"></script>
+	<!-- <script type="text/javascript" src="https://code.ospry.io/v1/ospry.js"></script> -->
 	<script type="text/javascript" src="/static/simplify.js"></script>
 	<script type="text/javascript" src="/static/geometry.js"></script>
 	<script type="text/javascript" src="/static/draw.js"></script>

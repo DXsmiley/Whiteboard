@@ -66,6 +66,11 @@ div.toolbar div, .toolbar_hidden {
 	display: none;
 }
 
+.fadein, #modal_pane {
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
 #text_input_text {
 	font-family: helvetica;
 	font-size: 30px;
