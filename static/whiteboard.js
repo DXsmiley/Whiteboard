@@ -83,7 +83,6 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 	$('.modal_centered').css('opacity', 0);
 	$(extra_thing).css('opacity', 0);
 	setTimeout(function() {
-		console.log($('#modal_pane').css('opacity'));
 		if ($('#modal_pane').css('opacity') < 0.5) {
 			$('#modal_pane').hide();
 			$('.modal_centered').hide();
