@@ -145,8 +145,10 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 	$('#canvas_wrapper').css('left', this.pan_x + 'px');
 	$('#canvas_wrapper').css('top', this.pan_y + 'px');
 	// make sure the display updates
-	$('#canvas_wrapper').toggle();
-	$('#canvas_wrapper').toggle();
+	if (!isMobile()) {
+		$('#canvas_wrapper').toggle();
+		$('#canvas_wrapper').toggle();
+	}
 };
 
 // Interperet events
