@@ -35,10 +35,12 @@
 					</tr>
 					<tr>
 						<td valign="bottom">
-							{% if permissions != 'open' %}
-								<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
-							{% endif %}
-							<img class="toolbar_button" id="button_settings" src="/static/images/settings.png"><br>
+							<div id="toolbar_footer">
+								{% if permissions != 'open' %}
+									<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
+								{% endif %}
+								<img class="toolbar_button" id="button_settings" src="/static/images/settings.png"><br>
+							</div>
 						</td>
 					</tr>
 				</table>

@@ -468,9 +468,11 @@ $(document).ready(function() {
 	var toolbar_y = 0;
 
 	function scrollToolbar(event) {
+		var space = $('#toolbar_wrapper').height() - $('#toolbar_footer').height();
+		var height = $('#toolbar_scrollable').height() - space;
 		toolbar_y += event.deltaY * 16;
+		toolbar_y = Math.min(toolbar_y, height); // size of toolbar times
 		toolbar_y = Math.max(toolbar_y, 0);
-		toolbar_y = Math.min(toolbar_y, 80 * 5); // size of toolbar times
 		$('#toolbar_scrollable').css('top', (-toolbar_y) + 'px');
 	}
 
