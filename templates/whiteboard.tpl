@@ -68,7 +68,7 @@
 				<div class="modal fadein modal_image">
 					<img id="modal_image" src="/static/images/placeholder.png"/>
 				</div>
-				<div class="modal_centered">
+				<div class="modal_centered fadein">
 					<div class="modal_centered_outer">
 						<div class="modal_centered_middle">
 							<div class="modal_centered_inner">
