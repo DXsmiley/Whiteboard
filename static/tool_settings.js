@@ -1,7 +1,6 @@
 $('#modal_settings_button_clear').click(function() {
 	whiteboard.modalClose('.modal_settings');
-	whiteboard.modalOpen('.modal_clear', '.modal_centered');
-	whiteboard.setToolHead(new ClearHead());
+	whiteboard.sendPaintEvent('clear', 0);
 });
 
 $('#modal_settings_button_cancel').click(function() {

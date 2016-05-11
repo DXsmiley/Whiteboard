@@ -79,13 +79,6 @@
 									</div>
 									<img id="modal_latex_positionable" src="/static/images/placeholder.png">
 								</div>
-								<div class="modal fadein modal_clear">
-									<div class="center">
-										<h1>Clear the whiteboard?</h1>
-										<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
-										<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
-									</div>
-								</div>
 								<div class="modal fadein modal_image_select">
 									<div class="center">
 										<h1>Where do you want to get the image from?</h1>
