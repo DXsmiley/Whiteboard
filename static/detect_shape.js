@@ -33,7 +33,7 @@ function detectCircle(points) {
 	if (vra / rad < 0.15) {
 		var points = [];
 		for (var a = 0.0; a < 2 * Math.PI + 0.1; a += Math.PI / 40.0) {
-			console.log(a);
+			// console.log(a);
 			points.push({
 				x: centre.x + Math.sin(a) * rad,
 				y: centre.y + Math.cos(a) * rad
@@ -98,6 +98,23 @@ function polygonDP(points, place) {
 	return dp_cache[place];
 }
 
+function kslope(a, b) {
+	var s = 1;
+	var dx = a.x - b.x;
+	var dy = a.y - b.y;
+	if (dx != 0) s = Math.min(s, Math.abs(dy / dx));
+	if (dy != 0) s = Math.min(s, Math.abs(dx / dy));
+	return s;
+}
+
+function rectangularity(points) {
+	var slope = kslope(points[0], points[1]);
+	slope += kslope(points[1], points[2]);
+	slope += kslope(points[2], points[3]);
+	slope += kslope(points[3], points[0]);
+	return slope;
+}
+
 function detectPolygon(points) {
 	dp_cache = {};
 	var result = polygonDP(points, 0);
@@ -105,14 +122,20 @@ function detectPolygon(points) {
 	// console.log('Shape:', result.shape);
 	if (result.shape.length == 5) {
 		// five pointts, four sides
-		box = boundingBox(result.shape, 0.9);
-		return [
-			new Point(box.left, box.top),
-			new Point(box.left, box.bottom),
-			new Point(box.right, box.bottom),
-			new Point(box.right, box.top),
-			new Point(box.left, box.top)
-		];
+		result.shape[4] = result.shape[0];
+		console.log(result.shape, rectangularity(result.shape));
+		if (rectangularity(result.shape) < 1) {
+			box = boundingBox(result.shape, 0.9);
+			return [
+				new Point(box.left, box.top),
+				new Point(box.left, box.bottom),
+				new Point(box.right, box.bottom),
+				new Point(box.right, box.top),
+				new Point(box.left, box.top)
+			];
+		} else {
+			return result.shape;
+		}
 	}
 	// if (result.shape.length <= 6) {
 	// 	return result.shape;
