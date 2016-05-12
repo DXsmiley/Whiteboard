@@ -137,6 +137,10 @@ function detectPolygon(points) {
 			return result.shape;
 		}
 	}
+	if (result.shape.length == 4) {
+		result.shape[3] = result.shape[0];
+		return result.shape;
+	}
 	// if (result.shape.length <= 6) {
 	// 	return result.shape;
 	// }
