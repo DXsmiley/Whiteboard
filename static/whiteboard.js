@@ -116,7 +116,7 @@ modules.create('whiteboard', (function whiteboard_module() {
 	}
 
 	Whiteboard.prototype.eventToolMove = function(p) {
-		if (this.nib && this.nib.onMove != undefined) {
+		if (this.nib != null && this.nib.onMove != undefined) {
 			this.nib.onMove(p);
 		}
 	};
@@ -167,7 +167,7 @@ modules.create('whiteboard', (function whiteboard_module() {
 			this.last_mouse_y = event.pageY;
 			this.panCanvas(dx, dy);
 		} else {
-			this.eventToolMove(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
+			this.eventToolMove(new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
 		}
 		if (event.preventDefault) event.preventDefault();
 	};

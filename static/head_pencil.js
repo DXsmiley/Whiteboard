@@ -1,5 +1,7 @@
 modules.create('pencil_head', function () {
 
+	var whiteboard = modules.require('whiteboard');
+
 	function PencilHead(tool_name, colour, thickness, style) {
 		this.tool_name = tool_name;
 		this.points = Array();
@@ -24,7 +26,7 @@ modules.create('pencil_head', function () {
 			this.pushed_once = true;
 			this.points = [last_point];
 		}
-		drawClear(context_preview);
+		drawClear(whiteboard.context_preview);
 	}
 
 	var projection_weight = 9;
@@ -34,6 +36,7 @@ modules.create('pencil_head', function () {
 	var push_point_requirement = 200;
 
 	PencilHead.prototype.onMove = function(input_point) {
+		// console.log('Pencil head: on move', input_point);
 		if (input_point) {
 			var new_point = {
 				x: input_point.x,
@@ -50,14 +53,14 @@ modules.create('pencil_head', function () {
 					this.projection.x = (projection_weight * this.projection.x + dx) / (projection_weight + 1);
 					this.projection.y = (projection_weight * this.projection.y + dy) / (projection_weight + 1);
 					var tracer = new Point(new_point.x + this.projection.x, new_point.y + this.projection.y);
-					drawClear(context_preview);
-					drawLine(this.points, context_preview, this.colour, this.thickness)
-					drawSegment(new_point, tracer, context_preview, this.colour, this.thickness);
+					drawClear(whiteboard.context_preview);
+					drawLine(this.points, whiteboard.context_preview, this.colour, this.thickness)
+					drawSegment(new_point, tracer, whiteboard.context_preview, this.colour, this.thickness);
 				} else {
 					if (this.style == 'calligraphy') {
-						drawLineCalligraphy([this.points[l - 2], new_point], context_preview, this.colour, this.thickness);
+						drawLineCalligraphy([this.points[l - 2], new_point], whiteboard.context_preview, this.colour, this.thickness);
 					} else {
-						drawSegment(this.points[l - 2], new_point, context_preview, this.colour, this.thickness);
+						drawSegment(this.points[l - 2], new_point, whiteboard.context_preview, this.colour, this.thickness);
 					}
 				}
 				this.distance += distance(this.points[l - 2], new_point);
