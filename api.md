@@ -12,22 +12,61 @@ Option with more flexibility.
 	<script type="text/javascript" src=".../embed_me.js"></script>
 	<script>
 		api = new BoardApi();
-		api.add('pencil', {'scale': 3, 'style': 'straight'});
-		api.add('eraser', {'scale': 26, 'style': 'straight'});
-		api.add('text');
-		api.add('image');
+		api.enable_toolbar(false); // togglable toolbar
+		api.add_tool('pencil', {'scale': 3, 'style': 'straight'});
+		api.add_tool('eraser', {'scale': 26, 'style': 'straight'});
+		api.add_tool('text');
+		api.add_tool('image');
 		api.add_colour('blue');
 		api.add_colour('orange');
 		api.add_colour('black');
 		api.add('clear', {'confirm': False});
 		api.establish();
+		// Events
+		api.pickup_tool('pencil');
+		api.change_pensize(3);
+		api.change_colour('nope');
+		api.grab_data(); // 
+		api.clear();
+		api.pickup_tool('none'); // option to disable things...
+		api.
 	</script>
+
+### Setup
+
+These functions deal with the setup of the whiteboard.
+
+#### new BoardApi( string : id )
+
+Constructs a new interface through which you can send and receive
+messages from the whiteboard.
+
+#### api.show_toolbar( bool : visible )
+
+Show or hide the inbuilt toolbar. Visible by default, but people will probably want
+to hide it and implement their own set of tools.
+
+### Interaction
+
+These allow the user to interact with the board.
+
+#### api.pickup_tool( string : tool_name )
+
+Pick up a tool. If the tool does not exist, the current tool is simply dropped.
+
+#### api.clear()
+
+Clear the board.
+
+#### api.change_colour( string : colour )
+
+Sets the pen colour. Colour should be a html hex-string.
 
 ## Writing Plugins
 
 ### Dependency Management
 
-All plugins should utilise `require.js`.
+All plugins should utilise `modules.js`.
 
 ### The Whiteboard Object
 
