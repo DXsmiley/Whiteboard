@@ -56,9 +56,13 @@ function measureStraightness(points) {
 	return result;
 }
 
+function straighten(points) {
+	return [points[0], points[points.length - 1]];
+}
+
 function detectStraightLine(points) {
 	if (measureStraightness(points) > 0) {
-		return [points[0], points[points.length - 1]];
+		return straighten(points);
 	}
 	return null;
 }
