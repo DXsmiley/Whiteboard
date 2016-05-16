@@ -1,35 +1,48 @@
-function ClearHead() {
-	whiteboard.modalOpen('.modal_clear');
-}
+modules.create('tool_clear', function () {
 
-ClearHead.prototype.onModalConfirm = function() {
-	whiteboard.sendPaintEvent('clear', 0);
-	whiteboard.modalClose('.modal_clear');
-};
+	// Modals are not an immidiate thing in this version.
+	function ClearHead() {
+		whiteboard.modalOpen('.modal_clear');
+	}
 
-ClearHead.prototype.onModalCancel = function() {
-	whiteboard.modalClose('.modal_clear');
-};
+	ClearHead.prototype.onModalConfirm = function() {
+		whiteboard.sendPaintEvent('clear', 0);
+		whiteboard.modalClose('.modal_clear');
+	};
 
-function ClearTool() {
-	this.name = 'clear';
-	this.buttonImage = 'clear.png';
-}
+	ClearHead.prototype.onModalCancel = function() {
+		whiteboard.modalClose('.modal_clear');
+	};
 
-ClearTool.prototype.onButtonClick = function() {
-	return new ClearHead();
-};
+	function ClearTool() {
+		this.name = 'clear';
+		this.buttonImage = 'clear.png';
+	}
 
-ClearTool.prototype.drawFull = function() {
-	drawClear(context_picture);
-};
+	ClearTool.prototype.onButtonClick = function() {
+		return new ClearHead();
+	};
 
-whiteboard.makeTool(new ClearTool());
+	ClearTool.prototype.init = function(wb, settings) {
+		if (settings.button === true) {
+			// should crate a button here
+		}
+	};
 
-$("#modal_clear_button_confirm").click(function() {
-	whiteboard.modalInputConfirm();
-})
+	ClearTool.prototype.drawFull = function() {
+		drawClear(context_picture);
+	};
 
-$("#modal_clear_button_cancel").click(function() {
-	whiteboard.modalInputCancel();
-})
+	whiteboard.makeTool(new ClearTool());
+
+	$("#modal_clear_button_confirm").click(function() {
+		whiteboard.modalInputConfirm();
+	})
+
+	$("#modal_clear_button_cancel").click(function() {
+		whiteboard.modalInputCancel();
+	})
+
+	return ClearTool;
+
+});

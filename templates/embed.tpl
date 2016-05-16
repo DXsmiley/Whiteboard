@@ -30,6 +30,7 @@
 			</iframe>
 			<p>It is possible to enbed the whiteboard within other web pages, like this one here.</p>
 			<p>Look at the source code of this page to see how.</p>
+			<button onclick="doclearthing()">Clear!</button>
 			<!--
 			<script type="text/javascript">
 				api = new BoardInterface();
@@ -39,6 +40,15 @@
 				api.startup();
 			</script>
 			-->
+			<script type="text/javascript" src="/static/api.js"></script>
+			<script type="text/javascript">
+				// Takes two arguments. ID of the iframe, and the ID of the whiteboard.
+				var api = new WhiteboardAPI('whiteboard_frame', 'embed');
+				// api.show_toolbar(false);
+				function doclearthing() {
+					api.clear();
+				}
+			</script>
 		</div>
 	</body>
 </html>
