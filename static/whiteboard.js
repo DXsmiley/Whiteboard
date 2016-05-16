@@ -423,22 +423,24 @@ modules.create('whiteboard', (function whiteboard_module() {
 		var tb_container = $("#toolbar_container");
 		for (var i in this.toolbars) {
 			console.log('Constructing toolbar', i);
-			this.toolbars[i].sort((a, b) => (a.weight < b.weight));
+			this.toolbars[i].sort((a, b) => (a.weight > b.weight));
 			var toolbar = $("<div/>", {id: 'tb_' + i});
 			tb_container.append(toolbar);
+			var rep = [];
 			for (var j in this.toolbars[i]) {
-				console.log('Adding button', j);
-				var target = this.toolbars[i][j].callback;
-				var callback = function() {
-					target.onButtonClick();
-				};
-				var button = $('<img/>', {
-					'class': 'toolbar_button',
-					'src': this.toolbars[i][j].image,
-					'mousedown': callback
-				});
-				toolbar.append(button);
+				(function () {
+					var ii = i;
+					var jj = j;
+					console.log('Adding button', ii, jj, the_whiteboard.toolbars[ii][jj]);
+					toolbar.append($('<img/>', {
+						'class': 'toolbar_button',
+						'src': the_whiteboard.toolbars[ii][jj].image,
+						'mousedown': () => (the_whiteboard.toolbars[ii][jj].callback.onButtonClick())
+					}));
+					rep.push([ii, jj]);
+				})();
 			}
+			console.log(rep);
 		}
 
 		var modal_container_outer = $("#modal_pane");

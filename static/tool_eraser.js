@@ -1,19 +1,31 @@
-function EraserTool() {
-	this.name = 'eraser';
-	this.buttonImage = 'eraser.png';
-	this.buttonImageSelected = 'eraser_select.png';
-}
+modules.create('tool_eraser', function() {
 
-EraserTool.prototype.onButtonClick = function() {
-	return true;
-};
+	var whiteboard = modules.require('whiteboard');
+	var PencilHead = modules.require('pencil_head');
 
-EraserTool.prototype.makeToolHead = function() {
-	return new PencilHead('eraser', '#ffffff', 30, 'straight');
-};
+	function EraserTool() {
+		this.name = 'eraser';
+	}
 
-EraserTool.prototype.drawFull = function(data) {
-	drawLine(data.points, context_picture, '#ffffff', 30);
-};
+	EraserTool.prototype.init = function(nothing, settings) {
+		whiteboard.toolbarAddButton('main', '/static/images/eraser.png', 10, this);
+	};
 
-whiteboard.makeTool(new EraserTool());
+	EraserTool.prototype.onButtonClick = function() {
+		console.log('Clicked eraser button');
+		whiteboard.toolSetActive('eraser');
+	};
+
+	EraserTool.prototype.makeToolHead = function() {
+		return new PencilHead('eraser', '#ffffff', 30, 'straight');
+	};
+
+	EraserTool.prototype.drawFull = function(data) {
+		drawLine(data.points, whiteboard.context_picture, '#ffffff', 30);
+	};
+
+	// whiteboard.makeTool(new EraserTool());
+
+	return EraserTool;
+
+});
