@@ -76,11 +76,11 @@ modules.create('whiteboard', (function whiteboard_module() {
 		}
 		if (setting === true) {
 			this.toolbar_visible = true;
-			$('#toolbar_container').hide();
+			$('#toolbar_container').show();
 		}
 		if (setting === false) {
 			this.toolbar_visible = false;
-			$('#toolbar_container').show();
+			$('#toolbar_container').hide();
 		}
 	};
 
