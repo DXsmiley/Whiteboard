@@ -31,6 +31,7 @@ modules.create('whiteboard', (function whiteboard_module() {
 		this.last_mouse_y = 0;
 		// New things... woo!
 		this.toolbars = {};
+		this.toolbar_visible = true;
 		this.modals = {};
 		this.nib = null; // The 'nib' is the new toolhead.
 		this.allow_pan = true;
@@ -60,11 +61,26 @@ modules.create('whiteboard', (function whiteboard_module() {
 	};
 
 	Whiteboard.prototype.toolbarActivate = function() {
+		console.log('Toolbar activation:', this.toolbars, arguments);
 		for (var i in this.toolbars) {
-			$('#toolbar_' + toolbars[i]).css('display', 'none');
+			$('#tb_' + i).css('display', 'none');
 		}
 		for (var i in arguments) {
-			$('#toolbar_' + arguments[i]).css('display', 'block');
+			$('#tb_' + arguments[i]).css('display', 'block');
+		}
+	};
+
+	Whiteboard.prototype.toolbarVisibility = function(setting) {
+		if (setting === undefined) {
+			return this.toolbar_visible;
+		}
+		if (setting === true) {
+			this.toolbar_visible = true;
+			$('#toolbar_container').hide();
+		}
+		if (setting === false) {
+			this.toolbar_visible = false;
+			$('#toolbar_container').show();
 		}
 	};
 

@@ -14,10 +14,11 @@ modules.create('listener', function () {
 			}
 		} else if (event.data.type === 'action') {
 			if (event.data.action === 'clear') {
-				console.log('Cleaing whiteboard...');
 				whiteboard.sendPaintEvent('clear', 0);
 			} else if (event.data.action === 'select tool') {
 				whiteboard.toolSetActive(event.data.tool);
+			} else if (event.data.action === 'toolbar visibility') {
+				whiteboard.toolbarVisibility(event.data.visible);
 			} else {
 				console.log('Unknown action:', event.data.action);
 			}

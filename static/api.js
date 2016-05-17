@@ -17,20 +17,42 @@ WhiteboardAPI = (function() {
 
 	}
 
+	API.prototype.post = function(data) {
+		this.iframe.postMessage(data, '*');
+	};
+
 	API.prototype.receive = function(event) {
 		console.log('API interface received message:', event.origin, event.data);
 	};
 
 	API.prototype.startConversation = function() {
-		this.iframe.postMessage({'type': 'event', 'event': 'startup'}, '*');
+		this.post({
+			'type': 'event',
+			'event': 'startup'
+		});
 	};
 
 	API.prototype.clear = function() {
-		this.iframe.postMessage({'type': 'action', 'action': 'clear'}, '*');
+		this.post({
+			'type': 'action',
+			'action': 'clear'
+		});
 	};
 
 	API.prototype.setTool = function(tool_name) {
-		this.iframe.postMessage({'type': 'action', 'action': 'set tool', 'tool': tool_name}, '*');
+		this.post({
+			'type': 'action',
+			'action': 'set tool',
+			'tool': tool_name
+		});
+	};
+
+	API.prototype.toolbarVisibility = function(visible) {
+		this.post({
+			'type': 'action',
+			'action': 'toolbar visibility',
+			'visible': visible
+		});
 	};
 
 	return API;

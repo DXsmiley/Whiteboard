@@ -31,6 +31,7 @@
 			<p>It is also possible to send and receive messages from the embedded board.</p>
 			<p>The button below will send a message to clear the board.</p>
 			<button onclick="api.clear()">Clear!</button>
+			<button onclick="toggleToolbar()">Toggle Toolbar</button>
 			<!--
 			<script type="text/javascript">
 				api = new BoardInterface();
@@ -43,7 +44,12 @@
 			<script type="text/javascript" src="/static/api.js"></script>
 			<script type="text/javascript">
 				// Takes two arguments. ID of the iframe, and the ID of the whiteboard.
+				var show_tb = true;
 				var api = new WhiteboardAPI('whiteboard_frame', 'embed');
+				function toggleToolbar() {
+					api.toolbarVisibility(show_tb);
+					show_tb = !show_tb;
+				}
 			</script>
 		</div>
 	</body>
