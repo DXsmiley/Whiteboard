@@ -158,6 +158,18 @@ modules.create('whiteboard', (function whiteboard_module() {
 		$('#canvas_wrapper').toggle();
 	};
 
+	Whiteboard.prototype.allowPanning = function(setting) {
+		if (setting === undefined) {
+			return this.allow_pan;
+		}
+		if (setting === true) {
+			this.allow_pan = true;
+		}
+		if (setting === false) {
+			this.allow_pan = false;
+		}
+	};
+
 	// Input events
 
 	Whiteboard.prototype.mouseDown = function(event) {

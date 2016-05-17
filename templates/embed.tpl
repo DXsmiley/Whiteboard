@@ -32,6 +32,7 @@
 			<p>The button below will send a message to clear the board.</p>
 			<button onclick="api.clear()">Clear!</button>
 			<button onclick="toggleToolbar()">Toggle Toolbar</button>
+			<button onclick="togglePanning()">Toggle Panning</button>
 			<!--
 			<script type="text/javascript">
 				api = new BoardInterface();
@@ -43,13 +44,23 @@
 			-->
 			<script type="text/javascript" src="/static/api.js"></script>
 			<script type="text/javascript">
+				
 				// Takes two arguments. ID of the iframe, and the ID of the whiteboard.
-				var show_tb = true;
 				var api = new WhiteboardAPI('whiteboard_frame', 'embed');
+
+				var show_tb = true;
+				var allow_pan = true;
+				
 				function toggleToolbar() {
-					api.toolbarVisibility(show_tb);
 					show_tb = !show_tb;
+					api.toolbarVisibility(show_tb);
 				}
+				
+				function togglePanning() {
+					allow_pan = !allow_pan;
+					api.allowPanning(allow_pan);
+				}
+
 			</script>
 		</div>
 	</body>

@@ -55,6 +55,14 @@ WhiteboardAPI = (function() {
 		});
 	};
 
+	API.prototype.allowPanning = function(allow) {
+		this.post({
+			'type': 'action',
+			'action': 'allow panning',
+			'allow': allow
+		})
+	};
+
 	return API;
 
 })();
