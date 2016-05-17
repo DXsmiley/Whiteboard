@@ -12,7 +12,7 @@ modules.create('tool_eraser', function() {
 	};
 
 	EraserTool.prototype.onButtonClick = function() {
-		console.log('Clicked eraser button');
+		// console.log('Clicked eraser button');
 		whiteboard.toolSetActive('eraser');
 	};
 

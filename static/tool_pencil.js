@@ -17,7 +17,7 @@ modules.create('tool_pencil', (function pencil_module() {
 	};
 
 	PencilTool.prototype.onButtonClick = function() {
-		console.log('Clicked pencil button');
+		// console.log('Clicked pencil button');
 		this.whiteboard.toolSetActive('pencil');
 	};
 
