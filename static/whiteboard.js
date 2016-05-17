@@ -127,10 +127,10 @@ modules.create('whiteboard', (function whiteboard_module() {
 	// Perform events
 
 	Whiteboard.prototype.eventToolDown = function(p) {
-		console.log('Event tool down!', this.active_tool);
+		// console.log('Event tool down!', this.active_tool);
 		if (this.active_tool) {
 			this.nib = this.active_tool.makeToolHead();
-			console.log(this.nib);
+			// console.log(this.nib);
 			if (this.nib && this.nib.onMove != undefined) {
 				this.nib.onMove(p);
 			}
