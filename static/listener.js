@@ -19,6 +19,8 @@ modules.create('listener', function () {
 				whiteboard.toolbarVisibility(event.data.visible);
 			} else if (event.data.action === 'allow panning') {
 				whiteboard.allowPanning(event.data.allow);
+			} else if (event.data.action === 'set colour') {
+				whiteboard.colourSetActive(event.data.colour);
 			} else {
 				console.error('[Whiteboard API Listener] Unknown action:', event.data.action);
 			}

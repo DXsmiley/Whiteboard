@@ -20,6 +20,34 @@
 			background-color: #ccffcc;
 		}
 
+		button.colour {
+			width: 40px;
+			height: 40px;
+			border: none;
+			border-radius: 50%;
+			margin: 3px;
+		}
+
+		button.blue {
+			background-color: #007fee;
+		}
+
+		button.orange {
+			background-color: #ee7f00;
+		}
+
+		button.black {
+			background-color: #2a2a2a;
+		}
+
+		button.green {
+			background-color: #7fee00;
+		}
+
+		button:hover {
+			border: 3px solid white;
+		}
+
 	</style>
 	<body>
 		<div id="wrapper">
@@ -33,6 +61,11 @@
 			<button onclick="api.clear()">Clear!</button>
 			<button onclick="toggleToolbar()">Toggle Toolbar</button>
 			<button onclick="togglePanning()">Toggle Panning</button>
+			<p>Change the pen colour:</p>
+			<button onclick="api.setColour('#007fee')" class="colour blue"></button>
+			<button onclick="api.setColour('#ee7f00')" class="colour orange"></button>
+			<button onclick="api.setColour('#2a2a2a')" class="colour black"></button>
+			<button onclick="api.setColour('#7fee00')" class="colour green"></button>
 			<!--
 			<script type="text/javascript">
 				api = new BoardInterface();

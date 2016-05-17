@@ -19,7 +19,7 @@ modules.create('whiteboard', (function whiteboard_module() {
 			blue: '#007fee',
 			red: '#ee7f00'
 		};
-		this.global_colour = '#ff0000';
+		this.global_colour = this.colours['blue'];
 		this.tools = {};
 		this.paint_blobs_mine = [];
 		this.paint_blobs_undone = {};
@@ -116,6 +116,12 @@ modules.create('whiteboard', (function whiteboard_module() {
 	Whiteboard.prototype.toolSetActive = function(toolname) {
 		if (toolname == undefined) this.active_tool = undefined;
 		else this.active_tool = this.tools[toolname];
+	};
+
+	// Colours
+
+	Whiteboard.prototype.colourSetActive = function(colour) {
+		this.global_colour = colour;
 	};
 
 	// Perform events

@@ -47,6 +47,14 @@ WhiteboardAPI = (function() {
 		});
 	};
 
+	API.prototype.setColour = function(colour) {
+		this.post({
+			'type': 'action',
+			'action': 'set colour',
+			'colour': colour
+		})
+	};
+
 	API.prototype.toolbarVisibility = function(visible) {
 		this.post({
 			'type': 'action',
