@@ -2,8 +2,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{% block title %}{% endblock %}</title>
-		<link rel="stylesheet" type="text/css" href="static/normalise.css">
-		<link rel="stylesheet" type="text/css" href="static/style_pages.css">
+		<link rel="stylesheet" type="text/css" href="static/css/normalise.css">
+		<link rel="stylesheet" type="text/css" href="static/css/style_pages.css">
 	</head>
 	<body>
 		<div class="headder">

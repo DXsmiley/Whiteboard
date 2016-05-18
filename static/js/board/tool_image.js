@@ -28,7 +28,9 @@ $("#modal_image_button_cancel").click(function() {
 
 // Handle the image uploading process
 
-var ospry = new Ospry('pk-test-53z2t7ah9j8jhe2l6zjh9v2h');
+if (typeof Ospry !== 'undefined') {
+	var ospry = new Ospry('pk-test-53z2t7ah9j8jhe2l6zjh9v2h');
+}
 
 var onUpload = function(err, metadata) {
 	console.log('Upload result');
@@ -44,17 +46,24 @@ var onUpload = function(err, metadata) {
 	}
 };
 
-$('#image_upload_form').change(function(e) {
-	console.log('Uploading...');
-	console.log(this, e);
-	ospry.up({
-		form: this,
-		imageReady: onUpload,
+
+if (typeof Ospry === 'undefined') {
+	$('#image_upload_form').change(function(e) {
+		alert('Image uploading is not available');
 	});
-	whiteboard.modalClose('.modal_image_select');
-	whiteboard.modalOpen('.modal_image_upload_progress', '.modal_centered');
-	whiteboard.toolbarActivate('#toolbar_cancel');
-});
+} else {
+	$('#image_upload_form').change(function(e) {
+		console.log('Uploading...');
+		console.log(this, e);
+		ospry.up({
+			form: this,
+			imageReady: onUpload,
+		});
+		whiteboard.modalClose('.modal_image_select');
+		whiteboard.modalOpen('.modal_image_upload_progress', '.modal_centered');
+		whiteboard.toolbarActivate('#toolbar_cancel');
+	});
+}
 
 // Objects to interface with the whiteboard
 

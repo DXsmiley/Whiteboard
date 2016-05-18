@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Whiteboard</title>
-		<link rel="stylesheet" type="text/css" href="/static/normalise.css">
-		<link rel="stylesheet" type="text/css" href="/static/style.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/normalise.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 	</head>
 
 	<body class="whiteboard" oncontextmenu="return false;">
@@ -138,27 +138,27 @@
 
 	</body>
 	
-	<script type="text/javascript" src="/static/cookies.js"></script>
-	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
-	<script type="text/javascript" src="/static/socket.io.min.js"></script>
+	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>
+	<script type="text/javascript" src="/static/js/lib/jquery-1.9.0.min.js"></script>
+	<script type="text/javascript" src="/static/js/lib/socket.io.min.js"></script>
 	<script type="text/javascript" src="https://code.ospry.io/v1/ospry.js"></script>
-	<script type="text/javascript" src="/static/simplify.js"></script>
-	<script type="text/javascript" src="/static/geometry.js"></script>
-	<script type="text/javascript" src="/static/draw.js"></script>
-	<script type="text/javascript" src="/static/globals.js"></script>
-	<script type="text/javascript" src="/static/whiteboard.js"></script>
+	<script type="text/javascript" src="/static/js/lib/simplify.js"></script>
+	<script type="text/javascript" src="/static/js/board/geometry.js"></script>
+	<script type="text/javascript" src="/static/js/board/draw.js"></script>
+	<script type="text/javascript" src="/static/js/board/globals.js"></script>
+	<script type="text/javascript" src="/static/js/board/whiteboard.js"></script>
 	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
-	<script type="text/javascript" src="/static/head_pencil.js"></script>
-	<script type="text/javascript" src="/static/head_line.js"></script>
-	<script type="text/javascript" src="/static/tool_pencil.js"></script>
-	<script type="text/javascript" src="/static/tool_eraser.js"></script>
-	<script type="text/javascript" src="/static/tool_clear.js"></script>
-	<script type="text/javascript" src="/static/tool_text.js"></script>
-	<script type="text/javascript" src="/static/tool_image.js"></script>
-	<script type="text/javascript" src="/static/tool_latex.js"></script>
-	<script type="text/javascript" src="/static/tool_undo.js"></script>
-	<script type="text/javascript" src="/static/tool_unlock.js"></script>
-	<script type="text/javascript" src="/static/tool_settings.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_pencil.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_line.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_pencil.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_eraser.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_clear.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_text.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_image.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">
