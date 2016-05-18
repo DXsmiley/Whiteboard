@@ -77,21 +77,33 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 	this.drawCommand(tool_name, action_data);
 };
 
-Whiteboard.prototype.modalClose = function() {
+Whiteboard.prototype.modalClose = function(extra_thing) {
 	this.toolbarActivate('#toolbar_normal');
-	$('#modal_pane').hide();
-	$('.modal_centered').hide();
-	for (var i in arguments) {
-		$(arguments[i]).hide();
-	}
+	$('#modal_pane').css('opacity', 0);
+	$('.modal_centered').css('opacity', 0);
+	$(extra_thing).css('opacity', 0);
+	setTimeout(function() {
+		if ($('#modal_pane').css('opacity') < 0.5) {
+			$('#modal_pane').hide();
+			$('.modal_centered').hide();
+		}
+		$(extra_thing).hide();
+	}, 500);
 };
 
 Whiteboard.prototype.modalOpen = function() {
-	this.toolbarActivate('#toolbar_empty');
-	$('#modal_pane').show();
-	for (var i in arguments) {
-		$(arguments[i]).show();
+	// Convert 'arguments' into an actual array.
+	var the_args = Array.prototype.slice.call(arguments);
+	the_args.push('#modal_pane');
+	this.toolbarActivate();
+	for (var i in the_args) {
+		$(the_args[i]).css('display', 'block');
 	}
+	setTimeout(function() {
+		for (var i in the_args) {
+			$(the_args[i]).css('opacity', 1);
+		}
+	}, 1);
 };
 
 Whiteboard.prototype.setToolHead = function(head) {
@@ -132,8 +144,10 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 	$('#canvas_wrapper').css('left', this.pan_x + 'px');
 	$('#canvas_wrapper').css('top', this.pan_y + 'px');
 	// make sure the display updates
-	$('#canvas_wrapper').toggle();
-	$('#canvas_wrapper').toggle();
+	if (!isMobile()) {
+		$('#canvas_wrapper').toggle();
+		$('#canvas_wrapper').toggle();
+	}
 };
 
 // Interperet events
@@ -335,10 +349,15 @@ Whiteboard.prototype.sockHandleUndo = function(msg) {
 Whiteboard.prototype.toolbarActivate = function() {
 	var toolbars = ['#toolbar_normal', '#toolbar_confirm', '#toolbar_cancel', '#toolbar_image'];
 	for (var i in toolbars) {
-		$(toolbars[i]).css('display', 'none');
+		$(toolbars[i]).css('left', '-80px');
 	}
 	for (var i in arguments) {
-		$(arguments[i]).css('display', 'block');
+		$(arguments[i]).css('left', '0px');
+	}
+	if (arguments.length == 0) {
+		$('#toolbar_wrapper').css('left', '-80px');
+	} else {
+		$('#toolbar_wrapper').css('left', '0px');
 	}
 }
 
@@ -361,6 +380,10 @@ Whiteboard.prototype.drawEverything = function() {
 	}
 };
 
+function isMobile() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 Whiteboard.prototype.startup = function() {
 
 	// Workaround for javascript clojure funkyness.
@@ -377,7 +400,7 @@ Whiteboard.prototype.startup = function() {
 		(function() {
 			var name = the_whiteboard.tools[i].name;
 			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
-			if (desktop_only === true && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			if (desktop_only === true && isMobile()) {
 				// disable the stuff
 				console.log('Disabling tool', i);
 				$('#button_' + name).hide();
@@ -429,18 +452,32 @@ $(window).on('beforeunload', function(){
 $(document).ready(function() {
 
 	$('#modal_pane').mousedown(function(event) {whiteboard.mouseMove(event);});
-	$('#button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
-	$('#button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
+	$('img.button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
+	$('img.button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
 	$('#modal_pane').keydown(function(event) {whiteboard.modalKeyHandle(event);});
 	// $('#modal_pane').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mousedown(function(event) {whiteboard.mouseDown(event);});
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mouseup(function(event) {whiteboard.mouseUp(event);});
 	$('#canvas2').dblclick(function(event) {whiteboard.canvasDoubleClick(event);});
-	document.getElementById('canvas2').addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
-	document.getElementById('canvas2').addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
+	var can2 = document.getElementById('canvas2');
+	can2.addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
+	can2.addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
+	can2.addEventListener('touchend', function(event) {whiteboard.mouseUp(event);}, false);
+	can2.addEventListener('touchcancel', function(event) {whiteboard.mouseUp(event);}, false);
+
+	var toolbar_y = 0;
+
+	function scrollToolbar(event) {
+		var space = $('#toolbar_wrapper').height() - $('#toolbar_footer').height();
+		var height = $('#toolbar_scrollable').height() - space;
+		toolbar_y += event.deltaY * 16;
+		toolbar_y = Math.min(toolbar_y, height); // size of toolbar times
+		toolbar_y = Math.max(toolbar_y, 0);
+		$('#toolbar_scrollable').css('top', (-toolbar_y) + 'px');
+	}
+
+	document.getElementById("toolbar_wrapper").addEventListener('wheel', scrollToolbar);
 
 	whiteboard.startup();
 

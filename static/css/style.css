@@ -50,6 +50,13 @@ div.toolbar {
 	position: relative;
 	padding: 0px;
 	width: 70px;
+	border-left: 80px solid white;
+	margin-left: -80px;
+}
+
+div.toolbar, div.toolbar div, .toolbar_hidden {
+	position: absolute;
+	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
 }
 
 div.center {
@@ -68,6 +75,11 @@ div.center {
 	margin: 0px auto;
 	background-color: rgba(255, 255, 255, 0.8);
 	display: none;
+}
+
+.fadein, #modal_pane {
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
 }
 
 #text_input_text {
@@ -98,12 +110,37 @@ div.center {
 	display: none;
 }
 
-img.toolbar_button:hover {
-	border-right: 4px #2a7fff solid;
+/*.modal_image_select {
+	background-color: #ffffff;
+	border-top: 1px #eeeeee solid;
+	border-bottom: 1px #eeeeee solid;
+	margin-top: 120px;
+}*/
+
+img.toolbar_button {
+	transition:
+		border-right-width 0.1s ease-in,
+		border-right-color 0.1s linear;
+	border-right-style: solid;
+	border-right-width: 0px;
+	border-right-color: #eeeeee;
 }
 
+img.toolbar_button:hover {
+	transition:
+		border-right-width 0.1s ease-out,
+		border-right-color 0.1s linear;
+	border-right-width: 4px;
+	border-right-color: #2a7fff;
+}
 img.toolbar_button_selected {
-	border-right: 4px #eeeeee solid;
+	border-right-width: 4px;
+	border-right-color: #eeeeee;
+}
+
+div.toolbar div[left = -80px] img {
+	border-right-width: 0px;
+	/*transition: border-right-width 0s;*/
 }
 
 #image_upload_form {
@@ -145,10 +182,17 @@ img.toolbar_button_selected {
 #toolbar_footer_container {
 	position: relative;
 	bottom: 0;
+	z-index: 20;
+	background-color: #ffffff;
 }
 
 #toolbar_normal {
 	height: 100%;
+}
+
+#toolbar_scrollable {
+	align: relative;
+	transition: top 0.1s ease-out;
 }
 
 #tb_table {

@@ -34,6 +34,6 @@
 			</tr>
 		</table>
 	</div>
-	<script type="text/javascript" src="/static/draw.js"></script>
-	<script type="text/javascript" src="/static/auto_drawer.js"></script>
+	<script type="text/javascript" src="/static/js/board/draw.js"></script>
+	<script type="text/javascript" src="/static/js/board/auto_drawer.js"></script>
 {% endblock %}

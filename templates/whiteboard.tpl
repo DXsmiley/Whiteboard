@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Whiteboard</title>
-		<link rel="stylesheet" type="text/css" href="/static/normalise.css">
-		<link rel="stylesheet" type="text/css" href="/static/style.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/normalise.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 	</head>
 
 	<body class="whiteboard" oncontextmenu="return false;">
@@ -15,39 +15,45 @@
 		</div>
 
 
-		<div class="toolbar">
+		<div class="toolbar" id="toolbar_wrapper">
 			<div id="toolbar_normal">
 				<table id="tb_table">
 					<tr>
 						<td valign="top">
-							<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
-							<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
-							<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
-							<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
-							<!-- <img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br> -->
-							<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
-							<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
-							<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
-							<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
+							<div id="toolbar_scrollable">
+								<img class="toolbar_button" id="button_pencil" src="/static/images/pencil.png"><br>
+								<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
+								<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
+								<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
+								<!-- <img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br> -->
+								<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
+								<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
+								<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
+								<img class="toolbar_button" id="button_undo"   src="/static/images/button_undo.png"><br>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td valign="bottom">
-							{% if permissions != 'open' %}
-								<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
-							{% endif %}
-							<img class="toolbar_button" id="button_settings" src="/static/images/settings.png"><br>
+							<div id="toolbar_footer">
+								{% if permissions != 'open' %}
+									<img class="toolbar_button" id="button_unlock" src="/static/images/button_unlock.png"><br>
+								{% endif %}
+								<img class="toolbar_button" id="button_settings" src="/static/images/settings.png"><br>
+							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="toolbar_cancel">
-				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_confirm">
-				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
 			</div>
 			<div id="toolbar_image">
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
 				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
 			</div>
@@ -58,31 +64,24 @@
 
 		<div class="absolute">
 			<div id="modal_pane">
-				<div class="modal modal_text">
+				<div class="modal fadein modal_text">
 					<p contenteditable id="text_input_text">Enter Text</p>
 				</div>
-				<div class="modal modal_image">
+				<div class="modal fadein modal_image">
 					<img id="modal_image" src="/static/images/placeholder.png"/>
 				</div>
-				<div class="modal_centered">
+				<div class="modal_centered fadein">
 					<div class="modal_centered_outer">
 						<div class="modal_centered_middle">
 							<div class="modal_centered_inner">
-								<div class="modal modal_latex">
+								<div class="modal fadein modal_latex">
 									<div class="center">
 										<p contenteditable id="modal_latex_input">\sqrt{a^2 + b^2} = c</p>
 										<img id="modal_latex_image" src="/static/images/placeholder.png">
 									</div>
 									<img id="modal_latex_positionable" src="/static/images/placeholder.png">
 								</div>
-								<div class="modal modal_clear">
-									<div class="center">
-										<h1>Clear the whiteboard?</h1>
-										<img id="modal_clear_button_confirm" src="/static/images/confirm_large.png">
-										<img id="modal_clear_button_cancel" src="/static/images/cancel_large.png">
-									</div>
-								</div>
-								<div class="modal modal_image_select">
+								<div class="modal fadein modal_image_select">
 									<div class="center">
 										<h1>Where do you want to get the image from?</h1>
 										<table>
@@ -103,13 +102,13 @@
 										</form>
 									</div>
 								</div>
-								<div class="modal modal_image_upload_progress">
+								<div class="modal fadein modal_image_upload_progress">
 									<div class="center">
 										<h1>Uploading image...</h1>
 										<img src="/static/images/loading.svg">
 									</div>
 								</div>
-								<div class="modal modal_settings">
+								<div class="modal fadein modal_settings">
 									<div class="center">
 										<h1>Settings and Extra Options</h1>
 										<table>
@@ -139,27 +138,27 @@
 
 	</body>
 	
-	<script type="text/javascript" src="/static/cookies.js"></script>
-	<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
-	<script type="text/javascript" src="/static/socket.io.min.js"></script>
+	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>
+	<script type="text/javascript" src="/static/js/lib/jquery-1.9.0.min.js"></script>
+	<script type="text/javascript" src="/static/js/lib/socket.io.min.js"></script>
 	<script type="text/javascript" src="https://code.ospry.io/v1/ospry.js"></script>
-	<script type="text/javascript" src="/static/simplify.js"></script>
-	<script type="text/javascript" src="/static/geometry.js"></script>
-	<script type="text/javascript" src="/static/draw.js"></script>
-	<script type="text/javascript" src="/static/globals.js"></script>
-	<script type="text/javascript" src="/static/whiteboard.js"></script>
+	<script type="text/javascript" src="/static/js/lib/simplify.js"></script>
+	<script type="text/javascript" src="/static/js/board/geometry.js"></script>
+	<script type="text/javascript" src="/static/js/board/draw.js"></script>
+	<script type="text/javascript" src="/static/js/board/globals.js"></script>
+	<script type="text/javascript" src="/static/js/board/whiteboard.js"></script>
 	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
-	<script type="text/javascript" src="/static/head_pencil.js"></script>
-	<script type="text/javascript" src="/static/head_line.js"></script>
-	<script type="text/javascript" src="/static/tool_pencil.js"></script>
-	<script type="text/javascript" src="/static/tool_eraser.js"></script>
-	<script type="text/javascript" src="/static/tool_clear.js"></script>
-	<script type="text/javascript" src="/static/tool_text.js"></script>
-	<script type="text/javascript" src="/static/tool_image.js"></script>
-	<script type="text/javascript" src="/static/tool_latex.js"></script>
-	<script type="text/javascript" src="/static/tool_undo.js"></script>
-	<script type="text/javascript" src="/static/tool_unlock.js"></script>
-	<script type="text/javascript" src="/static/tool_settings.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_pencil.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_line.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_pencil.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_eraser.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_clear.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_text.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_image.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">
