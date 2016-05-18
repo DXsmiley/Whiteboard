@@ -118,18 +118,24 @@ div.center {
 }*/
 
 img.toolbar_button {
-	transition: border-right 0.2s ease-in-out;
-	border-right-width: 0px;
+	transition:
+		border-right-width 0.1s ease-in,
+		border-right-color 0.1s linear;
 	border-right-style: solid;
-	border-right-color: #2a7fff;
+	border-right-width: 0px;
+	border-right-color: #eeeeee;
 }
 
 img.toolbar_button:hover {
-	border-right: 4px #2a7fff solid;
+	transition:
+		border-right-width 0.1s ease-out,
+		border-right-color 0.1s linear;
+	border-right-width: 4px;
+	border-right-color: #2a7fff;
 }
-
 img.toolbar_button_selected {
-	border-right: 4px #eeeeee solid;
+	border-right-width: 4px;
+	border-right-color: #eeeeee;
 }
 
 div.toolbar div[left = -80px] img {
