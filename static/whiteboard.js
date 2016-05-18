@@ -452,8 +452,8 @@ $(window).on('beforeunload', function(){
 $(document).ready(function() {
 
 	$('#modal_pane').mousedown(function(event) {whiteboard.mouseMove(event);});
-	$('#button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
-	$('#button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
+	$('img.button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
+	$('img.button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
 	$('#modal_pane').keydown(function(event) {whiteboard.modalKeyHandle(event);});
 	// $('#modal_pane').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mousedown(function(event) {whiteboard.mouseDown(event);});

@@ -46,12 +46,14 @@
 				</table>
 			</div>
 			<div id="toolbar_cancel">
-				<img class="toolbar_button" src="/static/images/cancel.png" id="button_cancel"><br>
-				<img class="toolbar_button" src="/static/images/confirm.png" id="button_confirm"><br>
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_confirm">
 			</div>
 			<div id="toolbar_image">
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 				<img class="toolbar_button" src="/static/images/zoom_out.png" id="button_shrink"><br>
 				<img class="toolbar_button" src="/static/images/zoom_in.png" id="button_enlarge"><br>				
 			</div>
