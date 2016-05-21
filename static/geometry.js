@@ -14,7 +14,8 @@ function distance(a, b) {
 function point_lerp(a, b, k) {
 	var x = a.x + (b.x - a.x) * k;
 	var y = a.y + (b.y - a.y) * k;
-	return {x: x, y: y}
+	var t = a.time + (b.time - a.time) * k;
+	return {x: x, y: y, time: t};
 }
 
 function lineThroughTwoPoints(p, q) {
@@ -32,26 +33,26 @@ function pointLineDistance(p, l) {
 
 // Functions for manipulating lines
 
-function cleanupLine(p) {
-	return simplify(p, 1.0, true);
-}
-
-function bezier(p, steps) {
-	var o = Array();
-	o.push(p[0]);
-	for (var i = 0; i < p.length - 3; i += 2) {
-		for (var j = 0; j < steps; ++j) {
-			a = point_lerp(p[i], p[i + 1], j / steps);
-			b = point_lerp(p[i + 1], p[i + 1], j / steps);
-			c = point_lerp(p[i + 1], p[i + 2], j / steps);
-			d = point_lerp(a, b, j / steps);
-			e = point_lerp(b, c, j / steps);
-			f = point_lerp(d, e, j / steps);
-			o.push(f);
+function beizierSmoothing(points) {
+	var res = [points[0]];
+	for (var i = 0; i < points.length - 2; ++i) {
+		for (var d = 0; d <= 1; d += 1 / 8) {
+			var a = point_lerp(points[i], points[i + 1], 0.5 + d / 2.0);
+			var b = point_lerp(points[i + 1], points[i + 2], d / 2.0);
+			var c = point_lerp(a, b, d);
+			res.push(c);
 		}
 	}
-	o.push(p[p.length - 1]);
-	return o;
+	res.push(points[points.length - 1]);
+	return res;
+}
+
+function cleanupLine(points) {
+	if (distance(points[0], points[points.length - 1]) < 20) {
+		points.push(points[0]);
+	}
+	points = beizierSmoothing(points);
+	return simplify(points, 1.0, true);
 }
 
 function boundingBox(line, shrinkage) {
