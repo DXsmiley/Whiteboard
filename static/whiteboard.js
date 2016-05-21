@@ -52,6 +52,24 @@ modules.create('whiteboard', (function whiteboard_module() {
 	// Toolbars
 
 	Whiteboard.prototype.toolbarAddButton = function(tb_name, image, weight, callback) {
+		var this_ref = this;
+		if (callback === 'modal:confirm') {
+			callback = function() {
+				console.log('modal:confirm');
+				this_ref.modalInputConfirm();
+			}
+		} else if (callback === 'modal:cancel') {
+			callback = function() {
+				console.log('modal:cancel');
+				this_ref.modalInputCancel();
+			}
+		} else {
+			var cbo = callback;
+			callback = function() {
+				console.log(callback, cbo);
+				cbo.onButtonClick();
+			}
+		}
 		if (this.toolbars[tb_name] === undefined) this.toolbars[tb_name] = [];
 		this.toolbars[tb_name].push({
 			weight: weight,
@@ -87,13 +105,13 @@ modules.create('whiteboard', (function whiteboard_module() {
 	// Modals
 
 	Whiteboard.prototype.modalClose = function(extra_thing) {
-		this.toolbarActivate('#toolbar_normal');
+		this.toolbarActivate('main');
 		$('#modal_pane').hide();
 		$(extra_thing).hide();
 	};
 
 	Whiteboard.prototype.modalOpen = function(extra_thing) {
-		this.toolbarActivate('#toolbar_empty');
+		this.toolbarActivate();
 		$('#modal_pane').show();
 		$(extra_thing).show();
 	};
@@ -469,13 +487,15 @@ modules.create('whiteboard', (function whiteboard_module() {
 					toolbar.append($('<img/>', {
 						'class': 'toolbar_button',
 						'src': the_whiteboard.toolbars[ii][jj].image,
-						'mousedown': () => (the_whiteboard.toolbars[ii][jj].callback.onButtonClick())
+						'mousedown': () => (the_whiteboard.toolbars[ii][jj].callback())
 					}));
 					rep.push([ii, jj]);
 				})();
 			}
 			console.log(rep);
 		}
+
+		this.toolbarActivate('main');
 
 		var modal_container_outer = $("#modal_pane");
 		var modal_container_inner = $("#modal_centered_inner");

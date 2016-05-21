@@ -96,8 +96,8 @@
 	<script type="text/javascript" src="/static/tool_eraser.js"></script>
 	<script type="text/javascript" src="/static/listener.js"></script>
 	<script type="text/javascript" src="/static/tool_clear.js"></script>
-	<!-- 
 	<script type="text/javascript" src="/static/tool_text.js"></script>
+	<!-- 
 	<script type="text/javascript" src="/static/tool_image.js"></script>
 	<script type="text/javascript" src="/static/tool_latex.js"></script>
 	<script type="text/javascript" src="/static/tool_undo.js"></script>
@@ -105,13 +105,11 @@
 
 	<script type="text/javascript">
 		var whiteboard = modules.require('whiteboard');
-		var pencil = modules.require('tool_pencil');
-		var eraser = modules.require('tool_eraser');
-		var clear = modules.require('tool_clear');
 		whiteboard.setId("{{board_id}}");
-		whiteboard.toolCreate(new pencil());
-		whiteboard.toolCreate(new eraser());
-		whiteboard.toolCreate(new clear());
+		whiteboard.toolCreate(new (modules.require('tool_pencil'))());
+		whiteboard.toolCreate(new (modules.require('tool_eraser'))());
+		whiteboard.toolCreate(new (modules.require('tool_clear'))());
+		whiteboard.toolCreate(new (modules.require('tool_text'))());
 		modules.require('listener');
 	</script>
 
