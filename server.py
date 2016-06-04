@@ -40,6 +40,7 @@ class Whiteboard:
 		self.owner_key = ''
 		self.name = name
 		self.load_everything()
+		self.save_everything()
 
 	def load_everything(self):
 		data = database.load(self.name)
@@ -55,7 +56,7 @@ class Whiteboard:
 			'key': self.key,
 			'owner_key': self.owner_key
 		}
-		database.save(self.name, payload)
+		database.rewrite(self.name, payload)
 
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
