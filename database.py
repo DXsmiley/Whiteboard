@@ -20,6 +20,9 @@ def action_push(bid, action):
 
 def action_remove(bid, action_id):
     collection.update({'_id': bid}, {'$pull': {'layers': {'action_id': action_id}}}, upsert = True)
+
+def rewrite(bid, data):
+    collection.update({'_id': bid}, data, upsert = True)
     
 def load(bid):
     return collection.find_one({'_id': bid})
