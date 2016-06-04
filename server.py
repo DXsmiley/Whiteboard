@@ -57,20 +57,6 @@ class Whiteboard:
 		}
 		database.save(self.name, payload)
 
-	def save_action(self, action):
-		payload = {
-			'$push': {
-				'layers': action
-			}
-		}
-		database.update(self.name, payload)
-
-	def save_undo(self, action_id):
-		payload = {
-			'$pull': {'layers': {'action_id': action_id}}
-		}
-		database.update(self.name, payload)
-
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
 
@@ -88,12 +74,12 @@ class Whiteboard:
 	def add_action(self, action):
 		self.update_time()
 		self.layers.append(action)
-		self.save_action(action)
+		database.action_push(self.name, action)
 
 	def undo_action(self, action):
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
-		self.save_undo(action)
+		self.action_remove(self.name, action)
 
 	def recency_formatted(self):
 		delta = datetime.datetime.now() - self.last_changed
