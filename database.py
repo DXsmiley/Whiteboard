@@ -13,7 +13,7 @@ collection = database['whiteboards']
 #    Exception: If the program is terminated, we can forget it.
 # 3. The whiteboard does not need to be saved after every change.
 
-def save(bid, data):
+def update(bid, data):
     collection.update({'_id': bid}, data, upsert = True)
     
 def load(bid):
