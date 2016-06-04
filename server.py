@@ -5,6 +5,19 @@ import random
 import flask.ext.socketio as socketio
 import datetime
 import edgy
+import database
+
+class keydefaultdict(collections.defaultdict):
+	"""collections.defaultdict except the key is passed to the default_factory
+
+	I got this off Stack Overflow: http://stackoverflow.com/a/2912455/2002307
+	"""
+	def __missing__(self, key):
+		if self.default_factory is None:
+			raise KeyError(key)
+		else:
+			ret = self[key] = self.default_factory(key)
+		return ret
 
 def make_humane_gibberish(length):
 	"""Generate a meaningless but human-friendly string.
@@ -18,13 +31,31 @@ def make_humane_gibberish(length):
 	return result
 
 class Whiteboard:
-	def __init__(self):
+	def __init__(self, name):
 		self.layers = []
 		self.last_changed = datetime.datetime.now()
 		self.last_saved = datetime.datetime.now()
 		self.permissions = 'open'
 		self.key = ''
 		self.owner_key = ''
+		self.name = name
+		self.load_everything()
+
+	def load_everything(self):
+		data = database.load(self.name)
+		if data:
+			# Using get will allow backwards compatibility in the future
+			self.key = data.get('key', '')
+			self.owner_key = data.get('owner_key', '')
+			self.layers = data.get('layers', [])
+
+	def save_everything(self):
+		payload = {
+			'layers': self.layers,
+			'key': self.key,
+			'owner_key': self.owner_key
+		}
+		database.save(self.name, payload)
 
 	def update_time(self):
 		self.last_changed = datetime.datetime.now()
@@ -43,10 +74,12 @@ class Whiteboard:
 	def add_action(self, action):
 		self.update_time()
 		self.layers.append(action)
+		self.save_everything()
 
 	def undo_action(self, action):
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
+		self.save_everything()
 
 	def recency_formatted(self):
 		delta = datetime.datetime.now() - self.last_changed
@@ -59,14 +92,17 @@ class Whiteboard:
 		self.permissions = 'protected'
 		self.key = make_humane_gibberish(6)
 		self.owner_key = make_humane_gibberish(30)
+		self.save_everything()
 
 	def make_private(self):
 		self.permissions = 'private'
 		self.key = make_humane_gibberish(6)
 		self.owner_key = make_humane_gibberish(30)
+		self.save_everything()
 
 	def unlock(self):
 		self.permissions = 'open'
+		self.save_everything()
 
 	def may_view(self, key):
 		return self.permissions in ['open', 'protected'] or key in [self.key, self.owner_key]
@@ -87,19 +123,24 @@ class Whiteboard:
 			}
 		}
 
-whiteboards = collections.defaultdict(lambda : Whiteboard())
+whiteboards = keydefaultdict(lambda name: Whiteboard(name))
 
 app = flask.Flask(__name__)
 app.debug = True
 
 sock = socketio.SocketIO(app)
 
-def make_board(permissions = 'open'):
+def make_board_id():
 	attempts = 0
 	board_id = make_humane_gibberish(4)
 	while board_id in whiteboards:
 		board_id = make_humane_gibberish(attempts + 4)
 		attempts += 1
+	return board_id
+
+def make_board(permissions = 'open', board_id = None):
+	board_id = board_id or make_board_id()
+	whiteboards[board_id]
 	if permissions == 'protected':
 		whiteboards[board_id].make_protected()
 	if permissions == 'private':
