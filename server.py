@@ -32,6 +32,7 @@ def make_humane_gibberish(length):
 
 class Whiteboard:
 	def __init__(self, name):
+		self.has_loaded = False
 		self.layers = []
 		self.last_changed = datetime.datetime.now()
 		self.last_saved = datetime.datetime.now()
@@ -39,8 +40,11 @@ class Whiteboard:
 		self.key = ''
 		self.owner_key = ''
 		self.name = name
-		self.load_everything()
-		self.save_everything()
+
+	def ensure_loaded(self):
+		if not self.has_loaded:
+			self.load_everything()
+			self.save_everything()
 
 	def load_everything(self):
 		data = database.load(self.name)
@@ -49,8 +53,10 @@ class Whiteboard:
 			self.key = data.get('key', '')
 			self.owner_key = data.get('owner_key', '')
 			self.layers = data.get('layers', [])
+		self.has_loaded = True
 
 	def save_everything(self):
+		self.ensure_loaded()
 		payload = {
 			'layers': self.layers,
 			'key': self.key,
@@ -69,18 +75,21 @@ class Whiteboard:
 		return self.last_changed != self.last_saved
 
 	def full_image(self):
+		self.ensure_loaded()
 		self.update_time()
 		return self.layers[:]
 
 	def add_action(self, action):
+		self.ensure_loaded()
 		self.update_time()
 		self.layers.append(action)
 		database.action_push(self.name, action)
 
 	def undo_action(self, action):
+		self.ensure_loaded()
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
-		self.action_remove(self.name, action)
+		database.action_remove(self.name, action)
 
 	def recency_formatted(self):
 		delta = datetime.datetime.now() - self.last_changed
@@ -90,28 +99,34 @@ class Whiteboard:
 		return '{} hours, {} minutes, {} seconds'.format(hours, minutes, seconds)
 
 	def make_protected(self):
+		self.ensure_loaded()
 		self.permissions = 'protected'
 		self.key = make_humane_gibberish(6)
 		self.owner_key = make_humane_gibberish(30)
 		self.save_everything()
 
 	def make_private(self):
+		self.ensure_loaded()
 		self.permissions = 'private'
 		self.key = make_humane_gibberish(6)
 		self.owner_key = make_humane_gibberish(30)
 		self.save_everything()
 
 	def unlock(self):
+		self.ensure_loaded()
 		self.permissions = 'open'
 		self.save_everything()
 
 	def may_view(self, key):
+		self.ensure_loaded()
 		return self.permissions in ['open', 'protected'] or key in [self.key, self.owner_key]
 
 	def may_edit(self, key):
+		self.ensure_loaded()
 		return self.permissions == 'open' or key in [self.key, self.owner_key]
 
 	def jsonise(self):
+		"""Deprecated"""
 		return {
 			'layers': self.layers[:],
 			'last_changed': {

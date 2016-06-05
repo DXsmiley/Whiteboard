@@ -27,6 +27,12 @@ def rewrite(bid, data):
 def load(bid):
     return collection.find_one({'_id': bid})
 
+def list_ids():
+    ids = []
+    for i in collection.find({}, {'_id': True}):
+        ids.append(i['_id'])
+    return ids
+
 # system_lock = threading.lock()
 
 # queue_master = collections.deque()
