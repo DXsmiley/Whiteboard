@@ -210,6 +210,7 @@ def serve_listing():
 @app.route('/board/<board_id>')
 @app.route('/b/<board_id>')
 def serve_board(board_id):
+	board_id = board_id.upper()
 	board = whiteboards[board_id]
 	key = flask.request.cookies.get('key_' + board_id)
 	if board.may_view(key):
@@ -238,7 +239,7 @@ SCHEMA_PAINT = load_schema('paint')
 def socketio_paint(message):
 	# print('paint', message)
 	if edgy.check(SCHEMA_PAINT, message):
-		bid = message['board_id']
+		bid = message['board_id'].upper()
 		key = message['key']
 		board = whiteboards[bid]
 		if board.may_edit(key):
@@ -257,7 +258,7 @@ def socketio_paint(message):
 @sock.on('full image')
 def socketio_full_image(message):
 	# print('full image', message)
-	bid = message['board_id']
+	bid = message['board_id'].upper()
 	key = message['key']
 	board = whiteboards[bid]
 	if board.may_view(key):
@@ -270,7 +271,7 @@ def socketio_full_image(message):
 
 @sock.on('undo')
 def socketio_undo(message):
-	bid = message['board_id']
+	bid = message['board_id'].upper()
 	aid = message['action_id']
 	key = message['key']
 	board = whiteboards[bid]
@@ -284,7 +285,7 @@ def socketio_undo(message):
 
 @sock.on('unlock')
 def socketio_unlock(message):
-	bid = message['board_id']
+	bid = message['board_id'].upper()
 	key = message['key']
 	board = whiteboards[bid]
 	if board.may_edit(key):
