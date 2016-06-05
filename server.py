@@ -141,6 +141,9 @@ class Whiteboard:
 
 whiteboards = keydefaultdict(lambda name: Whiteboard(name))
 
+for i in database.list_ids():
+	whiteboards[i] # Accessing the item in the dictionary will create the board.
+
 app = flask.Flask(__name__)
 app.debug = True
 
