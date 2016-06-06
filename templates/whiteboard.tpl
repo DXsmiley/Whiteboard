@@ -68,7 +68,7 @@
 					<p contenteditable id="text_input_text">Enter Text</p>
 				</div>
 				<div class="modal fadein modal_image">
-					<img id="modal_image" src="/static/images/placeholder.png"/>
+					<img id="modal_image" src="/static/images/loading.svg"/>
 				</div>
 				<div class="modal_centered fadein">
 					<div class="modal_centered_outer">
@@ -77,9 +77,9 @@
 								<div class="modal fadein modal_latex">
 									<div class="center">
 										<p contenteditable id="modal_latex_input">\sqrt{a^2 + b^2} = c</p>
-										<img id="modal_latex_image" src="/static/images/placeholder.png">
+										<img id="modal_latex_image" src="/static/images/loading.svg">
 									</div>
-									<img id="modal_latex_positionable" src="/static/images/placeholder.png">
+									<img id="modal_latex_positionable" src="/static/images/loading.svg">
 								</div>
 								<div class="modal fadein modal_image_select">
 									<div class="center">

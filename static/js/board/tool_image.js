@@ -90,7 +90,7 @@ ImageHead.prototype.onModalConfirm = function() {
 		scale: image_scale
 	});
 	whiteboard.modalClose('.modal_image');
-	$('#modal_image').attr('src', '/static/images/placeholder.png');
+	$('#modal_image').attr('src', '/static/images/loading.svg');
 }
 
 ImageHead.prototype.onModalCancel = function() {
