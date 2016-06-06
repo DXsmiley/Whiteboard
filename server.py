@@ -99,13 +99,6 @@ class Whiteboard:
 		self.layers = [i for i in self.layers if i['action_id'] != action]
 		database.action_remove(self.name, action, self.timestamp)
 
-	# def recency_formatted(self):
-	# 	delta = datetime.datetime.now() - self.last_changed
-	# 	hours = delta.seconds // 3600
-	# 	minutes = (delta.seconds // 60) % 60
-	# 	seconds = delta.seconds % 60
-	# 	return '{} hours, {} minutes, {} seconds'.format(hours, minutes, seconds)
-
 	def make_protected(self):
 		self.ensure_loaded()
 		self.permissions = 'protected'
@@ -132,20 +125,6 @@ class Whiteboard:
 	def may_edit(self, key):
 		self.ensure_loaded()
 		return self.permissions == 'open' or key in [self.key, self.owner_key]
-
-	def jsonise(self):
-		"""Deprecated"""
-		return {
-			'layers': self.layers[:],
-			'last_changed': {
-				'year': self.last_changed.year,
-				'month': self.last_changed.month,
-				'day': self.last_changed.day,
-				'hour': self.last_changed.hour,
-				'minute': self.last_changed.minute,
-				'second': self.last_changed.second
-			}
-		}
 
 whiteboards = keydefaultdict(lambda name: Whiteboard(name))
 
