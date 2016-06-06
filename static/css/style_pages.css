@@ -23,6 +23,7 @@ span.nav_button {
 }
 
 span.nav_button, span.nav_button_current {
+	line-height: 20px;
 	padding: 11px 20px 10px 20px;
 	margin: 0px 20px 0px 20px;
 	color: #000000;
@@ -51,14 +52,14 @@ span.nav_button:hover, span.nav_button_current:hover {
 }
 
 div.large_container {
-	width: 1000px;
+	max-width: 1000px;
 	margin: 0px auto;
 }
 
 div.container {
 	text-align: center;
 	margin: 0px auto;
-	width: 800px;
+	max-width: 800px;
 }
 
 table {
@@ -72,8 +73,6 @@ td {
 }
 
 #anim_canvas {
-	width: 1000px;
-	height: 800px;
 	margin: 0px auto;
 	z-index: -1;
 	position: absolute;
