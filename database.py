@@ -4,7 +4,6 @@ import collections
 import sys
 
 connection_url = sys.argv[2]
-print(connection_url)
 client = pymongo.MongoClient(connection_url)
 database = client[sys.argv[3]]
 collection = database['whiteboards']
@@ -15,11 +14,11 @@ collection = database['whiteboards']
 #    Exception: If the program is terminated, we can forget it.
 # 3. The whiteboard does not need to be saved after every change.
 
-def action_push(bid, action):
-    collection.update({'_id': bid}, {'$push': {'layers': action}}, upsert = True)
+def action_push(bid, action, time):
+    collection.update({'_id': bid}, {'$push': {'layers': action}, '$set': {'timestamp': time}}, upsert = True)
 
-def action_remove(bid, action_id):
-    collection.update({'_id': bid}, {'$pull': {'layers': {'action_id': action_id}}}, upsert = True)
+def action_remove(bid, action_id, time):
+    collection.update({'_id': bid}, {'$pull': {'layers': {'action_id': action_id}}, '$set': {'timestamp': time}}, upsert = True)
 
 def rewrite(bid, data):
     collection.update({'_id': bid}, data, upsert = True)
@@ -27,11 +26,14 @@ def rewrite(bid, data):
 def load(bid):
     return collection.find_one({'_id': bid})
 
-def list_ids():
-    ids = []
-    for i in collection.find({}, {'_id': True}):
-        ids.append(i['_id'])
-    return ids
+def load_meta():
+    results = []
+    for i in collection.find({}, {'_id': True, 'timestamp': True}):
+        results.append({
+            'name': i['_id'],
+            'timestamp': i.get('timestamp', 0)
+        })
+    return results
 
 # system_lock = threading.lock()
 
