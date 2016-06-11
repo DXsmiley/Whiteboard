@@ -1,0 +1,6 @@
+{
+	"port": 8080,
+	"db_enable": false,
+	"db_login": "nothing",
+	"db_name": "nothing"
+}

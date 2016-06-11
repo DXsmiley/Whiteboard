@@ -6,6 +6,7 @@ import flask.ext.socketio as socketio
 import time
 import edgy
 import database
+import settings
 
 class keydefaultdict(collections.defaultdict):
 	"""collections.defaultdict except the key is passed to the default_factory
@@ -284,4 +285,5 @@ def socketio_unlock(message):
 		socketio.emit('refresh', broadcast = True, room = bid)
 
 if __name__ == '__main__':
-	sock.run(app, host = '0.0.0.0', port = 8080)
+	port = int(settings.get('port'))
+	sock.run(app, host = '0.0.0.0', port = port)
