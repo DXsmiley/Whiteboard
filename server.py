@@ -3,10 +3,10 @@ import json
 import collections
 import random
 import flask.ext.socketio as socketio
-import datetime
-import sys
+import time
 import edgy
 import database
+import settings
 
 class keydefaultdict(collections.defaultdict):
 	"""collections.defaultdict except the key is passed to the default_factory
@@ -31,12 +31,25 @@ def make_humane_gibberish(length):
 		result += random.choice('ACEFHJKNPQRTVXY34869')
 	return result
 
+def time_current():
+	"""Returns the number of second since the epoch."""
+	return int(time.time())
+
+def time_breakdown(t):
+	"""Takes time as seconds-since epoch and breaks it down into human-friendly values."""
+	t = max(0, t)
+	return {
+		'seconds': t % 60,
+		'minutes': (t // 60) % 60,
+		'hours': (t // 3600) % 24,
+		'days': t // 86400
+	}
+
 class Whiteboard:
 	def __init__(self, name):
 		self.has_loaded = False
 		self.layers = []
-		self.last_changed = datetime.datetime.now()
-		self.last_saved = datetime.datetime.now()
+		self.timestamp = 0
 		self.permissions = 'open'
 		self.key = ''
 		self.owner_key = ''
@@ -54,6 +67,7 @@ class Whiteboard:
 			self.key = data.get('key', '')
 			self.owner_key = data.get('owner_key', '')
 			self.layers = data.get('layers', [])
+			self.timestamp = data.get('timestamp', time_current())
 		self.has_loaded = True
 
 	def save_everything(self):
@@ -61,19 +75,13 @@ class Whiteboard:
 		payload = {
 			'layers': self.layers,
 			'key': self.key,
-			'owner_key': self.owner_key
+			'owner_key': self.owner_key,
+			'timestamp': self.timestamp
 		}
 		database.rewrite(self.name, payload)
 
 	def update_time(self):
-		self.last_changed = datetime.datetime.now()
-
-	def update_save_time(self):
-		self.last_changed = datetime.datetime.now()
-		self.last_saved = datetime.datetime.now()
-
-	def changed_since_save(self):
-		return self.last_changed != self.last_saved
+		self.timestamp = time_current()
 
 	def full_image(self):
 		self.ensure_loaded()
@@ -84,20 +92,13 @@ class Whiteboard:
 		self.ensure_loaded()
 		self.update_time()
 		self.layers.append(action)
-		database.action_push(self.name, action)
+		database.action_push(self.name, action, self.timestamp)
 
 	def undo_action(self, action):
 		self.ensure_loaded()
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
-		database.action_remove(self.name, action)
-
-	def recency_formatted(self):
-		delta = datetime.datetime.now() - self.last_changed
-		hours = delta.seconds // 3600
-		minutes = (delta.seconds // 60) % 60
-		seconds = delta.seconds % 60
-		return '{} hours, {} minutes, {} seconds'.format(hours, minutes, seconds)
+		database.action_remove(self.name, action, self.timestamp)
 
 	def make_protected(self):
 		self.ensure_loaded()
@@ -126,24 +127,11 @@ class Whiteboard:
 		self.ensure_loaded()
 		return self.permissions == 'open' or key in [self.key, self.owner_key]
 
-	def jsonise(self):
-		"""Deprecated"""
-		return {
-			'layers': self.layers[:],
-			'last_changed': {
-				'year': self.last_changed.year,
-				'month': self.last_changed.month,
-				'day': self.last_changed.day,
-				'hour': self.last_changed.hour,
-				'minute': self.last_changed.minute,
-				'second': self.last_changed.second
-			}
-		}
-
 whiteboards = keydefaultdict(lambda name: Whiteboard(name))
 
-for i in database.list_ids():
-	whiteboards[i] # Accessing the item in the dictionary will create the board.
+for i in database.load_meta():
+	# Accessing the item in the dictionary will create the board.
+	whiteboards[i['name']].timestamp = i['timestamp']
 
 app = flask.Flask(__name__)
 
@@ -201,9 +189,12 @@ def server_board_new_private():
 def serve_listing():
 	boards = []
 	for i in whiteboards:
+		time_diff = time_current() - whiteboards[i].timestamp
+		timeparts = time_breakdown(time_diff)
+		rec_str = '{days} days, {hours} hours, {minutes} minutes, {seconds} seconds'.format(**timeparts)
 		boards.append({
 			'name': i,
-			'recency': 	whiteboards[i].recency_formatted()
+			'recency': 	rec_str
 		})
 	return flask.render_template('listing.tpl', boards = boards)
 
@@ -293,7 +284,5 @@ def socketio_unlock(message):
 		socketio.emit('refresh', broadcast = True, room = bid)
 
 if __name__ == '__main__':
-	port = 8080
-	if len(sys.argv) > 1:
-		port = int(sys.argv[1])
+	port = int(settings.get('port'))
 	sock.run(app, host = '0.0.0.0', port = port)
