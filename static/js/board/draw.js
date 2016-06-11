@@ -91,3 +91,15 @@ function drawImageScaled(url, position, scale, context, callback) {
 		// silence...
 	}
 }
+
+function drawPolygon(points, colour, context) {
+	// console.log('drawPolygon');
+	context.fillStyle = colour;
+	context.beginPath();
+	context.moveTo(points[0].x, points[0].y);
+	for (var i in points) {
+		context.lineTo(points[i].x, points[i].y);
+	}
+	context.closePath();
+	context.fill();
+}

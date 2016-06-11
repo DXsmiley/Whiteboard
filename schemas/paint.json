@@ -43,6 +43,13 @@
 			"colour": "string",
 			"position": "@point",
 			"text": "string"
+		},
+		{
+			"colour": "string",
+			"points": {
+				"__type__": "list",
+				"__item__": "@point"
+			}
 		}
 	]
 }
