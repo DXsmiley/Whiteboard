@@ -1,1 +1,1 @@
-web: python server.py $PORT $DB_LOGIN $DB_NAME
+web: python server.py
