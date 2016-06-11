@@ -2,5 +2,5 @@
 	"port": "env:PORT",
 	"db_enable": true,
 	"db_login": "env:DB_LOGIN",
-	"db_name": "env:DP_NAME"
+	"db_name": "env:DB_NAME"
 }
