@@ -8,8 +8,12 @@ EraserTool.prototype.onButtonClick = function() {
 	return true;
 };
 
-EraserTool.prototype.makeToolHead = function() {
-	return new PencilHead('eraser', '#ffffff', 30, 'straight');
+EraserTool.prototype.makeToolHead = function(button) {
+	if (button == 1) {
+		return new PencilHead('eraser', '#ffffff', 30, 'straight');
+	} else {
+		return new SolidShapeHead('#ffffff');
+	}
 };
 
 EraserTool.prototype.drawFull = function(data) {

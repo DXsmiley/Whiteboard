@@ -1,5 +1,4 @@
 function SolidShapeHead(colour) {
-	console.log('SolidShapeHead');
 	this.points = Array();
 	this.colour = colour;
 }
@@ -17,7 +16,6 @@ SolidShapeHead.prototype.pushData = function() {
 
 SolidShapeHead.prototype.onMove = function(input_point) {
 	if (input_point) {
-		console.log('onMove');
 		this.points.push({x: input_point.x, y: input_point.y});
 		drawClear(context_preview);
 		drawPolygon(this.points, this.colour, context_preview);

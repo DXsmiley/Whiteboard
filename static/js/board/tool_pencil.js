@@ -22,9 +22,13 @@ PencilTool.prototype.onDoubleClick = function() {
 	return true;
 };
 
-PencilTool.prototype.makeToolHead = function() {
-	if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, this.thickness);
-	return new PencilHead('pencil', whiteboard.global_colour, this.thickness, 'calligraphy');
+PencilTool.prototype.makeToolHead = function(button) {
+	if (button == 1) {
+		if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, this.thickness);
+		return new PencilHead('pencil', whiteboard.global_colour, this.thickness, 'calligraphy');
+	} else {
+		return new SolidShapeHead(whiteboard.global_colour);
+	}
 };
 
 PencilTool.prototype.drawFull = function(data) {
