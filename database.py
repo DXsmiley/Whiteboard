@@ -6,7 +6,7 @@ import settings
 enable = settings.get('db_enable')
 
 if enable:
-	client = pymongo.MongoClient(settinsg.get('db_login'))
+	client = pymongo.MongoClient(settings.get('db_login'))
 	database = client[settings.get('db_name')]
 	collection = database['whiteboards']
 else:
