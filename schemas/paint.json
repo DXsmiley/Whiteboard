@@ -23,32 +23,97 @@
 	"tool": "string",
 	"board_id": "string",
 	"key": "string",
-	"data": [
-		"int",
+	"__this__":
+	[
 		{
-			"colour": "string",
-			"thickness": "@number",
-			"style": "string",
-			"points": {
-				"__type__": "list",
-				"__item__": "@point_time"
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "clear"
+			},
+			"data": "int"
+		},
+		{
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "pencil"
+			},
+			"data":
+			{
+				"colour": "string",
+				"thickness": "@number",
+				"style": "string",
+				"points":
+				{
+					"__type__": "list",
+					"__item__": "@point_time"
+				}
 			}
 		},
 		{
-			"position": "@point",
-			"url": "string",
-			"scale": "@number"
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "eraser"
+			},
+			"data":
+			{
+				"colour": "string",
+				"thickness": "@number",
+				"style": "string",
+				"points":
+				{
+					"__type__": "list",
+					"__item__": "@point_time"
+				}
+			}
 		},
 		{
-			"colour": "string",
-			"position": "@point",
-			"text": "string"
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "image"
+			},
+			"data":
+			{
+				"position": "@point",
+				"url": "string",
+				"scale": "@number"
+			}
 		},
 		{
-			"colour": "string",
-			"points": {
-				"__type__": "list",
-				"__item__": "@point"
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "text"
+			},
+			"data":
+			{
+				"colour": "string",
+				"position": "@point",
+				"text": "string"
+			}
+		},
+		{
+			"__extra__": "anything",
+			"tool":
+			{
+				"__type__": "string",
+				"equals": "solid_shape"
+			},
+			"data":
+			{
+				"colour": "string",
+				"points": {
+					"__type__": "list",
+					"__item__": "@point"
+				}
 			}
 		}
 	]
