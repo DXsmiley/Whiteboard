@@ -1,5 +1,6 @@
 var image_scale = 1;
 var scale_per_click = 1.2;
+var current_upload_id = null;
 
 $('#button_shrink').click(function (event){
 	image_scale /= scale_per_click;
@@ -32,20 +33,6 @@ if (typeof Ospry !== 'undefined') {
 	var ospry = new Ospry('pk-test-53z2t7ah9j8jhe2l6zjh9v2h');
 }
 
-var onUpload = function(err, metadata) {
-	console.log('Upload result');
-	console.log(err);
-	console.log(metadata);
-	if (err === null) {
-		whiteboard.modalClose('.modal_image_upload_progress');
-		var url = metadata.url + '?format=jpeg';
-		whiteboard.setToolHead(new ImageHead(url));
-	} else {
-		whiteboard.modalClose('.modal_image_upload_progress');
-		alert('Error in image uploading :(');
-	}
-};
-
 
 if (typeof Ospry === 'undefined') {
 	$('#image_upload_form').change(function(e) {
@@ -53,12 +40,35 @@ if (typeof Ospry === 'undefined') {
 	});
 } else {
 	$('#image_upload_form').change(function(e) {
+
+		var the_id = Math.random();
+		current_upload_id = the_id;
+
+		var onUpload = function(err, metadata) {
+			console.log('Upload result:');
+			console.log(err);
+			console.log(metadata);
+			if (the_id == current_upload_id) {
+				if (err === null) {
+					whiteboard.modalClose('.modal_image_upload_progress');
+					var url = metadata.url + '?format=jpeg';
+					whiteboard.setToolHead(new ImageHead(url));
+				} else {
+					whiteboard.modalClose('.modal_image_upload_progress');
+					alert('Error in image uploading :(');
+				}
+			} else {
+				console.log('Image upload was cancelled');
+			}
+		};
+
 		console.log('Uploading...');
 		console.log(this, e);
-		ospry.up({
+		var up_result = ospry.up({
 			form: this,
 			imageReady: onUpload,
 		});
+		console.log(up_result);
 		whiteboard.modalClose('.modal_image_select');
 		whiteboard.modalOpen('.modal_image_upload_progress', '.modal_centered');
 		whiteboard.toolbarActivate('#toolbar_cancel');
@@ -109,6 +119,7 @@ SelectHead.prototype.onModalConfirm = function() {
 SelectHead.prototype.onModalCancel = function() {
 	whiteboard.modalClose('.modal_image_select');
 	whiteboard.modalClose('.modal_image_upload_progress');
+	current_upload_id = null;
 }
 
 function ImageTool() {

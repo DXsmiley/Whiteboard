@@ -47,9 +47,10 @@
 			</div>
 			<div id="toolbar_cancel">
 				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
-				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_confirm">
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_image">
 				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
