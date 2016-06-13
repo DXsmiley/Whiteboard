@@ -359,6 +359,7 @@ Whiteboard.prototype.toolbarActivate = function() {
 	} else {
 		$('#toolbar_wrapper').css('left', '0px');
 	}
+	$('#toolbar_wrapper').show();
 }
 
 Whiteboard.prototype.drawEverything = function() {
@@ -428,12 +429,19 @@ Whiteboard.prototype.startup = function() {
 		location.reload(true);
 	});
 
-	this.socket.on('disconnect', function(msg) {
-		console.error('Disconnected from the server!');
-		$('#disconnect_message').show();
+	this.socket.on('connect', function() {
+		console.log('Connected to server.');
+		var func = () => {$('#status_message').css('top', -200);};
+		window.setTimeout(func, 500);
 	});
 
-	this.socket.on('reconnect', function(msg) {
+	this.socket.on('disconnect', function() {
+		console.error('Disconnected from the server!');
+		$('#status_message span').html('&#9888; Disconnected from server');
+		$('#status_message').css('top', 20);
+	});
+
+	this.socket.on('reconnect', function() {
 		console.log('Reconnected to server!');
 		location.reload(true);
 	});

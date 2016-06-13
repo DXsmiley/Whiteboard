@@ -14,7 +14,6 @@
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
 
-
 		<div class="toolbar" id="toolbar_wrapper">
 			<div id="toolbar_normal">
 				<table id="tb_table">
@@ -137,8 +136,8 @@
 			</div>
 		</div>
 
-		<div id="disconnect_message">
-			<span>&#9888; Disconnected from server</span>
+		<div id="status_message">
+			<span>Connecting to server...</span>
 		</div>
 
 	</body>

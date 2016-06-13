@@ -54,6 +54,10 @@ div.toolbar {
 	margin-left: -80px;
 }
 
+div.toolbar {
+	display: none;
+}
+
 div.toolbar, div.toolbar div, .toolbar_hidden {
 	position: absolute;
 	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
@@ -199,16 +203,17 @@ div.toolbar div[left = -80px] img {
 	height: 100%;
 }
 
-#disconnect_message {
+#status_message {
+	transition: top 0.4s cubic-bezier(.68,-0.55,.27,1.55);
 	padding: 20px;
 	border: solid #eeeeee 1px;
-	display: none;
+	/*display: none;*/
 	position: fixed;
 	right: 20px;
 	top: 20px;
 	background-color: white;
 }
 
-#disconnect_message span {
+#status_message span {
 	font-size: 40px;
 }
