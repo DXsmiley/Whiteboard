@@ -137,6 +137,10 @@
 			</div>
 		</div>
 
+		<div id="disconnect_message">
+			<span>&#9888; Disconnected from server</span>
+		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>

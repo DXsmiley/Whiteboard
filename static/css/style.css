@@ -198,3 +198,17 @@ div.toolbar div[left = -80px] img {
 #tb_table {
 	height: 100%;
 }
+
+#disconnect_message {
+	padding: 20px;
+	border: solid #eeeeee 1px;
+	display: none;
+	position: fixed;
+	right: 20px;
+	top: 20px;
+	background-color: white;
+}
+
+#disconnect_message span {
+	font-size: 40px;
+}

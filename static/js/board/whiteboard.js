@@ -414,7 +414,7 @@ Whiteboard.prototype.startup = function() {
 
 	console.log('Board ID:', this.whiteboard_id);
 
-	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/', {'reconnection': true, 'reconnection delay': 500});
 
 	this.socket.on('paint', function(msg) {
 		the_whiteboard.sockHandlePaint(msg);
@@ -425,6 +425,16 @@ Whiteboard.prototype.startup = function() {
 	});
 
 	this.socket.on('refresh', function(msg) {
+		location.reload(true);
+	});
+
+	this.socket.on('disconnect', function(msg) {
+		console.error('Disconnected from the server!');
+		$('#disconnect_message').show();
+	});
+
+	this.socket.on('reconnect', function(msg) {
+		console.log('Reconnected to server!');
 		location.reload(true);
 	});
 
