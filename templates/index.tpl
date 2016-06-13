@@ -5,8 +5,8 @@
 	<canvas id="anim_canvas" width="500px" height="350px"></canvas>
 	<div class="container">
 		<br><br><br><br><br>
-		<h1>Express Yourself Visually</h1>
-		<h3><a class="bright" href="/new">Start Drawing Now</a></h3>
+		<h1 class="center">Express Yourself Visually</h1>
+		<h3 class="center"><a class="bright" href="/new">Start Drawing Now</a></h3>
 		<br><br><br><br><br><br>
 		<table>
 			<tr>

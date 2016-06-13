@@ -2,6 +2,18 @@ h1, h2, h3, h4, h5, h6, p {
 	font-family: helvetica, sans-serif;
 }
 
+h2 {
+	color: #ee7f00;
+}
+
+td h2 {
+	color: #000000;
+}
+
+.center {
+	text-align: center;
+}
+
 div.headder {
 	border-bottom: 1px solid #eeeeee;
 	text-align: center;
@@ -57,7 +69,6 @@ div.large_container {
 }
 
 div.container {
-	text-align: center;
 	margin: 0px auto;
 	max-width: 800px;
 }
