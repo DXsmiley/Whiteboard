@@ -1,6 +1,6 @@
 {% extends "info.tpl" %}
-{% block title %}Whiteboard{% endblock %}
-{% block nav_class_home %}nav_button_current{% endblock %}
+{% set title = 'Whiteboard' %}
+{% set nav_page = 'Home' %}
 {% block content %}
 	<canvas id="anim_canvas" width="500px" height="350px"></canvas>
 	<div class="container">

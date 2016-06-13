@@ -1,6 +1,6 @@
 {% extends "info.tpl" %}
-{% set title = 'Whiteboard - Ninjas' %}
-{% set nav_page = 'Ninjas' %}
+{% set title = 'Whiteboard - Docs' %}
+{% set nav_page = 'Docs' %}
 {% block content %}
 	<div class="container">
 		<h1>There's nothing here</h1>

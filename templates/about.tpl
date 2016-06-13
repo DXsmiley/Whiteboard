@@ -1,6 +1,6 @@
 {% extends "info.tpl" %}
-{% block title %}Whiteboard - About{% endblock %}
-{% block nav_class_about %}nav_button_current{% endblock %}
+{% set title = 'Whiteboard - About' %}
+{% set nav_page = 'About' %}
 {% block content %}
 	<div class="container">
 		<h1>What's going on?</h1>
