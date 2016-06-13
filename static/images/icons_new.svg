@@ -15,9 +15,9 @@
    id="svg4786"
    version="1.1"
    inkscape:version="0.91 r13725"
-   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\static\images\settings.png"
-   inkscape:export-xdpi="105"
-   inkscape:export-ydpi="105"
+   inkscape:export-filename="C:\Users\DXsmiley\Code\SDD\static\images\help.png"
+   inkscape:export-xdpi="180"
+   inkscape:export-ydpi="180"
    sodipodi:docname="icons_new.svg"
    shape-rendering="crispEdges">
   <sodipodi:namedview
@@ -28,10 +28,10 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.2"
-     inkscape:cx="36.440964"
-     inkscape:cy="32.10147"
+     inkscape:cx="38.439157"
+     inkscape:cy="29.837123"
      inkscape:document-units="px"
-     inkscape:current-layer="layer14"
+     inkscape:current-layer="text4749"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -433,7 +433,8 @@
      inkscape:groupmode="layer"
      id="layer14"
      inkscape:label="Settings 2"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <path
        style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
        d="M 26.149904,9.5008375 A 20.868877,20.868877 0 0 0 15.432068,15.056122 l 2.786032,7.428302 -7.881453,0.600841 A 20.868877,20.868877 0 0 0 9.1316038,30 20.868877,20.868877 0 0 0 9.7928677,35.145771 l 7.8076053,1.29903 -3.420443,7.126201 a 20.868877,20.868877 0 0 0 10.174056,6.498507 l 5.024931,-6.109133 4.471079,6.538786 A 20.868877,20.868877 0 0 0 44.567932,44.943878 L 41.7819,37.515577 49.663353,36.914735 A 20.868877,20.868877 0 0 0 50.868396,30 20.868877,20.868877 0 0 0 50.207132,24.854229 l -7.807605,-1.29903 3.420443,-7.126201 A 20.868877,20.868877 0 0 0 35.645914,9.9304908 L 30.620983,16.039624 26.149904,9.5008375 Z"
@@ -451,5 +452,26 @@
        cx="30"
        cy="30"
        r="8.338129" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer15"
+     inkscape:label="Help">
+    <g
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:43.34611511px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="text4749">
+      <path
+         d="m 33.52112,39.84601 -6.100763,0 0,-4.223605 c 0,-1.418298 0.281574,-2.534163 0.844722,-3.347597 0.584005,-0.813436 1.845873,-1.971016 3.785602,-3.472742 2.961737,-2.273447 4.442605,-4.682465 4.442605,-7.227057 0,-1.918872 -0.584005,-3.441456 -1.752013,-4.567751 -1.147153,-1.126293 -2.64888,-1.689441 -4.505179,-1.689441 -4.296605,0 -6.830768,2.972314 -7.602487,8.916646 l -6.82034,0 c 0,-5.528198 2.054445,-9.146077 4.911896,-11.66981 2.878309,-2.544591 6.319763,-3.8168873 10.324366,-3.8168873 3.983747,0 7.279201,1.1888673 9.886364,3.5665993 2.607164,2.356876 3.25084,5.297756 3.25084,8.822641 -0.131189,3.413239 -1.247861,6.373435 -3.073381,8.66621 -0.781338,0.981329 -2.659479,2.367305 -5.621216,4.536465 -0.834293,0.604861 -1.366154,1.199295 -1.595585,1.783299 -0.22943,0.563147 -0.354573,1.804157 -0.375431,3.72303 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Franklin Gothic Medium';-inkscape-font-specification:'Franklin Gothic Medium, '"
+         id="path4754"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccsccscscccsccsccc" />
+      <circle
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+         id="path4756"
+         cx="30.503544"
+         cy="47.96051"
+         r="4.7203045" />
+    </g>
   </g>
 </svg>
