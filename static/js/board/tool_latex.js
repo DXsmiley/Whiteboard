@@ -10,10 +10,11 @@ function LatexHead() {
 	this.stage = 0;
 	// 0 - text input
 	// 1 - placement
-	whiteboard.modalOpen('.modal_latex');
+	whiteboard.modalOpen('.modal_latex', '.modal_centered');
 	$('#modal_latex_input').text('\\sqrt{a^2 + b^2} = c');
 	$('#modal_latex_input').show();
 	$('#modal_latex_positionable').hide();
+	whiteboard.toolbarActivate('#toolbar_confirm');
 }
 
 LatexHead.prototype.onMove = function(p) {

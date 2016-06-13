@@ -106,7 +106,7 @@ div.center {
 }
 
 #modal_latex_positionable {
-	display: none;
+	/*display: none;*/
 	position: fixed;
 }
 
