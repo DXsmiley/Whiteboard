@@ -77,3 +77,11 @@ td {
 	z-index: -1;
 	position: absolute;
 }
+
+tbody.stripes tr:nth-child(even) {
+   background-color: #f8f8f8;
+}
+
+thead {
+	background-color: #eeeeee;
+}
