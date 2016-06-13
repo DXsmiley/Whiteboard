@@ -13,8 +13,8 @@
 			<a class="no_underline" href="/about">
 				<span class="{{ 'nav_button_current' if nav_page == 'About' else 'nav_button' }}">About</span>
 			</a>
-			<a class="no_underline" href="/ninjas">
-				<span class="{{ 'nav_button_current' if nav_page == 'Ninjas' else 'nav_button' }}">Ninjas</span>
+			<a class="no_underline" href="/docs">
+				<span class="{{ 'nav_button_current' if nav_page == 'Docs' else 'nav_button' }}">Docs</span>
 			</a>
 			<a class="no_underline" href="https://github.com/DXsmiley/Whiteboard" target="_blank">
 				<span class="nav_button">Code</span>
