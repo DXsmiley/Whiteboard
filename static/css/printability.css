@@ -1,0 +1,20 @@
+/*
+	This file has style declarations specific to printed pages.
+	This is mainly to 
+*/
+
+@media print {
+
+	div.headder {
+		display: none;
+	}
+
+	div.container, div.large_container {
+		max-width: none;
+	}
+
+	thead tr {
+		border-bottom: 1px #eeeeee solid;
+	}
+
+}

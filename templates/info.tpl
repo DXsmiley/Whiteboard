@@ -4,6 +4,7 @@
 		<title>{{ title }}</title>
 		<link rel="stylesheet" type="text/css" href="static/css/normalise.css">
 		<link rel="stylesheet" type="text/css" href="static/css/style_pages.css">
+		<link rel="stylesheet" type="text/css" href="static/css/printability.css">
 	</head>
 	<body>
 		<div class="headder">
