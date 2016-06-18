@@ -39,7 +39,7 @@
 		<h2>Advanced Use</h2>
 
 		<img src="/static/images/mouse_middle.png" class="floatleft">
-		<h3>Shape drawing</h3>
+		<h3>Drawing Shapes</h3>
 		<p>Both the pencil and eraser tools allow you to draw solid shapes. When using either of the tools, hold down the <i>middle mouse button</i> and drag to produce a filled shape.</p>
 
 		<h3>Keyboard shortcuts</h3>
