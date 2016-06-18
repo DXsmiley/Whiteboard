@@ -96,3 +96,13 @@ tbody.stripes tr:nth-child(even) {
 thead {
 	background-color: #eeeeee;
 }
+
+.floatleft {
+	float: left;
+	margin-right: 8px;
+}
+
+.floatright {
+	float: right;
+	margin-left: 8px;
+}
