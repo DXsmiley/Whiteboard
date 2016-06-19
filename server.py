@@ -167,6 +167,26 @@ def serve_about():
 def serve_ninjas():
 	return flask.render_template('ninjas.tpl')
 
+@app.route('/feedback')
+def serve_feedback():
+	return flask.render_template('feedback.tpl')
+
+@app.route('/send', methods = ['GET'])
+def serve_send_get():
+	return flask.redirect('/')
+
+@app.route('/send', methods = ['POST'])
+def serve_send_post():
+	feedback = flask.request.form.get('feedback')
+	print('Feedback!', feedback)
+	database.feedback_post(feedback)
+	return flask.render_template('send.tpl')
+
+@app.route('/feedback_listing')
+def serve_feedback_listing():
+	feedback = list(database.feedback_list())
+	return flask.render_template('feedback_listing.tpl', feedback = feedback)
+
 @app.route('/new')
 def server_board_new():
 	board_id, key = make_board()
