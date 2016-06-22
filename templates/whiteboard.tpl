@@ -140,6 +140,14 @@
 			<span>Connecting to server...</span>
 		</div>
 
+		<div id="feedbackpopup">
+			<p>Hey, there! You seem to be using the whiteboard a lot! Want to tell us your thoughts?</p>
+			<div>
+				<a href="http://goo.gl/forms/z988iOkqxZI2mlaD3" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
+				<button onclick="feedbackPopupClose(false)">No Thanks</button>
+			</div>
+		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>
@@ -166,9 +174,36 @@
 
 	{% if show_controls %}
 		<script type="text/javascript">
+
 			whiteboard.toolbarActivate('#toolbar_normal');
 			whiteboard.triggerToolButton('pencil');
 			whiteboard.triggerColourButton('blue');
+
+			function feedbackPopupShow() {
+				console.log('Showing feedback popup.');
+				$("#feedbackpopup").css('bottom', '20px');
+			}
+
+			function feedbackPopupClose(result) {
+				console.log('Closing feedback popup.');
+				$("#feedbackpopup").css('bottom', '-150px');
+				if (result) {
+					// User went to the feedback page.
+					// Ask them again in several months.
+					Cookies.set('feedbackpopup', 1, {'expires': 300});
+				} else {
+					// User didn't go to the feedback page :(
+					// Ask them again in a bit over a month.
+					Cookies.set('feedbackpopup', 1, {'expires': 40});
+				}
+			}
+
+			if (Cookies.get('feedbackpopup') === undefined) {
+				// Show in 15 minutes
+				console.log('Setting feedback popup timer.');
+				window.setTimeout(feedbackPopupShow, 1000 * 60 * 15);
+			}
+
 		</script>
 	{% else %}
 		<script type="text/javascript">
