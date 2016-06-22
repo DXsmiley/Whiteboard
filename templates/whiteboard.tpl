@@ -136,11 +136,11 @@
 			</div>
 		</div>
 
-		<div id="status_message">
-			<span>Connecting to server...</span>
+		<div id="status_message" class="popup">
+			<p id="status_message_text">Connecting to server...</p>
 		</div>
 
-		<div id="feedbackpopup">
+		<div id="feedbackpopup" class="popup">
 			<p>Hey, there! You seem to be using the whiteboard a lot! Want to tell us your thoughts?</p>
 			<div>
 				<a href="http://goo.gl/forms/z988iOkqxZI2mlaD3" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
