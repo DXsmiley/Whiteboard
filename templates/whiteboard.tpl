@@ -143,7 +143,7 @@
 		<div id="feedbackpopup" class="popup">
 			<p>Hey, there! You seem to be using the whiteboard a lot! Want to tell us your thoughts?</p>
 			<div>
-				<a href="http://goo.gl/forms/z988iOkqxZI2mlaD3" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
+				<a href="{{ feedback_form }}" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
 				<button onclick="feedbackPopupClose(false)">No Thanks</button>
 			</div>
 		</div>

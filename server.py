@@ -231,7 +231,8 @@ def serve_board(board_id):
 			'whiteboard.tpl',
 			board_id = board_id,
 			show_controls = show_controls,
-			permissions = board.permissions
+			permissions = board.permissions,
+			feedback_form = settings.get('feedback_form')
 		)
 	else:
 		flask.abort(403)
