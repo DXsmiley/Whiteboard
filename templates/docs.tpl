@@ -31,6 +31,10 @@
 		<h3>Undo</h3>
 		<p>Pressing undo will reverse your previous action, without interfering with any else's work. All actions can be undone, including clearing the board. Note that you cannot 'undo' the actions of other people, but you can erase what they draw.</p>
 
+		<img src="/static/images/settings.png" class="floatleft">
+		<h3>Settings</h3>
+		<p>The settings buttons provides a few extra options. The <i>clear</i> button will clear the whiteboard. If you hit this by accident, you can press the undo button to get the board back. The <i>save image</i> button will allow you to save an image of the whiteboard to your own computer. The <i>help</i> button opens this page. It does so in a new tab, so the whiteboard remains accessable. The <i>return</i> button closes the settings panal and returns you to the whiteboard.</p>
+
 		<h2>Navigating the Board</h2>
 		<img src="/static/images/mouse_right.png" class="floatleft">
 		<p>If you are using a mouse, you can <i>right click</i> and drag to pan around the board.</p>
