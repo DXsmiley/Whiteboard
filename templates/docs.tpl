@@ -11,6 +11,12 @@
 		<p>If you are using a mouse, you can <i>right click</i> and drag to pan around the board.</p>
 		<p>If you are using a touch screen, simply drag the board using two fingers.</p>
 
+		<h2>Adding Collaborators</h2>
+
+		<p>Having multiple people drawing on the same board is a key feature. To get other people drawing on your board, simply go to your board and give them the URL, which can be found in the address bar.</p>
+
+		<p>Collaborators will be able to do anything that you can, including erasing the board and sharing it with others, shoudl they so wish.</p>
+
 		<h2>Tools</h2>
 
 		<img src="/static/images/pencil.png" class="floatleft">
