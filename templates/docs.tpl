@@ -13,6 +13,7 @@
 
 		<h2>Adding Collaborators</h2>
 
+		<img src="/static/images/people.png" class="floatleft">
 		<p>Having multiple people drawing on the same board is a key feature. To get other people drawing on your board, simply go to your board and give them the URL, which can be found in the address bar.</p>
 
 		<p>Collaborators will be able to do anything that you can, including erasing the board and sharing it with others, shoudl they so wish.</p>
