@@ -5,6 +5,12 @@
 	<div class="container">
 		<h1>Docs</h1>
 
+		<h2>Navigating the Board</h2>
+
+		<img src="/static/images/mouse_right.png" class="floatleft">
+		<p>If you are using a mouse, you can <i>right click</i> and drag to pan around the board.</p>
+		<p>If you are using a touch screen, simply drag the board using two fingers.</p>
+
 		<h2>Tools</h2>
 
 		<img src="/static/images/pencil.png" class="floatleft">
@@ -34,11 +40,6 @@
 		<img src="/static/images/settings.png" class="floatleft">
 		<h3>Settings</h3>
 		<p>The settings buttons provides a few extra options. The <i>clear</i> button will clear the whiteboard. If you hit this by accident, you can press the undo button to get the board back. The <i>save image</i> button will allow you to save an image of the whiteboard to your own computer. The <i>help</i> button opens this page. It does so in a new tab, so the whiteboard remains accessable. The <i>return</i> button closes the settings panal and returns you to the whiteboard.</p>
-
-		<h2>Navigating the Board</h2>
-		<img src="/static/images/mouse_right.png" class="floatleft">
-		<p>If you are using a mouse, you can <i>right click</i> and drag to pan around the board.</p>
-		<p>If you are using a touch screen, simply drag the board using two fingers.</p>
 
 		<h2>Advanced Use</h2>
 
