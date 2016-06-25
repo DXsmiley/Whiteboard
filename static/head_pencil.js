@@ -19,7 +19,7 @@ PencilHead.prototype.pushData = function() {
 		// }
 		// .slice() makes a copy, might edit a .copy into the prototype later
 		this.points = cleanupLine(this.points.slice());
-		// this.points = detectShape(this.points.slice());
+		this.points = detectShape(this.points.slice());
 		var last_point = this.points[this.points.length - 1];
 		var action_data = {
 			points: this.points,

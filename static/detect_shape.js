@@ -45,15 +45,19 @@ function detectCircle(points) {
 	return null;
 }
 
+function square(x) {
+	return x * x;
+}
+
 function measureStraightness(points) {
 	var start = points[0];
 	var end = points[points.length - 1];
 	var line = lineThroughTwoPoints(start, end);
-	var length = distance(start, end);
-	var offsets = points.map( (point) => pointLineDistance(point, line) );
-	var result = (length / 20) - Math.max(...offsets)
+	// var length = distance(start, end);
+	var offsets = points.map( (point) => square(pointLineDistance(point, line)) );
+	var result = (sum(offsets)) / points.length;
 	// console.log(points, '=>', result);
-	return result;
+	return Math.sqrt(result);
 }
 
 function straighten(points) {
@@ -61,7 +65,7 @@ function straighten(points) {
 }
 
 function detectStraightLine(points) {
-	if (measureStraightness(points) > 0) {
+	if (measureStraightness(points) < 10) {
 		return straighten(points);
 	}
 	return null;
@@ -155,10 +159,10 @@ function detectShape(points) {
 	if (points.length > 5) {
 		var l = detectStraightLine(points);
 		if (l != null) return l;
-		var l = detectPolygon(points);
-		if (l != null) return l;
-		var l = detectCircle(points);
-		if (l !== null) return l;
+		// var l = detectPolygon(points);
+		// if (l != null) return l;
+		// var l = detectCircle(points);
+		// if (l !== null) return l;
 	}
 	return points;
 }
