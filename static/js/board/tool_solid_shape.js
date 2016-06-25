@@ -11,7 +11,7 @@ SolidShapeTool.prototype.onDoubleClick = function() {
 };
 
 SolidShapeTool.prototype.makeToolHead = function() {
-	return new SolidShapeHead(whiteboard.global_colour);
+	return new SolidShapeHead(whiteboard.global_colour, false);
 };
 
 SolidShapeTool.prototype.drawFull = function(data) {

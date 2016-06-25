@@ -12,7 +12,7 @@ EraserTool.prototype.makeToolHead = function(button) {
 	if (button == 1) {
 		return new PencilHead('eraser', '#ffffff', 30, 'straight');
 	} else {
-		return new SolidShapeHead('#ffffff');
+		return new SolidShapeHead('#ffffff', true);
 	}
 };
 

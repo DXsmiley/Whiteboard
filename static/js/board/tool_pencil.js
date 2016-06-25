@@ -27,7 +27,7 @@ PencilTool.prototype.makeToolHead = function(button) {
 		if (this.line_mode) return new LineHead('pencil', whiteboard.global_colour, this.thickness);
 		return new PencilHead('pencil', whiteboard.global_colour, this.thickness, 'calligraphy');
 	} else {
-		return new SolidShapeHead(whiteboard.global_colour);
+		return new SolidShapeHead(whiteboard.global_colour, false);
 	}
 };
 
