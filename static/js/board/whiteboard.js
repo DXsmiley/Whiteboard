@@ -446,7 +446,7 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('disconnect', function() {
 		console.error('Disconnected from the server!');
-		$('#status_message span').html('&#9888; Disconnected from server');
+		$('#status_message_text').html('&#9888; Disconnected from server');
 		$('#status_message').css('top', 20);
 	});
 
