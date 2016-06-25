@@ -435,26 +435,26 @@ Whiteboard.prototype.startup = function() {
 		the_whiteboard.sockHandleUndo(msg);
 	});
 
-	this.socket.on('refresh', function(msg) {
-		location.reload(true);
-	});
+	// this.socket.on('refresh', function(msg) {
+	// 	location.reload(true);
+	// });
 
-	this.socket.on('connect', function() {
-		console.log('Connected to server.');
-		var func = () => {$('#status_message').css('top', -200);};
-		window.setTimeout(func, 500);
-	});
+	// this.socket.on('connect', function() {
+	// 	console.log('Connected to server.');
+	// 	var func = () => {$('#status_message').css('top', -200);};
+	// 	window.setTimeout(func, 500);
+	// });
 
-	this.socket.on('disconnect', function() {
-		console.error('Disconnected from the server!');
-		$('#status_message_text').html('&#9888; Disconnected from server');
-		$('#status_message').css('top', 20);
-	});
+	// this.socket.on('disconnect', function() {
+	// 	console.error('Disconnected from the server!');
+	// 	$('#status_message_text').html('&#9888; Disconnected from server');
+	// 	$('#status_message').css('top', 20);
+	// });
 
-	this.socket.on('reconnect', function() {
-		console.log('Reconnected to server!');
-		location.reload(true);
-	});
+	// this.socket.on('reconnect', function() {
+	// 	console.log('Reconnected to server!');
+	// 	location.reload(true);
+	// });
 
 	this.socket.emit('full image',
 		{
