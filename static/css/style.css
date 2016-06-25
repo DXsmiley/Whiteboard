@@ -54,6 +54,10 @@ div.toolbar {
 	margin-left: -80px;
 }
 
+div.toolbar {
+	display: none;
+}
+
 div.toolbar, div.toolbar div, .toolbar_hidden {
 	position: absolute;
 	transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55);
@@ -102,7 +106,7 @@ div.center {
 }
 
 #modal_latex_positionable {
-	display: none;
+	/*display: none;*/
 	position: fixed;
 }
 
@@ -197,4 +201,48 @@ div.toolbar div[left = -80px] img {
 
 #tb_table {
 	height: 100%;
+}
+
+/* popup messages including connection status and feedback prompt */
+div.popup {
+	transition: 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+	position: fixed;
+	right: 20px;
+	padding: 10px;
+	max-width: 280px;
+	text-align: justify;
+	background-color: white;
+	border-style: solid;
+	border-width: 4px;
+	border-color: #007fee;
+	z-index: 10;
+}
+
+div.popup button {
+	background-color: #007fee;
+	border-style: none;
+	padding: 4px;
+	margin: 4px;
+	color: white;
+}
+
+div.popup div button:hover {
+	background-color: #ee7f00;
+}
+
+div.popup p {
+	margin: 8px;
+}
+
+div.popup div {
+	text-align: center;
+}
+
+#status_message {
+	top: 20px;
+}
+
+#feedbackpopup {
+	bottom: -150px; /* initially off screen */
+	max-width: 280px;
 }

@@ -16,12 +16,26 @@ b.addEventListener('click', function() {
     this.download = 'whiteboard-' + n + '.png';
 });
 
+function SettingsHead() {
+	// This object has no constructor
+}
+
+SettingsHead.prototype.onModalConfirm = function() {
+	whiteboard.modalClose('.modal_settings');
+}
+
+SettingsHead.prototype.onModalCancel = function() {
+	whiteboard.modalClose('.modal_settings');
+}
+
 function SettingsTool() {
 	this.name = 'settings';
+	this.shortcut_key = 's';
 }
 
 SettingsTool.prototype.onButtonClick = function() {
 	whiteboard.modalOpen('.modal_settings', '.modal_centered');
+	return new SettingsHead();
 };
 
 whiteboard.makeTool(new SettingsTool());

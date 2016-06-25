@@ -14,7 +14,6 @@
 			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
 		</div>
 
-
 		<div class="toolbar" id="toolbar_wrapper">
 			<div id="toolbar_normal">
 				<table id="tb_table">
@@ -25,7 +24,6 @@
 								<img class="toolbar_button" id="button_eraser" src="/static/images/eraser.png"><br>
 								<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
 								<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
-								<!-- <img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br> -->
 								<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
 								<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 								<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
@@ -47,9 +45,10 @@
 			</div>
 			<div id="toolbar_cancel">
 				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
-				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_confirm">
+				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
+				<img class="toolbar_button button_confirm" src="/static/images/confirm.png"><br>
 			</div>
 			<div id="toolbar_image">
 				<img class="toolbar_button button_cancel"  src="/static/images/cancel.png"><br>
@@ -68,7 +67,7 @@
 					<p contenteditable id="text_input_text">Enter Text</p>
 				</div>
 				<div class="modal fadein modal_image">
-					<img id="modal_image" src="/static/images/placeholder.png"/>
+					<img id="modal_image" src="/static/images/loading.svg"/>
 				</div>
 				<div class="modal_centered fadein">
 					<div class="modal_centered_outer">
@@ -77,9 +76,9 @@
 								<div class="modal fadein modal_latex">
 									<div class="center">
 										<p contenteditable id="modal_latex_input">\sqrt{a^2 + b^2} = c</p>
-										<img id="modal_latex_image" src="/static/images/placeholder.png">
+										<img id="modal_latex_image" src="/static/images/loading.svg">
 									</div>
-									<img id="modal_latex_positionable" src="/static/images/placeholder.png">
+									<img id="modal_latex_positionable" src="/static/images/loading.svg">
 								</div>
 								<div class="modal fadein modal_image_select">
 									<div class="center">
@@ -136,6 +135,18 @@
 			</div>
 		</div>
 
+		<div id="status_message" class="popup">
+			<p id="status_message_text">Connecting to server...</p>
+		</div>
+
+		<div id="feedbackpopup" class="popup">
+			<p>Hey, there! You seem to be using the whiteboard a lot! Want to tell us your thoughts?</p>
+			<div>
+				<a href="{{ feedback_form }}" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
+				<button onclick="feedbackPopupClose(false)">No Thanks</button>
+			</div>
+		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>
@@ -150,21 +161,50 @@
 	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
 	<script type="text/javascript" src="/static/js/board/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/head_line.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_eraser.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_clear.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_text.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_image.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">
+
 			whiteboard.toolbarActivate('#toolbar_normal');
 			whiteboard.triggerToolButton('pencil');
 			whiteboard.triggerColourButton('blue');
+
+			function feedbackPopupShow() {
+				console.log('Showing feedback popup.');
+				$("#feedbackpopup").css('bottom', '20px');
+			}
+
+			function feedbackPopupClose(result) {
+				console.log('Closing feedback popup.');
+				$("#feedbackpopup").css('bottom', '-150px');
+				if (result) {
+					// User went to the feedback page.
+					// Ask them again in several months.
+					Cookies.set('feedbackpopup', 1, {'expires': 300});
+				} else {
+					// User didn't go to the feedback page :(
+					// Ask them again in a bit over a month.
+					Cookies.set('feedbackpopup', 1, {'expires': 40});
+				}
+			}
+
+			if (Cookies.get('feedbackpopup') === undefined) {
+				// Show in 15 minutes
+				console.log('Setting feedback popup timer.');
+				window.setTimeout(feedbackPopupShow, 1000 * 60 * 15);
+			}
+
 		</script>
 	{% else %}
 		<script type="text/javascript">

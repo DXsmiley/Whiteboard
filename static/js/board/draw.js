@@ -24,11 +24,20 @@ function shiftPoint(p, x, y) {
 	return new Point(p.x + x, p.y + y);
 }
 
-function drawLine(points, context, colour, thickness) {
+function drawLine(points, context, colour, thickness, loop) {
 	if (points.length > 1) {
+		context.lineJoin = "round";
+		context.strokeStyle = colour;
+		context.lineWidth = thickness;
+		context.beginPath();
+		context.moveTo(points[0].x, points[0].y);
 		for (var i = 1; i < points.length; i++) {
-			drawSegment(points[i - 1], points[i], context, colour, thickness);
+			context.lineTo(points[i].x, points[i].y);
 		}
+		if (loop) {
+			context.lineTo(points[0].x, points[0].y);
+		}
+		context.stroke();
 	}
 }
 
@@ -90,4 +99,15 @@ function drawImageScaled(url, position, scale, context, callback) {
 	} catch (error) {
 		// silence...
 	}
+}
+
+function drawPolygon(points, colour, context) {
+	context.fillStyle = colour;
+	context.beginPath();
+	context.moveTo(points[0].x, points[0].y);
+	for (var i in points) {
+		context.lineTo(points[i].x, points[i].y);
+	}
+	context.closePath();
+	context.fill();
 }

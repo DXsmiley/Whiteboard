@@ -3,7 +3,7 @@ function TextHead(colour) {
 	this.point = new Point(0, 0);
 	this.click_on_text = false;
 	whiteboard.modalOpen('.modal_text');
-	whiteboard.toolbarActivate('#toolbar_confirm', '#toolbar_cancel');
+	whiteboard.toolbarActivate('#toolbar_confirm');
 	$('#text_input_text').text('Enter Text');
 	var passback = this;
 	$('#text_input_text').mousedown(function(event) {
@@ -46,6 +46,7 @@ function TextTool() {
 	this.buttonImage = 'text.png';
 	this.buttonImageSelected = 'text_select.png';
 	this.desktopOnly = true;
+	this.shortcut_key = 't';
 }
 
 TextTool.prototype.onButtonClick = function() {
