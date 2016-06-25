@@ -277,13 +277,6 @@ Whiteboard.prototype.handleKeypress = function(event) {
 	}
 };
 
-Whiteboard.prototype.canvasDoubleClick = function() {
-	if (this.active_tool) {
-		console.log('canvasDoubleClick', this.active_tool);
-		this.triggerToolButton(this.active_tool.name, true);
-	}
-};
-
 // Tool buttons
 
 Whiteboard.prototype.triggerToolButton = function(t, dbl) {
@@ -421,7 +414,6 @@ Whiteboard.prototype.startup = function() {
 				$('#button_' + name).next().hide();
 			} else {
 				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
-				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);});
 				var shortcut_key = the_whiteboard.tools[i].shortcut_key;
 				if (shortcut_key !== undefined) {
 					the_whiteboard.keyboard_shortcuts[shortcut_key] = name;
@@ -493,7 +485,6 @@ $(document).ready(function() {
 	$('#canvas2').mousedown(function(event) {whiteboard.mouseDown(event);});
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mouseup(function(event) {whiteboard.mouseUp(event);});
-	$('#canvas2').dblclick(function(event) {whiteboard.canvasDoubleClick(event);});
 	var can2 = document.getElementById('canvas2');
 	can2.addEventListener('touchstart', function(event) {whiteboard.touchDown(event);}, false);
 	can2.addEventListener('touchmove', function(event) {whiteboard.touchMove(event);}, false);
