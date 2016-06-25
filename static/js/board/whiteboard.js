@@ -482,6 +482,7 @@ $(document).ready(function() {
 	$('img.button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
 	$('img.button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
 	// $('#modal_pane').mousemove(function(event) {whiteboard.mouseMove(event);});
+	$(document).keydown(function(event) {whiteboard.handleKeypress(event);});
 	$('#canvas2').mousedown(function(event) {whiteboard.mouseDown(event);});
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mouseup(function(event) {whiteboard.mouseUp(event);});
@@ -505,7 +506,5 @@ $(document).ready(function() {
 	document.getElementById("toolbar_wrapper").addEventListener('wheel', scrollToolbar);
 
 	whiteboard.startup();
-
-	$(document).keydown(function(event) {whiteboard.handleKeypress(event);});
 
 });
