@@ -20,6 +20,8 @@ function Whiteboard() {
 	this.panning = false;
 	this.last_mouse_x = 0;
 	this.last_mouse_y = 0;
+	this.current_modal = null;
+	this.keyboard_shortcuts = {};
 };
 
 Whiteboard.prototype.getKey = function(key) {
@@ -78,6 +80,7 @@ Whiteboard.prototype.sendPaintEvent = function(tool_name, action_data, extend) {
 };
 
 Whiteboard.prototype.modalClose = function(extra_thing) {
+	var the_whiteboard = this;
 	this.toolbarActivate('#toolbar_normal');
 	$('#modal_pane').css('opacity', 0);
 	$('.modal_centered').css('opacity', 0);
@@ -86,6 +89,7 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 		if ($('#modal_pane').css('opacity') < 0.5) {
 			$('#modal_pane').hide();
 			$('.modal_centered').hide();
+			the_whiteboard.current_modal = null;
 		}
 		$(extra_thing).hide();
 	}, 500);
@@ -94,6 +98,7 @@ Whiteboard.prototype.modalClose = function(extra_thing) {
 Whiteboard.prototype.modalOpen = function() {
 	// Convert 'arguments' into an actual array.
 	var the_args = Array.prototype.slice.call(arguments);
+	this.current_modal = the_args[0];
 	the_args.push('#modal_pane');
 	this.toolbarActivate();
 	for (var i in the_args) {
@@ -259,9 +264,17 @@ Whiteboard.prototype.modalInputCancel = function() {
 	}
 };
 
-Whiteboard.prototype.modalKeyHandle = function(event) {
-	if (event.keyCode == 13 && !event.shiftKey) this.modalInputConfirm();
-	if (event.keyCode == 27) this.modalInputCancel();
+Whiteboard.prototype.handleKeypress = function(event) {
+	if (this.current_modal == null) {
+		// trigger keyboard shortcut
+		var key_tool = this.keyboard_shortcuts[event.key];
+		if (key_tool != undefined) {
+			this.triggerToolButton(key_tool, false);
+		}
+	} else {
+		if (event.key == "Enter") this.modalInputConfirm();
+		if (event.key == "Escape") this.modalInputCancel();
+	}
 };
 
 Whiteboard.prototype.canvasDoubleClick = function() {
@@ -408,7 +421,11 @@ Whiteboard.prototype.startup = function() {
 				$('#button_' + name).next().hide();
 			} else {
 				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
-				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);})
+				$('#button_' + name).dblclick(function(event) {the_whiteboard.triggerToolButton(name, true);});
+				var shortcut_key = the_whiteboard.tools[i].shortcut_key;
+				if (shortcut_key !== undefined) {
+					the_whiteboard.keyboard_shortcuts[shortcut_key] = name;
+				}
 			}
 		})();
 	}
@@ -472,7 +489,6 @@ $(document).ready(function() {
 	$('#modal_pane').mousedown(function(event) {whiteboard.mouseMove(event);});
 	$('img.button_cancel').click(function(event) {whiteboard.modalInputCancel(event);});
 	$('img.button_confirm').click(function(event) {whiteboard.modalInputConfirm(event);});
-	$('#modal_pane').keydown(function(event) {whiteboard.modalKeyHandle(event);});
 	// $('#modal_pane').mousemove(function(event) {whiteboard.mouseMove(event);});
 	$('#canvas2').mousedown(function(event) {whiteboard.mouseDown(event);});
 	$('#canvas2').mousemove(function(event) {whiteboard.mouseMove(event);});
@@ -498,5 +514,7 @@ $(document).ready(function() {
 	document.getElementById("toolbar_wrapper").addEventListener('wheel', scrollToolbar);
 
 	whiteboard.startup();
+
+	$(document).keydown(function(event) {whiteboard.handleKeypress(event);});
 
 });

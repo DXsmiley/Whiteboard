@@ -4,6 +4,7 @@ function PencilTool() {
 	this.name = 'pencil';
 	this.buttonImage = 'pencil.png';
 	this.buttonImageSelected = 'pencil_select.png';
+	this.shortcut_key = 'p';
 }
 
 PencilTool.prototype.onButtonClick = function() {

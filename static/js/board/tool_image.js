@@ -125,6 +125,7 @@ SelectHead.prototype.onModalCancel = function() {
 function ImageTool() {
 	this.name = 'image';
 	this.desktopOnly = true;
+	this.shortcut_key = 'i';
 }
 
 ImageTool.prototype.onButtonClick = function() {

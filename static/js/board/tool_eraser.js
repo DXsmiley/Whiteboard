@@ -2,6 +2,7 @@ function EraserTool() {
 	this.name = 'eraser';
 	this.buttonImage = 'eraser.png';
 	this.buttonImageSelected = 'eraser_select.png';
+	this.shortcut_key = 'e';
 }
 
 EraserTool.prototype.onButtonClick = function() {

@@ -46,6 +46,7 @@ function TextTool() {
 	this.buttonImage = 'text.png';
 	this.buttonImageSelected = 'text_select.png';
 	this.desktopOnly = true;
+	this.shortcut_key = 't';
 }
 
 TextTool.prototype.onButtonClick = function() {
