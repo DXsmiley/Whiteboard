@@ -243,9 +243,6 @@ def socketio_paint(message):
 			}
 			board.add_action(message)
 			socketio.emit('paint', data, broadcast = True, room = bid)
-	else:
-		print('A paint action failed')
-		print(message)
 
 @sock.on('full image')
 def socketio_full_image(message):
