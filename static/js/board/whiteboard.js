@@ -117,9 +117,9 @@ Whiteboard.prototype.setToolHead = function(head) {
 
 // Perform events
 
-Whiteboard.prototype.eventToolDown = function(n, p) {
+Whiteboard.prototype.eventToolDown = function(n, p, b) {
 	if (this.active_tool) {
-		this.tool_heads[n] = this.active_tool.makeToolHead();
+		this.tool_heads[n] = this.active_tool.makeToolHead(b);
 		if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
 			this.tool_heads[n].onMove(p);
 		}
@@ -158,13 +158,13 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 // Interperet events
 
 Whiteboard.prototype.mouseDown = function(event) {
-	if (event.which == 1) {
-		this.eventToolDown(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
-	}
 	if (event.which == 3) {
 		this.last_mouse_x = event.pageX;
 		this.last_mouse_y = event.pageY;
 		this.panning = true;
+	} else {
+		var touchpoint = new Point(event.pageX - this.pan_x, event.pageY - this.pan_y);
+		this.eventToolDown(0, touchpoint, event.which);
 	}
 	if (event.preventDefault) event.preventDefault();
 };

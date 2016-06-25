@@ -25,6 +25,7 @@
 								<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
 								<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
 								<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
+								<!-- <img class="toolbar_button" id="button_solid_shape"  src="/static/images/button_maths.png"><br> -->
 								<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
 								<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 								<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
@@ -154,12 +155,14 @@
 	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
 	<script type="text/javascript" src="/static/js/board/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/head_line.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_eraser.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_clear.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_text.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_image.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
