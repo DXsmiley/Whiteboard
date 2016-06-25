@@ -8,5 +8,5 @@ python-socketio==1.1
 six==1.10.0
 Werkzeug==0.11.5
 git+https://github.com/DXsmiley/gevent-websocket.git
-edgy-json==0.0.3
+git+https://github.com/DXsmiley/edgy-json.git@4c92f9dac99ccfef1e9cb4eed0a3aaa2d090fcb3#egg=edgy_json
 pymongo==3.2.2
