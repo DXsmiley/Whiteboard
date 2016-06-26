@@ -181,6 +181,7 @@ div.toolbar div[left = -80px] img {
 #toolbar_footer {
 	position: absolute;
 	bottom: 0;
+	background-color: #ffffff;
 }
 
 #toolbar_footer_container {
