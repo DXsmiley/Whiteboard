@@ -46,7 +46,22 @@ def time_breakdown(t):
 	}
 
 class Whiteboard:
+	"""Object representing a single whiteboard.
+
+	This interfaces with the database on the backend.
+
+		has_loaded :: whether the content have been loaded
+		layers :: the list of actions that have been performed on the whiteboard
+		timestamp :: the time at which the whiteboard was last modified
+		permissions :: string, either 'open', 'presentation', or 'private'
+		key :: string used to identify who has access to the whiteboard
+		owner_key :: string used to identify who owns (created) the whiteboard
+	"""
 	def __init__(self, name):
+		"""Initialise a whiteboard object
+
+		Initially, the contents of the whiteboard has not been loaded.
+		"""
 		self.has_loaded = False
 		self.layers = []
 		self.timestamp = 0
@@ -56,11 +71,13 @@ class Whiteboard:
 		self.name = name
 
 	def ensure_loaded(self):
+		"""Load the whiteboard's contents if they haven't been already"""
 		if not self.has_loaded:
 			self.load_everything()
 			self.save_everything()
 
 	def load_everything(self):
+		"""Load all the data from the database"""
 		data = database.load(self.name)
 		if data:
 			# Using get will allow backwards compatibility in the future
@@ -71,6 +88,7 @@ class Whiteboard:
 		self.has_loaded = True
 
 	def save_everything(self):
+		"""Save all the data to the database"""
 		self.ensure_loaded()
 		payload = {
 			'layers': self.layers,
@@ -81,26 +99,33 @@ class Whiteboard:
 		database.rewrite(self.name, payload)
 
 	def update_time(self):
+		"""Change the modification timestamp to the current time"""
 		self.timestamp = time_current()
 
 	def full_image(self):
+		"""Returns a copy of the whiteboard contents, for sending to the cient"""
 		self.ensure_loaded()
 		self.update_time()
 		return self.layers[:]
 
 	def add_action(self, action):
+		"""Add a paint action to the whiteboard"""
 		self.ensure_loaded()
 		self.update_time()
 		self.layers.append(action)
 		database.action_push(self.name, action, self.timestamp)
 
 	def undo_action(self, action):
+		"""Remove a paint action from the whiteboard"""
 		self.ensure_loaded()
 		self.update_time()
 		self.layers = [i for i in self.layers if i['action_id'] != action]
 		database.action_remove(self.name, action, self.timestamp)
 
 	def make_protected(self):
+		"""Set the whiteboard to be 'protected'
+
+		Will regenerate keys even if the whiteboard is already protected"""
 		self.ensure_loaded()
 		self.permissions = 'protected'
 		self.key = make_humane_gibberish(6)
@@ -108,6 +133,9 @@ class Whiteboard:
 		self.save_everything()
 
 	def make_private(self):
+		"""Set the whiteboard to be 'private'
+
+		Will regenerate keys even if the whiteboard is already private"""
 		self.ensure_loaded()
 		self.permissions = 'private'
 		self.key = make_humane_gibberish(6)
@@ -115,23 +143,29 @@ class Whiteboard:
 		self.save_everything()
 
 	def unlock(self):
+		"""Sets the whiteboard to be publically accessible (by those with the link)"""
 		self.ensure_loaded()
 		self.permissions = 'open'
 		self.save_everything()
 
 	def may_view(self, key):
+		"""Checks if someone with the given key may view the whiteboard"""
 		self.ensure_loaded()
 		return self.permissions in ['open', 'protected'] or key in [self.key, self.owner_key]
 
 	def may_edit(self, key):
+		"""Checks if someone with the given key may edit the whiteboard"""
 		self.ensure_loaded()
 		return self.permissions == 'open' or key in [self.key, self.owner_key]
+
+# Create a dictioary of whiteboards and load the whiteboard metadata
 
 whiteboards = keydefaultdict(lambda name: Whiteboard(name))
 
 for i in database.load_meta():
-	# Accessing the item in the dictionary will create the board.
 	whiteboards[i['name']].timestamp = i['timestamp']
+
+# Create the flask server and the socket.io handler
 
 app = flask.Flask(__name__)
 app.debug = True
@@ -139,14 +173,19 @@ app.debug = True
 sock = socketio.SocketIO(app)
 
 def make_board_id():
+	"""Generates an unused board id"""
 	attempts = 0
 	board_id = make_humane_gibberish(4)
+	# Every time a clash occurs, increase the length of the ID by one
+	# in order to avoid problems with the birthday paradox.
+	# Initially having the key to be small ensures that links remain human readable.
 	while board_id in whiteboards:
 		board_id = make_humane_gibberish(attempts + 4)
 		attempts += 1
 	return board_id
 
 def make_board(permissions = 'open', board_id = None):
+	"""Creates a new board with specifc permissions"""
 	board_id = board_id or make_board_id()
 	whiteboards[board_id]
 	if permissions == 'protected':
@@ -154,6 +193,8 @@ def make_board(permissions = 'open', board_id = None):
 	if permissions == 'private':
 		whiteboards[board_id].make_private()
 	return (board_id, whiteboards[board_id].owner_key)
+
+# Set up routing for the information pages (home, about, etc...)
 
 @app.route('/')
 def serve_index():
@@ -166,6 +207,9 @@ def serve_about():
 @app.route('/ninjas')
 def serve_ninjas():
 	return flask.render_template('ninjas.tpl')
+
+# URLs that create new whiteboards. They create a new whiteboard and
+# then automatically redirect the user there.
 
 @app.route('/new')
 def server_board_new():
@@ -186,6 +230,10 @@ def server_board_new_private():
 	response.set_cookie('key_' + board_id, key)
 	return response
 
+# Serves up a list of existant whiteboards.
+# Used for debugging purposes only.
+# TODO: Add a password to this page, don't let normal users see it.
+
 @app.route('/listing')
 def serve_listing():
 	boards = []
@@ -198,6 +246,9 @@ def serve_listing():
 			'recency': 	rec_str
 		})
 	return flask.render_template('listing.tpl', boards = boards)
+
+# Serve the board
+# Both '/board/x' and '/b/x' are supported for convinience
 
 @app.route('/board/<board_id>')
 @app.route('/b/<board_id>')
@@ -216,10 +267,14 @@ def serve_board(board_id):
 	else:
 		flask.abort(403)
 
+# Serve static files
+
 @app.route('/static/<path:path>')
 def serve_static(path):
 	print('Serving static: ', path)
 	return flask.send_from_directory('static', path)
+
+# Load the paint action schema into a constant.
 
 def load_schema(name):
 	text = open('schemas/' + name + '.json').read()
@@ -227,25 +282,33 @@ def load_schema(name):
 
 SCHEMA_PAINT = load_schema('paint')
 
+# Handle incomming paint event.
+
 @sock.on('paint')
 def socketio_paint(message):
 	# print('paint', message)
+	# Ensure the paint action is valid
 	if edgy.check(SCHEMA_PAINT, message):
 		bid = message['board_id'].upper()
 		key = message['key']
 		board = whiteboards[bid]
+		# Ensure the user has the correct permissions
 		if board.may_edit(key):
+			# Add the action to the whiteboard
+			board.add_action(message)
+			# Transmit the action to all other clients
 			data = {
 				'board_id': bid,
 				'actions': [
 					message
 				]
 			}
-			board.add_action(message)
 			socketio.emit('paint', data, broadcast = True, room = bid)
 	else:
 		print('A paint action failed')
 		print(message)
+
+# Fired when the user joins the whiteboard.
 
 @sock.on('full image')
 def socketio_full_image(message):
@@ -253,6 +316,7 @@ def socketio_full_image(message):
 	bid = message['board_id'].upper()
 	key = message['key']
 	board = whiteboards[bid]
+	# Ensure the user may see this board
 	if board.may_view(key):
 		socketio.join_room(bid)
 		data = {
@@ -261,28 +325,40 @@ def socketio_full_image(message):
 		}
 		socketio.emit('paint', data)
 
+# Fired when a user attempts to undo an action
+
 @sock.on('undo')
 def socketio_undo(message):
 	bid = message['board_id'].upper()
 	aid = message['action_id']
 	key = message['key']
 	board = whiteboards[bid]
+	# Ensure the user has permission to edit the board
 	if board.may_edit(key):
+		# Remove the action from the board
 		board.undo_action(aid)
+		# Tell other clients the action has been undone
 		data = {
 			'board_id': bid,
 			'action_id': aid
 		}
 		socketio.emit('undo', data, broadcast = True, room = bid)
 
+# Fired when a user attmpts to unlock a whiteboard
+
 @sock.on('unlock')
 def socketio_unlock(message):
 	bid = message['board_id'].upper()
 	key = message['key']
 	board = whiteboards[bid]
+	# Ensure the user has permission to do so
 	if board.may_edit(key):
 		board.unlock()
+		# Tells the other client that the board has been unlocked
+		# this will cause the browsers to refresh the page
 		socketio.emit('refresh', broadcast = True, room = bid)
+
+# Run the server
 
 if __name__ == '__main__':
 	port = int(settings.get('port'))
