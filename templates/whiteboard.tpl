@@ -25,6 +25,7 @@
 								<img class="toolbar_button" id="button_text"   src="/static/images/text.png"><br>
 								<img class="toolbar_button" id="button_image"  src="/static/images/button_image.png"><br>
 								<img class="toolbar_button" id="button_latex"  src="/static/images/button_maths.png"><br>
+								<!-- <img class="toolbar_button" id="button_solid_shape"  src="/static/images/button_maths.png"><br> -->
 								<img class="toolbar_button" id="colour_blue"   src="/static/images/col_blue.png"><br>
 								<img class="toolbar_button" id="colour_red"    src="/static/images/col_red.png"><br>
 								<img class="toolbar_button" id="colour_black"  src="/static/images/col_black.png"><br>
@@ -136,8 +137,16 @@
 			</div>
 		</div>
 
-		<div id="status_message">
-			<span>Connecting to server...</span>
+		<div id="status_message" class="popup">
+			<p id="status_message_text">Connecting to server...</p>
+		</div>
+
+		<div id="feedbackpopup" class="popup">
+			<p>Hey, there! You seem to be using the whiteboard a lot! Want to tell us your thoughts?</p>
+			<div>
+				<a href="{{ feedback_form }}" target="_blank"><button onclick="feedbackPopupClose(true)">Sure</button></a>
+				<button onclick="feedbackPopupClose(false)">No Thanks</button>
+			</div>
 		</div>
 
 	</body>
@@ -154,21 +163,50 @@
 	<script type="text/javascript">whiteboard.setId("{{board_id}}");</script>
 	<script type="text/javascript" src="/static/js/board/head_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/head_line.js"></script>
+	<script type="text/javascript" src="/static/js/board/head_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_pencil.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_eraser.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_clear.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_text.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_image.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_latex.js"></script>
+	<script type="text/javascript" src="/static/js/board/tool_solid_shape.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">
+
 			whiteboard.toolbarActivate('#toolbar_normal');
 			whiteboard.triggerToolButton('pencil');
 			whiteboard.triggerColourButton('blue');
+
+			function feedbackPopupShow() {
+				console.log('Showing feedback popup.');
+				$("#feedbackpopup").css('bottom', '20px');
+			}
+
+			function feedbackPopupClose(result) {
+				console.log('Closing feedback popup.');
+				$("#feedbackpopup").css('bottom', '-150px');
+				if (result) {
+					// User went to the feedback page.
+					// Ask them again in several months.
+					Cookies.set('feedbackpopup', 1, {'expires': 300});
+				} else {
+					// User didn't go to the feedback page :(
+					// Ask them again in a bit over a month.
+					Cookies.set('feedbackpopup', 1, {'expires': 40});
+				}
+			}
+
+			if (Cookies.get('feedbackpopup') === undefined) {
+				// Show in 15 minutes
+				console.log('Setting feedback popup timer.');
+				window.setTimeout(feedbackPopupShow, 1000 * 60 * 15);
+			}
+
 		</script>
 	{% else %}
 		<script type="text/javascript">
