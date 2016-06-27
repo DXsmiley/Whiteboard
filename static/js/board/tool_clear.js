@@ -1,3 +1,5 @@
+// Tool which clears the whiteboard
+
 function ClearTool() {
 	this.name = 'clear';
 }

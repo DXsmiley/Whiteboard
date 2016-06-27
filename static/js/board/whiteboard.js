@@ -424,7 +424,7 @@ Whiteboard.prototype.startup = function() {
 
 	console.log('Board ID:', this.whiteboard_id);
 
-	this.socket = io.connect('http://' + document.domain + ':' + location.port + '/', {'reconnection': true, 'reconnection delay': 500});
+	this.socket = io.connect('//' + document.domain + ':' + location.port + '/', {'reconnection': true, 'reconnection delay': 500});
 
 	this.socket.on('paint', function(msg) {
 		the_whiteboard.sockHandlePaint(msg);
