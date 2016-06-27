@@ -163,10 +163,6 @@ def serve_index():
 def serve_about():
 	return flask.render_template('about.tpl')
 
-@app.route('/ninjas')
-def serve_ninjas():
-	return flask.render_template('ninjas.tpl')
-
 @app.route('/new')
 def server_board_new():
 	board_id, key = make_board()
