@@ -30,7 +30,7 @@ PencilTool.prototype.drawFull = function(data) {
 	if (data.style == 'calligraphy') {
 		drawLineCalligraphy(data.points, context_picture, data.colour, this.thickness);
 	} else {
-		drawLine(data.points, context_picture, data.colour, this.thickness);
+		drawLine(data.points, context_picture, data.colour, this.thickness, false);
 	}
 };
 

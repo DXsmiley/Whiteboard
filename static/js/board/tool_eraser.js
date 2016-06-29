@@ -22,7 +22,7 @@ EraserTool.prototype.makeToolHead = function(button) {
 };
 
 EraserTool.prototype.drawFull = function(data) {
-	drawLine(data.points, context_picture, '#ffffff', 30);
+	drawLine(data.points, context_picture, '#ffffff', 30, false);
 };
 
 whiteboard.makeTool(new EraserTool());
