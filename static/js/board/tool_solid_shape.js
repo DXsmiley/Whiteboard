@@ -1,5 +1,6 @@
 function SolidShapeTool() {
 	this.name = 'solid_shape';
+	this.shortcut_key = 'k';
 }
 
 SolidShapeTool.prototype.onButtonClick = function() {
