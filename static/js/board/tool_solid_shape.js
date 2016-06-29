@@ -6,10 +6,6 @@ SolidShapeTool.prototype.onButtonClick = function() {
 	return true;
 };
 
-SolidShapeTool.prototype.onDoubleClick = function() {
-	return true;
-};
-
 SolidShapeTool.prototype.makeToolHead = function() {
 	return new SolidShapeHead(whiteboard.global_colour, false);
 };
