@@ -10,7 +10,18 @@ function PencilHead(tool_name, colour, thickness, style) {
 }
 
 PencilHead.prototype.pushData = function() {
-	if (this.points.length > 1) {
+	if (this.points.length == 1) {
+		var p = this.points[0];
+		var action_data = {
+			points: [p, new Point(p.x + 1, p.y + 1)],
+			colour: this.colour,
+			thickness: this.thickness,
+			style: 'straight'
+		}
+		whiteboard.sendPaintEvent(this.tool_name, action_data, this.pushed_once);
+		this.pushed_once = true;
+		this.points = [];
+	} else if (this.points.length > 1) {
 		var last_point = this.points[this.points.length - 1];
 		var action_data = {
 			points: cleanupLine(this.points),
