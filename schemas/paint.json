@@ -30,7 +30,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "clear"
+				"__equals__": "clear"
 			},
 			"data": "int"
 		},
@@ -39,7 +39,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "pencil"
+				"__equals__": "pencil"
 			},
 			"data":
 			{
@@ -58,7 +58,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "eraser"
+				"__equals__": "eraser"
 			},
 			"data":
 			{
@@ -77,7 +77,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "image"
+				"__equals__": "image"
 			},
 			"data":
 			{
@@ -91,7 +91,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "text"
+				"__equals__": "text"
 			},
 			"data":
 			{
@@ -105,7 +105,7 @@
 			"tool":
 			{
 				"__type__": "string",
-				"equals": "solid_shape"
+				"__equals__": "solid_shape"
 			},
 			"data":
 			{

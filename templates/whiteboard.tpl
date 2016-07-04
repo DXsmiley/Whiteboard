@@ -118,11 +118,17 @@
 														<img src="/static/images/download_large.png">
 													</a>
 												</td>
+												<td>
+													<a href="/docs" target="_blank">
+														<img src="/static/images/help.png">
+													</a>
+												</td>
 												<td><img id="modal_settings_button_cancel" src="/static/images/cancel_large.png"></td>
 											</tr>
 											<tr>
 												<td><div class="center"><p>Clear</p></div></td>
 												<td><div class="center"><p>Save Image</p></div></td>
+												<td><div class="center"><p>Help</p></div></td>
 												<td><div class="center"><p>Return</p></div></td>
 											</tr>
 										</table>
@@ -172,6 +178,7 @@
 	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
+	<script type="text/javascript" src="/static/js/board/colour_shortcuts.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">

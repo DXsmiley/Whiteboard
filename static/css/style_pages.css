@@ -2,6 +2,23 @@ h1, h2, h3, h4, h5, h6, p {
 	font-family: helvetica, sans-serif;
 }
 
+h2 {
+	color: #ee7f00;
+}
+
+td h2 {
+	color: #000000;
+}
+
+p {
+	line-height: 150%;
+	font-size: 16px;
+}
+
+.center {
+	text-align: center;
+}
+
 div.headder {
 	border-bottom: 1px solid #eeeeee;
 	text-align: center;
@@ -57,8 +74,8 @@ div.large_container {
 }
 
 div.container {
-	text-align: center;
 	margin: 0px auto;
+	padding: 20px;
 	max-width: 800px;
 }
 
@@ -76,4 +93,22 @@ td {
 	margin: 0px auto;
 	z-index: -1;
 	position: absolute;
+}
+
+tbody.stripes tr:nth-child(even) {
+   background-color: #f8f8f8;
+}
+
+thead {
+	background-color: #eeeeee;
+}
+
+.floatleft {
+	float: left;
+	margin-right: 12px;
+}
+
+.floatright {
+	float: right;
+	margin-left: 12px;
 }

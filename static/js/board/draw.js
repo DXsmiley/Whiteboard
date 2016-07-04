@@ -1,14 +1,17 @@
 // Functions for drawing things on canvases
 
+// Fills the canvas with solid white
 function drawClearSolid(context) {
 	context.fillStyle = "#ffffff";
 	context.fillRect(0, 0, context.canvas.width, context.canvas.height); 
 }
 
+// Erases everything on the canvas, making it completely transparent
 function drawClear(context) {
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
+// Draw a line given the two endpoints, colour and thickness
 function drawSegment(start, end, context, colour, thickness) {
 	context.lineJoin = "round";
 	context.strokeStyle = colour;
@@ -20,10 +23,13 @@ function drawSegment(start, end, context, colour, thickness) {
 	context.stroke();
 }
 
+// Translate a point by a given x and y value.
 function shiftPoint(p, x, y) {
 	return new Point(p.x + x, p.y + y);
 }
 
+// Draws contiguous line segments through a list of points given the colour and thickness
+// Setting `loop` to true creates an additional line between the first and last points
 function drawLine(points, context, colour, thickness, loop) {
 	if (points.length > 1) {
 		context.lineJoin = "round";
@@ -34,9 +40,12 @@ function drawLine(points, context, colour, thickness, loop) {
 		for (var i = 1; i < points.length; i++) {
 			context.lineTo(points[i].x, points[i].y);
 		}
-		if (loop) {
-			context.lineTo(points[0].x, points[0].y);
+		if (!loop) {
+			for (var i = points.length - 2; i > 0; i--) {
+				context.lineTo(points[i].x, points[i].y);
+			}
 		}
+		context.closePath();
 		context.stroke();
 	}
 }
@@ -44,6 +53,10 @@ function drawLine(points, context, colour, thickness, loop) {
 var calligraphy_x = 1;
 var calligraphy_y = -1;
 
+// Draw a continuous line in 'caligraphic' style
+// This means the stroke is diagonally slanted to show pen tilt
+// Also, the thickness of the line is altered slightly by the speed the line was drawn
+// Points need to have a timstamp on them for this to work properly
 function drawLineCalligraphy(points, context, colour, thickness) {
 	thickness /= 2;
 	if (points.length > 1) {
@@ -66,6 +79,7 @@ function drawLineCalligraphy(points, context, colour, thickness) {
 	}
 }
 
+// Draw text at a particular position
 function drawText(position, text, colour, font, context) {
 	context.textBaseline = 'top';
 	context.font = font;
@@ -75,15 +89,21 @@ function drawText(position, text, colour, font, context) {
 
 var _imageCache = {};
 
+// Draw an image at a particular position
+// The callback is called when the image is loaded, if it hasn't already done so
 function drawImage(url, position, context, callback) {
 	drawImageScaled(url, position, 1, context, callback);
 }
 
+// Draws a scaled image
+// The callback is called when the image is loaded, if it hasn't already done so
 function drawImageScaled(url, position, scale, context, callback) {
 	if (!(url in _imageCache)) {
+		// If the image isn't loaded, load it.
 		var image = new Image();
 		image.src = url;
 		_imageCache[url] = image;
+		// When the image has loaded, actually draw it, and trigger the callback
 		image.onload = function() {
 			var w = image.width;
 			var h = image.height;
@@ -92,15 +112,17 @@ function drawImageScaled(url, position, scale, context, callback) {
 		}
 	}
 	try {
+		// actually draw the image
 		var image = _imageCache[url];
 		var w = image.width;
 		var h = image.height;
 		context.drawImage(image, position.x, position.y, w * scale, h * scale);
 	} catch (error) {
-		// silence...
+		// if an error is raised, it means the image hasn't loaded yet
 	}
 }
 
+// Draws a filled shape
 function drawPolygon(points, colour, context) {
 	context.fillStyle = colour;
 	context.beginPath();

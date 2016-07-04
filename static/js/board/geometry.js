@@ -1,28 +1,31 @@
-// Geometric structures
-
+// Creates a new point
 function Point(x, y) {
 	this.x = x;
 	this.y = y;
 }
 
-// Utility functions
-
+// Returns the distance between two points
 function distance(a, b) {
 	return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
+// Linear iterpolation between two points
+// For example,
+//     k = 0 returns a,
+//     k = 1 returns b,
+//     k = 0.5 returns the point halfway between a and b
 function point_lerp(a, b, k) {
 	var x = a.x + (b.x - a.x) * k;
 	var y = a.y + (b.y - a.y) * k;
-	return {'x': x, 'y': y}
+	return new Point(x, y);
 }
 
-// Functions for manipulating lines
-
+// Cleans a line, so it's not such a mess
 function cleanupLine(p) {
 	return simplify(p, 1.0, true);
 }
 
+// bexier line calculations
 function bezier(p, steps) {
 	var o = Array();
 	o.push(p[0]);

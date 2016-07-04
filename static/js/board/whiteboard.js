@@ -158,6 +158,8 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 // Interperet events
 
 Whiteboard.prototype.mouseDown = function(event) {
+	console.log(event);
+	console.log(event.which);
 	if (event.which == 3) {
 		this.last_mouse_x = event.pageX;
 		this.last_mouse_y = event.pageY;
@@ -205,7 +207,8 @@ function touchCentre(touches) {
 
 Whiteboard.prototype.touchDown = function(event) {
 	if (event.touches.length == 1) {
-		this.eventToolDown(0, new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y));
+		var p = new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y);
+		this.eventToolDown(0, p, 1 /* Left button */);
 	}
 	if (event.touches.length == 2) {
 		var c = touchCentre(event.touches);
