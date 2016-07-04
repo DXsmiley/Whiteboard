@@ -95,14 +95,7 @@
 					<td>Escape</td>
 					<td>Cancel action</td>
 				</tr>
-				<tr>
-					<td>Space</td>
-					<td>Toggles between the text and eraser tools. Actives the pencil tool if another tool is selected.</td>
-				</tr>
-				<tr>
-					<td>C</td>
-					<td>Clear the board, prompts with warning</td>
-				</tr>
+
 			</tbody>
 		</table>
 	</div>
