@@ -40,9 +40,12 @@ function drawLine(points, context, colour, thickness, loop) {
 		for (var i = 1; i < points.length; i++) {
 			context.lineTo(points[i].x, points[i].y);
 		}
-		if (loop) {
-			context.lineTo(points[0].x, points[0].y);
+		if (!loop) {
+			for (var i = points.length - 2; i > 0; i--) {
+				context.lineTo(points[i].x, points[i].y);
+			}
 		}
+		context.closePath();
 		context.stroke();
 	}
 }

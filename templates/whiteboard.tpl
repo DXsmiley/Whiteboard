@@ -174,6 +174,7 @@
 	<script type="text/javascript" src="/static/js/board/tool_undo.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_unlock.js"></script>
 	<script type="text/javascript" src="/static/js/board/tool_settings.js"></script>
+	<script type="text/javascript" src="/static/js/board/colour_shortcuts.js"></script>
 
 	{% if show_controls %}
 		<script type="text/javascript">
