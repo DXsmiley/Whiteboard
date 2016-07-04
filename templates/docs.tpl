@@ -16,7 +16,7 @@
 		<img src="/static/images/people.png" class="floatleft">
 		<p>Having multiple people drawing on the same board is a key feature. To get other people drawing on your board, simply go to your board and give them the URL, which can be found in the address bar.</p>
 
-		<p>Collaborators will be able to do anything that you can, including erasing the board and sharing it with others, shoudl they so wish.</p>
+		<p>Collaborators will be able to do anything that you can, including erasing the board and sharing it with others, should they so wish.</p>
 
 		<h2>Tools</h2>
 
@@ -34,7 +34,7 @@
 
 		<img src="/static/images/button_image.png" class="floatleft">
 		<h3>Image</h3>
-		<p>Clicking this will give you the option to either upload an image or retrieve one from a URL. After doing so, click on the canvas to position the image. The magnifying glass buttons in the toolbar will allow you to enlarge or shrink the image. When you are happy, click the confirm button in the toolbar, or click the cancel button to not place the image and return to the whiteboard.</p>
+		<p>Clicking this will give you the option to either upload an image or retrieve one from a URL. After doing so, click on the canvas to position the image. The magnifying glass buttons in the tool bar will allow you to enlarge or shrink the image. When you are happy, click the confirm button in the tool bar, or click the cancel button to not place the image and return to the whiteboard.</p>
 
 		<img src="/static/images/col_black.png" class="floatleft">
 		<h3>Colours</h3>
@@ -46,14 +46,14 @@
 
 		<img src="/static/images/settings.png" class="floatleft">
 		<h3>Settings</h3>
-		<p>The settings buttons provides a few extra options. The <i>clear</i> button will clear the whiteboard. If you hit this by accident, you can press the undo button to get the board back. The <i>save image</i> button will allow you to save an image of the whiteboard to your own computer. The <i>help</i> button opens this page. It does so in a new tab, so the whiteboard remains accessable. The <i>return</i> button closes the settings panal and returns you to the whiteboard.</p>
+		<p>The settings buttons provides a few extra options. The <i>clear</i> button will clear the whiteboard. If you hit this by accident, you can press the undo button to get the board back. The <i>save image</i> button will allow you to save an image of the whiteboard to your own computer. The <i>help</i> button opens this page. It does so in a new tab, so the whiteboard remains accessible. The <i>return</i> button closes the settings panel and returns you to the whiteboard.</p>
 
 		<h2>Advanced Use</h2>
 
 		<img src="/static/images/mouse_middle.png" class="floatleft">
 		<h3>Drawing Shapes</h3>
 		<p>Both the pencil and eraser tools allow you to draw solid shapes. When using either of the tools, hold down the <i>middle mouse button</i> and drag to produce a filled shape.</p>
-		<p>If you don't have a middle mouse button, you can activate the special <i>shape tools</i> using the <code>K</code> and <code>L</code> keys. Note that these tools are simply replacements and do not appear in the toolbar.</p>
+		<p>If you don't have a middle mouse button, you can activate the special <i>shape tools</i> using the <code>K</code> and <code>L</code> keys. Note that these tools are simply replacements and do not appear in the tool bar.</p>
 
 		<h3>Keyboard shortcuts</h3>
 		<table>
