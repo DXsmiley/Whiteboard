@@ -53,6 +53,7 @@
 		<img src="/static/images/mouse_middle.png" class="floatleft">
 		<h3>Drawing Shapes</h3>
 		<p>Both the pencil and eraser tools allow you to draw solid shapes. When using either of the tools, hold down the <i>middle mouse button</i> and drag to produce a filled shape.</p>
+		<p>If you don't have a middle mouse button, you can activate the special <i>shape tools</i> using the <code>K</code> and <code>L</code> keys. Note that these tools are simply replacements and do not appear in the toolbar.</p>
 
 		<h3>Keyboard shortcuts</h3>
 		<table>
@@ -106,6 +107,14 @@
 				<tr>
 					<td>3 <i>or</i> 0</td>
 					<td>Black Paint</td>
+				</tr>
+				<tr>
+					<td>K</td>
+					<td>Activate the solid shape tool</td>
+				</tr>
+				<tr>
+					<td>L</td>
+					<td>Activate the area eraser tool</td>
 				</tr>
 			</tbody>
 		</table>
