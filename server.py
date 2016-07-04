@@ -207,6 +207,10 @@ def serve_about():
 # URLs that create new whiteboards. They create a new whiteboard and
 # then automatically redirect the user there.
 
+@app.route('/docs')
+def serve_docs():
+	return flask.render_template('docs.tpl')
+
 @app.route('/new')
 def server_board_new():
 	board_id, key = make_board()
