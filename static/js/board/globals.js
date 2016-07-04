@@ -4,10 +4,13 @@ function getSysClock() {
 	return d.getTime();
 }
 
+// A function that does nothing
 function nullFunction() {
-	// a function that does nothing
+	// ┬─┬﻿ ノ( ゜-゜ノ) steady now darling, we wouldn't want to break anything, would we?
 }
 
+// jQuery plugin to programatically select text
+// sourced from here: http://stackoverflow.com/a/13641884/2002307
 jQuery.fn.selectText = function() {
 	var range, selection;
 	return this.each(function() {
@@ -25,7 +28,8 @@ jQuery.fn.selectText = function() {
 	});
 };
 
-// These also exist within the whiteboard class.
-// I'm not really sure if they should be out here or in there.
-this.context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
-this.context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
+// The two drawing contexts of the whiteboard.
+// context_picture is the actual whiteboard.
+// context_preview shows what the user has drawn before it gets sent to the server.
+context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
+context_preview = document.getElementById('canvas2').getContext('2d'); // top layer

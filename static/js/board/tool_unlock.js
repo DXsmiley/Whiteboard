@@ -1,8 +1,8 @@
 function UnlockTool() {
 	this.name = 'unlock';
-	this.buttonImage = 'button_unlock.png';
 }
 
+// When the button is clicked, ask the user if they want to unlock the board.
 UnlockTool.prototype.onButtonClick = function() {
 	var res = window.confirm("Unlock the whiteboard? Anyone will be able to view and access draw on it.");
 	if (res) {
@@ -14,9 +14,5 @@ UnlockTool.prototype.onButtonClick = function() {
 	// }
 	return false;
 };
-
-UnlockTool.prototype.drawFull = function() {
-
-}
 
 whiteboard.makeTool(new UnlockTool());

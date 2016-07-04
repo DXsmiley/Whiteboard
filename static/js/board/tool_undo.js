@@ -1,9 +1,9 @@
 function UndoTool() {
 	this.name = 'undo';
-	this.buttonImage = 'button_undo.png';
 	this.shortcut_key = 'u';
 }
 
+// When the button is clicked, undo the last action.
 UndoTool.prototype.onButtonClick = function() {
 	if (whiteboard.paint_blobs_mine.length > 0) {
 		var uid = whiteboard.paint_blobs_mine.pop();
