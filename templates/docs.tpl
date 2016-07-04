@@ -95,7 +95,18 @@
 					<td>Escape</td>
 					<td>Cancel action</td>
 				</tr>
-
+				<tr>
+					<td>1 <i>or</i> 8</td>
+					<td>Blue paint</td>
+				</tr>
+				<tr>
+					<td>2 <i>or</i> 9</td>
+					<td>Orange paint</td>
+				</tr>
+				<tr>
+					<td>3 <i>or</i> 0</td>
+					<td>Black Paint</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
