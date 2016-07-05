@@ -409,7 +409,7 @@ Whiteboard.prototype.startup = function() {
 	for (var i in this.tools) {
 		(function() {
 			var name = the_whiteboard.tools[i].name;
-			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
+			var desktop_only = the_whiteboard.tools[i]['desktop_only'];
 			if (desktop_only === true && isMobile()) {
 				// disable the stuff
 				console.log('Disabling tool', i);

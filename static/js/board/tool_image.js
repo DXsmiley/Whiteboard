@@ -154,7 +154,6 @@ SelectHead.prototype.onModalCancel = function() {
 // Manage the image button the toolbar
 function ImageTool() {
 	this.name = 'image';
-	this.desktopOnly = true;
 	this.shortcut_key = 'i';
 }
 

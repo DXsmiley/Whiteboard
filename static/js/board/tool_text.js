@@ -51,7 +51,7 @@ TextHead.prototype.onModalCancel = function() {
 // Handle button presses
 function TextTool() {
 	this.name = 'text';
-	this.desktopOnly = true;
+	this.desktop_only = true;
 	this.shortcut_key = 't';
 }
 
