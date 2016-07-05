@@ -443,8 +443,7 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('connect', function() {
 		console.log('Connected to server.');
-		var func = () => {$('#status_message').css('top', -200);};
-		window.setTimeout(func, 500);
+		window.setTimeout(function () {$('#status_message').css('top', -200);}, 500);
 	});
 
 	this.socket.on('disconnect', function() {
