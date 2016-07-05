@@ -2,10 +2,12 @@
 
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 		<title>Whiteboard</title>
 		<link rel="stylesheet" type="text/css" href="/static/css/normalise.css">
 		<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 	</head>
+
 
 	<body class="whiteboard" oncontextmenu="return false;">
 
@@ -119,7 +121,7 @@
 													</a>
 												</td>
 												<td>
-													<a href="/docs" target="_blank">
+													<a id="modal_settings_button_help" href="/docs" target="_blank">
 														<img src="/static/images/help.png">
 													</a>
 												</td>
@@ -127,7 +129,7 @@
 											</tr>
 											<tr>
 												<td><div class="center"><p>Clear</p></div></td>
-												<td><div class="center"><p>Save Image</p></div></td>
+												<td><div class="center" id="modal_settings_text_download"><p>Save Image</p></div></td>
 												<td><div class="center"><p>Help</p></div></td>
 												<td><div class="center"><p>Return</p></div></td>
 											</tr>

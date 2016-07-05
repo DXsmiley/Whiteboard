@@ -68,7 +68,7 @@ function LatexTool() {
 	this.name = 'latex';
 	this.buttonImage = 'button_maths.png';
 	this.buttonImageSelected = 'button_maths_selected.png';
-	this.desktopOnly = true;
+	this.desktop_only = true;
 }
 
 LatexTool.prototype.onButtonClick = function() {

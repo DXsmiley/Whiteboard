@@ -390,10 +390,6 @@ Whiteboard.prototype.drawEverything = function() {
 	}
 };
 
-function isMobile() {
-	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
 Whiteboard.prototype.startup = function() {
 
 	// Workaround for javascript clojure funkyness.
@@ -402,21 +398,21 @@ Whiteboard.prototype.startup = function() {
 	for (var i in this.colours) {
 		(function() {
 			var x = i;
-			$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
+			$('#colour_' + x).bind(device_click_event, function(event) {the_whiteboard.triggerColourButton(x);});
 		})();
 	}
 
 	for (var i in this.tools) {
 		(function() {
 			var name = the_whiteboard.tools[i].name;
-			var desktop_only = the_whiteboard.tools[i]['desktopOnly'];
+			var desktop_only = the_whiteboard.tools[i]['desktop_only'];
 			if (desktop_only === true && isMobile()) {
 				// disable the stuff
 				console.log('Disabling tool', i);
 				$('#button_' + name).hide();
 				$('#button_' + name).next().hide();
 			} else {
-				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
+				$('#button_' + name).bind(device_click_event, function(event) {the_whiteboard.triggerToolButton(name, false);});
 				var shortcut_key = the_whiteboard.tools[i].shortcut_key;
 				if (shortcut_key !== undefined) {
 					the_whiteboard.keyboard_shortcuts[shortcut_key] = name;
@@ -443,8 +439,7 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('connect', function() {
 		console.log('Connected to server.');
-		var func = () => {$('#status_message').css('top', -200);};
-		window.setTimeout(func, 500);
+		window.setTimeout(function () {$('#status_message').css('top', -200);}, 500);
 	});
 
 	this.socket.on('disconnect', function() {
