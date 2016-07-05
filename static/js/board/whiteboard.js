@@ -390,10 +390,6 @@ Whiteboard.prototype.drawEverything = function() {
 	}
 };
 
-function isMobile() {
-	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
 Whiteboard.prototype.startup = function() {
 
 	// Workaround for javascript clojure funkyness.
@@ -402,7 +398,7 @@ Whiteboard.prototype.startup = function() {
 	for (var i in this.colours) {
 		(function() {
 			var x = i;
-			$('#colour_' + x).mousedown(function(event) {the_whiteboard.triggerColourButton(x);});
+			$('#colour_' + x).bind(device_click_event, function(event) {the_whiteboard.triggerColourButton(x);});
 		})();
 	}
 
@@ -416,7 +412,7 @@ Whiteboard.prototype.startup = function() {
 				$('#button_' + name).hide();
 				$('#button_' + name).next().hide();
 			} else {
-				$('#button_' + name).mousedown(function(event) {the_whiteboard.triggerToolButton(name, false);});
+				$('#button_' + name).bind(device_click_event, function(event) {the_whiteboard.triggerToolButton(name, false);});
 				var shortcut_key = the_whiteboard.tools[i].shortcut_key;
 				if (shortcut_key !== undefined) {
 					the_whiteboard.keyboard_shortcuts[shortcut_key] = name;

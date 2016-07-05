@@ -1,11 +1,11 @@
 // When the 'clear' button is clicked, clear the board.
-$('#modal_settings_button_clear').click(function() {
+$('#modal_settings_button_clear').bind(device_click_event, function() {
 	whiteboard.modalClose('.modal_settings');
 	whiteboard.sendPaintEvent('clear', 0);
 });
 
 // When the return button is clicked, close the settings panal.
-$('#modal_settings_button_cancel').click(function() {
+$('#modal_settings_button_cancel').bind(device_click_event, function() {
 	whiteboard.modalClose('.modal_settings');
 });
 

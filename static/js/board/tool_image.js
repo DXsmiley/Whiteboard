@@ -4,24 +4,24 @@ var scale_per_click = 1.2;
 var current_upload_id = null;
 
 // Toolbar button to shrink the image
-$('#button_shrink').click(function (event){
+$('#button_shrink').on(device_click_event, function (event){
 	image_scale /= scale_per_click;
 	$("#modal_image").css('transform', 'scale(' + image_scale + ')');
 });
 
 // Toolbar button to enlarge the image
-$('#button_enlarge').click(function (event){
+$('#button_enlarge').on(device_click_event, function (event){
 	image_scale *= scale_per_click;
 	$("#modal_image").css('transform', 'scale(' + image_scale + ')');
 });
 
 // Modal button to upload an image
-$("#modal_image_button_upload").click(function() {
+$("#modal_image_button_upload").on('click', function() {
 	$("#image_upload_input").click();
 });
 
 // Modal button to enter an image url
-$("#modal_image_button_url").click(function() {
+$("#modal_image_button_url").on(device_click_event, function() {
 	var url = window.prompt('Enter image url', '');
 	if (url) {
 		whiteboard.setToolHead(new ImageHead(url));
@@ -29,7 +29,7 @@ $("#modal_image_button_url").click(function() {
 });
 
 // Modal button to cancel the image tool
-$("#modal_image_button_cancel").click(function() {
+$("#modal_image_button_cancel").on(device_click_event, function() {
 	whiteboard.modalInputCancel();
 });
 

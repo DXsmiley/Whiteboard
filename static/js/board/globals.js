@@ -28,6 +28,12 @@ jQuery.fn.selectText = function() {
 	});
 };
 
+function isMobile() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+var device_click_event = isMobile() ? 'touchstart' : 'click'
+
 // The two drawing contexts of the whiteboard.
 // context_picture is the actual whiteboard.
 // context_preview shows what the user has drawn before it gets sent to the server.
