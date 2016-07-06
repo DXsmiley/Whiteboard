@@ -2,7 +2,7 @@
 {% set title = 'Whiteboard - Legal' %}
 {% set nav_page = 'Legal' %}
 {% block content %}
-	<div class="container">
+	<div class="container justify">
 		<p>The Whiteboard is provided under the MIT License, described below. Short version is that the Whiteboard is free, but it's not guaranteed to do what you want.</p>
 		<h1>MIT License</h1>
 		<p>Copyright &copy; 2016 "DXsmiley"</p>
