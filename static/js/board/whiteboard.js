@@ -1,3 +1,11 @@
+/*
+	The great and powerfull whiteboard.js
+
+	This holds all the core functionality of the whiteboard,
+	including tool management, interface bindings and
+	socket handling.
+*/
+
 function Whiteboard() {
 	this.whiteboard_id = 'unknown';
 	this.socket = undefined;
