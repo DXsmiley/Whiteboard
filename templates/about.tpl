@@ -13,6 +13,6 @@
 		<p>This whiteboard was developed by <a href="https://github.com/DXsmiley" target="_blank">myself</a> as a school project.</p>
 		<h2>Known Issues</h2>
 		<p>Using the text tool on devices that <i>have a touch screen</i>, but identify as <i>non-mobile</i> may cause the whiteboard to freeze. If this happens, refresh the page and avoid using the text tool on that device.</p>
-		<p>The Whiteboard is not designed to work with older browsers, such as Internet Explorer. I'm a programmer, not an archaeologist.</p>
+		<p>The Whiteboard is not designed to work with older browsers. You can <a href="https://whatbrowser.org">go here</a> to upgrade your browser.</p>
 	</div>
 {% endblock %}
