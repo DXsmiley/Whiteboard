@@ -17,6 +17,9 @@
 			<a class="no_underline" href="/docs">
 				<span class="{{ 'nav_button_current' if nav_page == 'Docs' else 'nav_button' }}">Docs</span>
 			</a>
+			<a class="no_underline" href="/legal">
+				<span class="{{ 'nav_button_current' if nav_page == 'Legal' else 'nav_button' }}">Legal</span>
+			</a>
 			<a class="no_underline" href="https://github.com/DXsmiley/Whiteboard" target="_blank">
 				<span class="nav_button">Code</span>
 			</a>
