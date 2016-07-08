@@ -1,9 +1,15 @@
+/*
+	The great and powerfull whiteboard.js
+
+	This holds all the core functionality of the whiteboard,
+	including tool management, interface bindings and
+	socket handling.
+*/
+
 function Whiteboard() {
 	this.whiteboard_id = 'unknown';
 	this.socket = undefined;
-	this.tool_heads = [null, null, null, null, null]; // support up to five fingers! not.
-	this.context_picture = document.getElementById('canvas1').getContext('2d'); // bottom layer
-	this.context_preview = document.getElementById('canvas2').getContext('2d'); // top layer
+	this.tool_head = null;
 	this.active_tool = null;
 	this.colours = {
 		black: '#2a2a2a',
@@ -112,32 +118,32 @@ Whiteboard.prototype.modalOpen = function() {
 };
 
 Whiteboard.prototype.setToolHead = function(head) {
-	this.tool_heads[0] = head;
+	this.tool_head = head;
 }
 
 // Perform events
 
-Whiteboard.prototype.eventToolDown = function(n, p, b) {
+Whiteboard.prototype.eventToolDown = function(p, b) {
 	if (this.active_tool) {
-		this.tool_heads[n] = this.active_tool.makeToolHead(b);
-		if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-			this.tool_heads[n].onMove(p);
+		this.tool_head = this.active_tool.makeToolHead(b);
+		if (this.tool_head && this.tool_head.onMove != undefined) {
+			this.tool_head.onMove(p);
 		}
 	}
 }
 
-Whiteboard.prototype.eventToolMove = function(n, p) {
-	if (this.tool_heads[n] && this.tool_heads[n].onMove != undefined) {
-		this.tool_heads[n].onMove(p);
+Whiteboard.prototype.eventToolMove = function(p) {
+	if (this.tool_head && this.tool_head.onMove != undefined) {
+		this.tool_head.onMove(p);
 	}
 };
 
 Whiteboard.prototype.eventToolUp = function(n) {
-	if (this.tool_heads[n]) {
-		if (this.tool_heads[n].onRelease != undefined) {
-			this.tool_heads[n].onRelease();
+	if (this.tool_head) {
+		if (this.tool_head.onRelease != undefined) {
+			this.tool_head.onRelease();
 		}
-		this.tool_heads[n] = null;
+		this.tool_head = null;
 	}
 };
 
@@ -158,15 +164,13 @@ Whiteboard.prototype.panCanvas = function(x, y) {
 // Interperet events
 
 Whiteboard.prototype.mouseDown = function(event) {
-	console.log(event);
-	console.log(event.which);
 	if (event.which == 3) {
 		this.last_mouse_x = event.pageX;
 		this.last_mouse_y = event.pageY;
 		this.panning = true;
 	} else {
 		var touchpoint = new Point(event.pageX - this.pan_x, event.pageY - this.pan_y);
-		this.eventToolDown(0, touchpoint, event.which);
+		this.eventToolDown(touchpoint, event.which);
 	}
 	if (event.preventDefault) event.preventDefault();
 };
@@ -182,7 +186,7 @@ Whiteboard.prototype.mouseMove = function(event) {
 		this.last_mouse_y = event.pageY;
 		this.panCanvas(dx, dy);
 	} else {
-		this.eventToolMove(0, new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
+		this.eventToolMove(new Point(event.pageX - this.pan_x, event.pageY - this.pan_y));
 	}
 	if (event.preventDefault) event.preventDefault();
 };
@@ -208,7 +212,7 @@ function touchCentre(touches) {
 Whiteboard.prototype.touchDown = function(event) {
 	if (event.touches.length == 1) {
 		var p = new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y);
-		this.eventToolDown(0, p, 1 /* Left button */);
+		this.eventToolDown(p, 1 /* Left button */);
 	}
 	if (event.touches.length == 2) {
 		var c = touchCentre(event.touches);
@@ -235,7 +239,7 @@ Whiteboard.prototype.touchMove = function(event) {
 			this.last_mouse_y = c.y;
 			this.panning = true;
 		} else {
-			this.eventToolMove(0, new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y));
+			this.eventToolMove(new Point(event.touches[0].pageX - this.pan_x, event.touches[0].pageY - this.pan_y));
 		}
 	}
 	event.preventDefault();
@@ -248,21 +252,17 @@ Whiteboard.prototype.drawCommand = function(the_tool, the_data) {
 };
 
 Whiteboard.prototype.modalInputConfirm = function() {
-	for (var i in this.tool_heads) {
-		if (this.tool_heads[i] != null) {
-			if (!this.tool_heads[i].onModalConfirm()) {
-				this.tool_heads[i] = null;
-			}
+	if (this.tool_head != null) {
+		if (!this.tool_head.onModalConfirm()) {
+			this.tool_head = null;
 		}
 	}
 };
 
 Whiteboard.prototype.modalInputCancel = function() {
-	for (var i in this.tool_heads) {
-		if (this.tool_heads[i] != null) {
-			if (!this.tool_heads[i].onModalCancel()) {
-				this.tool_heads[i] = null;
-			}
+	if (this.tool_head != null) {
+		if (!this.tool_head.onModalCancel()) {
+			this.tool_head = null;
 		}
 	}
 };
@@ -282,43 +282,31 @@ Whiteboard.prototype.handleKeypress = function(event) {
 
 // Tool buttons
 
-Whiteboard.prototype.triggerToolButton = function(t, dbl) {
+Whiteboard.prototype.triggerToolButton = function(t) {
 	console.log('Tool:', t);
 	// Tigger the click event
-	var click_result = false;
-	var triggered = false;
-	if (dbl) {
-		if (this.tools[t].onDoubleClick !== undefined) {
-			click_result = this.tools[t].onDoubleClick();
-			triggered = true;
-		}
-	} else {
-		click_result = this.tools[t].onButtonClick();
-		triggered = true;
-	}
-	if (triggered) {
-		if (click_result === true) {
-			// Button was selected. This is good.
-			this.active_tool = this.tools[t];
-			// Change button images
-			for (var i in this.tools) {
-				var t_name = this.tools[i].name;
-				var t_image = this.tools[i].buttonImage;
-				var bt_elem = $('#button_' + t_name);
-				if (bt_elem) {
-					bt_elem.removeClass('toolbar_button_selected');
-				}
+	var click_result = this.tools[t].onButtonClick();
+	if (click_result === true) {
+		// Button was selected. This is good.
+		this.active_tool = this.tools[t];
+		// Change button images
+		for (var i in this.tools) {
+			var t_name = this.tools[i].name;
+			var t_image = this.tools[i].buttonImage;
+			var bt_elem = $('#button_' + t_name);
+			if (bt_elem) {
+				bt_elem.removeClass('toolbar_button_selected');
 			}
-			var t_image = this.tools[t].buttonImageSelected;
-			var btn = $('#button_' + t);
-			btn.addClass('toolbar_button_selected');
-		} else if (click_result === false) {
-			// The button did an action, we don't need to do anything.
-		} else {
-			// The button produced a toolhead.
-			// Probably means the modal pane was opened, for clear confirmation or something.
-			this.tool_heads[0] = click_result;
 		}
+		var t_image = this.tools[t].buttonImageSelected;
+		var btn = $('#button_' + t);
+		btn.addClass('toolbar_button_selected');
+	} else if (click_result === false || click_result === null || click_result === undefined) {
+		// The button did an action, we don't need to do anything.
+	} else {
+		// The button produced a toolhead.
+		// Probably means the modal pane was opened, for clear confirmation or something.
+		this.tool_head = click_result;
 	}
 };
 
@@ -373,7 +361,7 @@ Whiteboard.prototype.toolbarActivate = function() {
 
 Whiteboard.prototype.drawEverything = function() {
 	console.log('Drawing everything!');
-	drawClearSolid(this.context_picture);
+	drawClearSolid(context_picture);
 	var last_clear = this.paint_blobs_all.length - 1;
 	while (last_clear >= 0) {
 		var aid = this.paint_blobs_all[last_clear]['action_id'];
@@ -439,6 +427,7 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('connect', function() {
 		console.log('Connected to server.');
+		console.log('Transport medium:', this.io.engine.transport.name);
 		window.setTimeout(function () {$('#status_message').css('top', -200);}, 500);
 	});
 
@@ -451,6 +440,10 @@ Whiteboard.prototype.startup = function() {
 	this.socket.on('reconnect', function() {
 		console.log('Reconnected to server!');
 		location.reload(true);
+	});
+
+	this.socket.io.engine.on('upgrade', function(transport) {
+		console.log('Transport changed:', transport.name);
 	});
 
 	this.socket.emit('full image',

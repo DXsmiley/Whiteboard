@@ -203,12 +203,16 @@ def serve_index():
 def serve_about():
 	return flask.render_template('about.tpl')
 
-# URLs that create new whiteboards. They create a new whiteboard and
-# then automatically redirect the user there.
-
 @app.route('/docs')
 def serve_docs():
 	return flask.render_template('docs.tpl')
+
+@app.route('/legal')
+def serve_legal():
+	return flask.render_template('legal.tpl')
+
+# URLs that create new whiteboards. They create a new whiteboard and
+# then automatically redirect the user there.
 
 @app.route('/new')
 def server_board_new():

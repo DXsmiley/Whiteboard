@@ -22,12 +22,12 @@ SolidShapeTool.prototype.drawFull = function(data) {
 whiteboard.makeTool(new SolidShapeTool(
 	'solid_shape',
 	'k',
-	() => whiteboard.global_colour
+	function () {return whiteboard.global_colour;}
 ));
 
 // Solid shape with the 'eraser', draws with white.
 whiteboard.makeTool(new SolidShapeTool(
 	'solid_shape_white',
 	'l',
-	() => '#ffffff'
+	function () {return '#ffffff';}
 ));

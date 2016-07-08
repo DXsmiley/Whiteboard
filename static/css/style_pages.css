@@ -15,6 +15,10 @@ p {
 	font-size: 16px;
 }
 
+.justify {
+	text-align: justify;
+}
+
 .center {
 	text-align: center;
 }
