@@ -2,7 +2,9 @@
 {% set title = 'Whiteboard' %}
 {% set nav_page = 'Home' %}
 {% block content %}
+	<!-- Canvas for the animation -->
 	<canvas id="anim_canvas" width="500px" height="350px"></canvas>
+	<!-- Rest of page -->
 	<div class="container">
 		<br><br><br><br><br>
 		<h1 class="center">Express Yourself Visually</h1>
@@ -33,6 +35,7 @@
 			</tr>
 		</table>
 	</div>
+	<!-- Scripts to run the animation -->
 	<script type="text/javascript" src="/static/js/board/draw.js"></script>
 	<script type="text/javascript" src="/static/js/board/auto_drawer.js"></script>
 {% endblock %}
