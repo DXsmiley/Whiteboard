@@ -427,6 +427,7 @@ Whiteboard.prototype.startup = function() {
 
 	this.socket.on('connect', function() {
 		console.log('Connected to server.');
+		console.log('Transport medium:', this.io.engine.transport.name);
 		window.setTimeout(function () {$('#status_message').css('top', -200);}, 500);
 	});
 
@@ -439,6 +440,10 @@ Whiteboard.prototype.startup = function() {
 	this.socket.on('reconnect', function() {
 		console.log('Reconnected to server!');
 		location.reload(true);
+	});
+
+	this.socket.io.engine.on('upgrade', function(transport) {
+		console.log('Transport changed:', transport.name);
 	});
 
 	this.socket.emit('full image',
