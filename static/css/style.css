@@ -243,7 +243,7 @@ div.popup div {
 	top: 20px;
 }
 
-#feedbackpopup {
+#feedbackpopup, #panningpopup {
 	bottom: -150px; /* initially off screen */
 	max-width: 280px;
 }

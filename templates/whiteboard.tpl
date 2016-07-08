@@ -156,6 +156,13 @@
 			</div>
 		</div>
 
+		<div id="panningpopup" class="popup">
+			<p>Top tip: Use the <i>right mouse button</i> or a <i>two finger swipe</i> to navigate around the board.</p>
+			<div>
+				<button onclick="panningPopupClose()">Great!</button>
+			</div>
+		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/static/js/lib/cookies.js"></script>
@@ -190,6 +197,8 @@
 			whiteboard.triggerToolButton('pencil');
 			whiteboard.triggerColourButton('blue');
 
+			// Feedback popup
+
 			function feedbackPopupShow() {
 				console.log('Showing feedback popup.');
 				$("#feedbackpopup").css('bottom', '20px');
@@ -213,6 +222,23 @@
 				// Show in 15 minutes
 				console.log('Setting feedback popup timer.');
 				window.setTimeout(feedbackPopupShow, 1000 * 60 * 15);
+			}
+
+			// Panning tip popup
+
+			function panningPopupShow() {
+				console.log('Showing panning popup.');
+				$("#panningpopup").css('bottom', '20px');
+			}
+
+			function panningPopupClose() {
+				console.log('Closing panning popup.');
+				$('#panningpopup').css('bottom', '-150px');
+				Cookies.set('panningpopup', 1, {'expires': 800});
+			}
+
+			if (Cookies.get('panningpopup') === undefined) {
+				window.setTimeout(panningPopupShow, 1000 * 5);
 			}
 
 		</script>
