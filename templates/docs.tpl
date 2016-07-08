@@ -56,6 +56,7 @@
 		<p>If you don't have a middle mouse button, you can activate the special <i>shape tools</i> using the <code>K</code> and <code>L</code> keys. Note that these tools are simply replacements and do not appear in the tool bar.</p>
 
 		<h3>Keyboard shortcuts</h3>
+		<p>These are only applicable for devices that actually have a keyboard.</p>
 		<table>
 			<thead>
 				<tr>
