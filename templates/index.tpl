@@ -2,7 +2,9 @@
 {% set title = 'Whiteboard' %}
 {% set nav_page = 'Home' %}
 {% block content %}
+	<!-- Canvas for the animation -->
 	<canvas id="anim_canvas" width="500px" height="350px"></canvas>
+	<!-- Rest of page -->
 	<div class="container">
 		<br><br><br><br><br>
 		<h1 class="center">Express Yourself Visually</h1>
@@ -24,16 +26,16 @@
 			<tr>
 				<td>
 					<h2>Touch Friendly</h2>
-					<p>Draw and view on any device! Well, maybe. I'm not really sure how well it works.</p>
+					<p>Draw and view on any modern device! The board supports a number of features designed for mobile devices.</p>
 				</td>
 				<td>
-					<h2>LaTeX Support</h2>
-					<p><s>This one's for the geeks! Format equations with full-featured LaTeX with live preview.</s></p>
-					<p>Currently broken.</p>
+					<h2>Desktop Empowering</h2>
+					<p>The whiteboard leverages <i>all three</i> of your mouse buttons to ensure maximum efficiency when using a mouse and keyboard.</p>
 				</td>
 			</tr>
 		</table>
 	</div>
+	<!-- Scripts to run the animation -->
 	<script type="text/javascript" src="/static/js/board/draw.js"></script>
 	<script type="text/javascript" src="/static/js/board/auto_drawer.js"></script>
 {% endblock %}

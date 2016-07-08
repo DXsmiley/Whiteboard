@@ -2,13 +2,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{{ title }}</title>
+		<!-- stylesheets requires for the information pages on the website -->
 		<link rel="stylesheet" type="text/css" href="static/css/normalise.css">
 		<link rel="stylesheet" type="text/css" href="static/css/style_pages.css">
 		<link rel="stylesheet" type="text/css" href="static/css/printability.css">
 	</head>
 	<body>
+		<!-- navigation bar at the top -->
 		<div class="headder">
 			<a class="no_underline" href="/">
+				<!-- These expressions are used to determine the nav button that should be highlighted -->
 				<span class="{{ 'nav_button_current' if nav_page == 'Home' else 'nav_button' }}">Home</span>
 			</a>
 			<a class="no_underline" href="/about">
@@ -25,6 +28,7 @@
 			</a>
 		</div>
 		<div class="large_container">
+			<!-- Main content of the page gets inserted here -->
 			{% block content %}{% endblock %}
 		</div>
 	</body>
