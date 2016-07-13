@@ -16,9 +16,9 @@
 		<!-- the actual canvases, to which pictures get drawn -->
 		<div id="canvas_wrapper">
 			<!-- the lower one is the actual board -->
-			<canvas id="canvas1" width="1980" height="1080" onclick="void(0)"></canvas>
+			<canvas id="canvas1" width="3000" height="3000" onclick="void(0)"></canvas>
 			<!-- the upper one is the preview of whatever the user is currently drawing. information on here has not been sent to the server -->
-			<canvas id="canvas2" width="1980" height="1080" onclick="void(0)"></canvas>
+			<canvas id="canvas2" width="3000" height="3000" onclick="void(0)"></canvas>
 		</div>
 
 		<!-- wrapper around the toolbars -->
