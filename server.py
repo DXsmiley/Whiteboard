@@ -236,7 +236,6 @@ def server_board_new_private():
 
 # Serves up a list of existant whiteboards.
 # Used for debugging purposes only.
-# TODO: Add a password to this page, don't let normal users see it.
 
 @app.route('/listing')
 def serve_listing():

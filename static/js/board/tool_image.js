@@ -84,7 +84,6 @@ if (typeof Ospry === 'undefined') {
 			form: this,
 			imageReady: onUpload,
 		});
-		// TODO: What does this do?
 		console.log(up_result);
 
 		// Show the progress spinner
@@ -133,7 +132,6 @@ ImageHead.prototype.onModalCancel = function() {
 }
 
 // Receives events during image upload
-// TODO: Rename this?
 function SelectHead() {
 	whiteboard.modalOpen('.modal_image_select', '.modal_centered');
 }
