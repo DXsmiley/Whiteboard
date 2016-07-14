@@ -3,5 +3,6 @@
 	"db_enable": true,
 	"db_login": "env:DB_LOGIN",
 	"db_name": "env:DB_NAME",
-	"feedback_form": "env:FEEDBACK_FORM"
+	"feedback_form": "env:FEEDBACK_FORM",
+	"debug": false
 }
