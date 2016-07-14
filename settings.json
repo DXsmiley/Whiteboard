@@ -3,5 +3,6 @@
 	"db_enable": false,
 	"db_login": "nothing",
 	"db_name": "nothing",
-	"feedback_form": "http://goo.gl/forms/z988iOkqxZI2mlaD3"
+	"feedback_form": "http://goo.gl/forms/z988iOkqxZI2mlaD3",
+	"debug": true
 }
