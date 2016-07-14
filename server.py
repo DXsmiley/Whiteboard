@@ -168,7 +168,7 @@ for i in database.load_meta():
 # Create the flask server and the socket.io handler
 
 app = flask.Flask(__name__)
-app.debug = True
+app.debug = settings.get('debug')
 
 sock = socketio.SocketIO(app)
 
@@ -240,6 +240,8 @@ def server_board_new_private():
 
 @app.route('/listing')
 def serve_listing():
+	if not settings.get('debug'):
+		flask.abort(403)
 	boards = []
 	for i in whiteboards:
 		time_diff = time_current() - whiteboards[i].timestamp
