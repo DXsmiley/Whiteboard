@@ -20,4 +20,8 @@
 		border-bottom: 1px #ee7f00 solid;
 	}
 
+	.noprint {
+		display: none;
+	}
+
 }
