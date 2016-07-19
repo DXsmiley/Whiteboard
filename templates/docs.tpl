@@ -3,6 +3,9 @@
 {% set nav_page = 'Docs' %}
 {% block content %}
 	<div class="container">
+
+		<p class="noprint">You can download a PDF copy of this page <a href="/static/whiteboard-docs.pdf" target="_blank">here</a>.</p>
+
 		<h1>Docs</h1>
 
 		<h2>Navigating the Board</h2>

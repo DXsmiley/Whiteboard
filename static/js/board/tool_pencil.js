@@ -4,7 +4,6 @@
 
 function PencilTool() {
 	this.thickness = 3.2;
-	this.line_mode = false;
 	this.name = 'pencil';
 	this.shortcut_key = 'p';
 }

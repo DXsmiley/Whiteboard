@@ -12,8 +12,16 @@
 		max-width: none;
 	}
 
-	thead tr {
+	tr {
 		border-bottom: 1px #eeeeee solid;
+	}
+
+	thead tr {
+		border-bottom: 1px #ee7f00 solid;
+	}
+
+	.noprint {
+		display: none;
 	}
 
 }
