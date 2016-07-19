@@ -292,7 +292,6 @@ SCHEMA_PAINT = load_schema('paint')
 
 @sock.on('paint')
 def socketio_paint(message):
-	# print('paint', message)
 	# Ensure the paint action is valid
 	if edgy.check(SCHEMA_PAINT, message):
 		bid = message['board_id'].upper()
@@ -318,7 +317,6 @@ def socketio_paint(message):
 
 @sock.on('full image')
 def socketio_full_image(message):
-	# print('full image', message)
 	bid = message['board_id'].upper()
 	key = message['key']
 	board = whiteboards[bid]
