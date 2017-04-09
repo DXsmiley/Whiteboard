@@ -20,7 +20,7 @@
 				<td>
 					<h2>Stay Undercover</h2>
 					<img src="/static/images/spy.png">
-					<p>Paranoid about people stealing your million-dollar idea? <a href="/new/private">Private boards</a> can only be accessed by you.</p>
+					<p><a href="/new/private">Wear a hat that makes you look shifty</a>. It'll be certain to throw off any... investigators.</p>
 				</td>
 			</tr>
 			<tr>
